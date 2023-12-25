@@ -1,94 +1,72 @@
-# Interfaces for Data Transformation
+# File Transformer
 
-This document describes a set of interfaces for transforming data between various formats, such as Blob, Base64, File, FormData, and Uint8Array.
+This library provides a set of interfaces and classes for transforming files, blobs, and form data. It includes the following features:
 
-## Table of Contents
+- Convert a Uint8Array to a Blob
+- Convert a File to a Blob
+- Convert a base64 string to a Blob
+- Transform data into a FormData object
+- Revert a FormData object into a JavaScript object
+- Convert a base64 string to a File
+- Convert a File to a base64 string
+- Convert a base64 string to a Uint8Array
+- Convert a Uint8Array to a base64 string
+- Convert a Blob to a base64 string or ArrayBuffer
+- Convert a File to a base64 string
+- Convert a base64 string to a File
+- Convert a Uint8Array to a File
 
-- [Blob Transformer Interface](#blob-transformer-interface)
-- [FormData Transformer Interface](#formdata-transformer-interface)
-- [Base64 Transformer Interface](#base64-transformer-interface)
-- [File Transformer Interface](#file-transformer-interface)
+## Installation
 
-## Blob Transformer Interface
+To install the library, run the following command:
 
-The `IBlobTransformer` interface provides methods for transforming data into Blob format.
+```bash
+npm install file-transformer
+```
 
-### Methods for Blob Transformation
+## Usage
 
-#### `fromUint8Array(uint8Array: Uint8Array, contentType?: string): Blob`
+### Blob Transformer
 
-Converts a Uint8Array to a Blob object.
+The `BlobTransformer` interface provides methods for converting Uint8Arrays, Files, and base64 strings to Blobs.
 
-#### `fromFile(file: File): Blob`
+To convert a Uint8Array to a Blob, use the `fromUint8Array()` method:
 
-Creates a Blob from a File object.
+```typescript
+const blobTransformer = new BlobTransformer();
+const blob = blobTransformer.fromUint8Array(uint8Array);
+```
 
-#### `fromBase64String(base64String: string, contentType?: string): Blob`
+To convert a File to a Blob, use the `fromFile()` method:
 
-Creates a Blob from a Base64-encoded string.
+```typescript
+const blobTransformer = new BlobTransformer();
+const blob = blobTransformer.fromFile(file);
+```
 
-## FormData Transformer Interface
+To convert a base64 string to a Blob, use the `fromBase64String()` method:
 
-The `IFormDataTransformer` interface offers methods to transform data into FormData and revert FormData to JavaScript objects.
+```typescript
+const blobTransformer = new BlobTransformer();
+const blob = blobTransformer.fromBase64String(base64String);
+```
 
-### Methods for FormData Transformation
+### FormData Transformer
 
-#### `transform(): FormData`
+The `FormDataTransformer` interface provides methods for transforming data into a FormData object and reverting a FormData object into a JavaScript object.
 
-Transforms data into a FormData object.
+To transform data into a FormData object, use the `transform()` method:
 
-#### `reverse(): object`
+```typescript
+const formDataTransformer = new FormDataTransformer();
+const formData = formDataTransformer.transform();
+```
 
-Reverts a FormData object back to a JavaScript object.
+To revert a FormData object into a JavaScript object, use the `reverse()` method:
 
-#### `option(option: string): object | FormData | undefined`
+```typescript
+const formDataTransformer = new FormDataTransformer();
+const object = formDataTransformer.reverse();
+```
 
-Applies specific transformation options: 'onlyobject', 'onlyformdata', 'auto', returning the resulting object or FormData based on the provided option.
-
-## Base64 Transformer Interface
-
-The `IBase64Transformer` interface deals with transformations between Base64 encoding and other data representations.
-
-### Methods for Base64 Transformation
-
-#### `toFile(base64String: string, fileName?: string): File`
-
-Converts a Base64 string to a File object.
-
-#### `fromFile(file: File): Promise<any>`
-
-Converts a File object to a Base64-encoded string.
-
-#### `toUint8Array(base64String: string): Uint8Array`
-
-Converts a Base64 string to a Uint8Array.
-
-#### `fromUint8Array(uint8Array: Uint8Array): string`
-
-Converts a Uint8Array to a Base64-encoded string.
-
-#### `fromBlob(blob: Blob): Promise<string | ArrayBuffer>`
-
-Converts a Blob object to a Base64-encoded string or an ArrayBuffer.
-
-## File Transformer Interface
-
-The `IFileTransformer` interface provides methods specifically for File transformations.
-
-### Methods for File Transformation
-
-#### `toBase64(file: File): Promise<unknown>`
-
-Converts a File to a Base64 string.
-
-#### `fromBase64String(base64String: string, contentType?: string | null, fileName?: string | null, formatString?: boolean): File`
-
-Converts a Base64 string to a File object.
-
-#### `fromUint8Array(uint8Array: Uint8Array, mimeType: string, fileName: string): File`
-
-Converts a Uint8Array to a File object with specified MIME type and filename.
-
----
-
-Feel free to supplement this documentation with usage examples, code samples, or any additional details relevant to the usage and implementation of these interfaces.
+The `FormDataTransformer` interface also provides an `option()` method that allows you to specify a transformation option. The

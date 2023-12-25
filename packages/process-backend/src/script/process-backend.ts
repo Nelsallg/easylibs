@@ -1,5 +1,5 @@
 import { FetchRequest } from "./fetch-request";
-import { ProcessIndexedDB } from "./indexed-db";
+import { ProcessIndexedDB } from "../../../tempdata/src/script/indexed-db";
 import { BlobTransformer } from "../functions/data-transfomer";
 import { escape } from "../functions/utils";
 

@@ -6,7 +6,7 @@ The `FileUploader` class provides a simple way to upload files to a server. It c
 
 To install the `FileUploader` class, simply add the following line to your `package.json` file:
 
-```shell
+```bash
 npm install file-uploader
 ```
 
