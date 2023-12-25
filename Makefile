@@ -1,0 +1,25 @@
+.PHONY: init create list exec run publish
+
+# Initialise le monorepo avec Lerna
+init:
+	lerna init
+
+# Crée un nouveau package dans le monorepo
+create:
+	lerna create ${name}
+
+# Affiche la liste des packages dans le monorepo
+list:
+	lerna ls
+
+# Exécute une commande dans tous les packages
+exec:
+	lerna exec -- ${commande}
+
+# Exécute une commande spécifique dans tous les packages
+run:
+	lerna run ${commande}
+
+# Publie les packages modifiés dans le monorepo
+publish:
+	lerna publish
