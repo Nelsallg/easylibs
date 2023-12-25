@@ -1,4 +1,4 @@
-import { IFileTransformer } from "../main";
+import { IFileTransformer } from "../../main";
 
 export class FileTransformer implements IFileTransformer{
     public toBase64(file: File): Promise<unknown> {

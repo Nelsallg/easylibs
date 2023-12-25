@@ -1,4 +1,4 @@
-import { IBlobTransformer } from "../main";
+import { IBlobTransformer } from "../../main";
 
 export class BlobTransformer implements IBlobTransformer {
     public fromUint8Array(uint8Array: Uint8Array, contentType?: string): Blob {

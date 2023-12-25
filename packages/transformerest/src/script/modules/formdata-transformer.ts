@@ -1,4 +1,4 @@
-import { IFormDataTransformer } from "../main";
+import { IFormDataTransformer } from "../../main";
 
 export class FormDataTransformer implements IFormDataTransformer{
     private _data: object | undefined;

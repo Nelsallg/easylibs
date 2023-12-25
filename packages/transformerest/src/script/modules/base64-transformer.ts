@@ -1,4 +1,4 @@
-import { IBase64Transformer } from "../main";
+import { IBase64Transformer } from "../../main";
 import { getMimeType } from "../functions/mime";
 
 export class Base64Transformer implements IBase64Transformer{

@@ -6,7 +6,7 @@ init:
 
 # Crée un nouveau package dans le monorepo
 create:
-	lerna create ${name}
+	lerna create $(name)
 
 # Affiche la liste des packages dans le monorepo
 list:
@@ -23,3 +23,10 @@ run:
 # Publie les packages modifiés dans le monorepo
 publish:
 	lerna publish
+
+# Compile une bibliothèque spécifique (remplacer @monorepo/library1 par le nom de votre bibliothèque)
+build-lib:
+	lerna run build --scope=${lib}
+
+build-lib-c:
+	lerna run tsc --scope=${lib}
