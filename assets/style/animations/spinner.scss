@@ -1,0 +1,225 @@
+
+@mixin rotate-pinner-filled($element,$size:26px){
+    #{$element}.rotate-pinner-filled {
+       position: relative;
+       width: $size;
+       height: $size;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       outline: none;
+       margin:0 15px;
+    }
+    
+    #{$element}.rotate-pinner-filled::before,
+    #{$element}.rotate-pinner-filled::after {
+       border: 5.7px solid #F2F3F5;
+       border-radius: 50%;
+       position: absolute;
+       content: '';
+       display: block;
+    }
+    
+    #{$element}.rotate-pinner-filled::before {
+       width: calc($size - 22.4px);
+       height: calc($size - 22.4px);
+       border-bottom-color: transparent;
+       border-left-color: transparent;
+       animation: spinner-1o3y8q 0.75s infinite linear reverse;
+    }
+    
+    #{$element}.rotate-pinner-filled::after {
+       animation: spinner-1o3y8q 0.5s infinite linear;
+       height: $size;
+       width: $size;
+       border-right-color: transparent;
+       border-top-color: transparent;
+    }
+    
+    @keyframes spinner-1o3y8q {
+       to {
+          transform: rotate(360deg);
+       }
+    }
+ }
+ 
+ @mixin band-loader($element,$color,$height:50px,$width:20px){
+    #{$element}.band-loader {
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       height: $height;
+       position: relative;
+     }
+     
+     #{$element}.band-loader .loader__band {
+       height: 100%;
+       width: $width;
+       margin: 0 5px;
+       background-color: $color;
+       animation: loader__band 1.5s infinite cubic-bezier(0.4, 0.0, 0.2, 1);
+     }
+     
+    #{$element}.band-loader .loader__band:nth-child(2) {
+       animation-delay: 0.2s;
+     }
+     
+    #{$element}.band-loader .loader__band:nth-child(3) {
+       animation-delay: 0.4s;
+     }
+     
+     @keyframes loader__band {
+       0% {
+         transform: scaleY(1);
+       }
+       50% {
+         transform: scaleY(0.3);
+       }
+       100% {
+         transform: scaleY(1);
+       }
+     }
+ }
+
+
+ 
+ @mixin progress_bar($element){
+    #{$element}.progress-bar {
+       width: 300px;
+       height: 20px;
+       border: 1px solid #ccc;
+       border-radius: 10px;
+     }
+     
+     #{$element}.progress {
+       height: 100%;
+       background-color: #3498db;
+       border-radius: 10px;
+       animation: progress-bar 5s linear;
+     }
+     
+     @keyframes progress-bar {
+       0% {
+         width: 0%;
+       }
+       100% {
+         width: 100%;
+       }
+     }
+     
+ }
+ 
+ @mixin loading_bar($element, $top, $bg-color){
+    .#{$element}.loading-bar {
+       top:$top;
+       position: absolute;
+       overflow: hidden;
+       width: 100%;
+       height: 4px;
+       display: flex;
+       justify-content: center;
+       align-items: default;
+       background-color: $bg-color;
+     }
+     
+     .#{$element}.loading-bar::before {
+       width: 50%;
+       height: 4px;
+       content: "";
+       background-image: conic-gradient(#53538b, #5757b1);
+       box-shadow: 16px 14px 20px #000000Bc;
+       border-radius: 20px;
+       animation: loading-animation 2s linear infinite;
+     }
+     
+     @keyframes loading-animation {
+       0%{
+          transform: translateX(-200%);
+      }
+      100%{
+          transform: translateX(200%);
+      }
+     }  
+ }
+
+ @mixin scalling-dot-ring($element, $color){
+  #{$element} .spinner {
+    --d: 24.6px;
+    width: 4.5px;
+    height: 4.5px;
+    border-radius: 50%;
+    color: $color;
+    box-shadow: calc(1*var(--d))      calc(0*var(--d))     0 0,
+           calc(0.707*var(--d))  calc(0.707*var(--d)) 0 1.1px,
+           calc(0*var(--d))      calc(1*var(--d))     0 2.2px,
+           calc(-0.707*var(--d)) calc(0.707*var(--d)) 0 3.4px,
+           calc(-1*var(--d))     calc(0*var(--d))     0 4.5px,
+           calc(-0.707*var(--d)) calc(-0.707*var(--d))0 5.6px,
+           calc(0*var(--d))      calc(-1*var(--d))    0 6.7px;
+    animation: spinner-a90wxe 1s infinite steps(8);
+ }
+ 
+ @keyframes spinner-a90wxe {
+    100% {
+       transform: rotate(1turn);
+    }
+ }
+ }
+
+@mixin rouded-head-cornet-spinner($element,$size:56px,$color:#FFFFFF){
+  #{$element}.rouded-head-cornet-spinner {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side,$color 94%,#0000) top/9px 9px no-repeat,
+           conic-gradient(#0000 30%,$color);
+    mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
+    animation: spinner-c7wet2 1s infinite linear;
+ }
+ 
+ @keyframes spinner-c7wet2 {
+    100% {
+       transform: rotate(1turn);
+    }
+ }
+}
+
+@mixin eight-dot($element,$size:36px){
+  #{$element}.eight-dot {
+    width: $size;
+    height: $size;
+    display: grid;
+    margin-right:15px;
+ }
+ 
+ #{$element}.eight-dot::before,
+ #{$element}.eight-dot::after {
+    content: "";
+    grid-area: 1/1;
+    background: var(--c) 50%  0, 
+         var(--c) 50%  100%, 
+         var(--c) 100% 50%, 
+         var(--c) 0    50%;
+    background-size: 10.4px 10.4px;
+    background-repeat: no-repeat;
+    animation: spinner-3hs4a3 .7s infinite;
+ }
+ 
+ #{$element}.eight-dot::before {
+    --c: radial-gradient(farthest-side,#FFFFFF 92%,#0000);
+    margin: 0.5px;
+    background-size: 7px 7px;
+    animation-timing-function: linear;
+ }
+ 
+ #{$element}.eight-dot::after {
+    --c: radial-gradient(farthest-side,#ffffff 92%,#0000);
+ }
+ 
+ @keyframes spinner-3hs4a3 {
+    100% {
+       transform: rotate(.5turn);
+    }
+ }
+}

@@ -1,0 +1,49 @@
+  
+ @mixin flex-center($content-jusrify, $items-align, $content-direction){
+    display: flex;
+    align-items:#{$content-jusrify};
+    justify-content:#{$items-align};
+    flex-direction:#{ $content-direction};
+ }
+ @mixin proportions($width, $height){
+   width: $width;
+   height: $height;
+ }
+ @mixin positions($position, $left, $top, $right, $bottom){
+   position: $position;
+   left: $left;
+   top: $top;
+   right: $right;
+   bottom: $bottom;
+ }
+ @mixin colors($color, $background-color){
+   color: $color;
+   background-color: $background-color;
+ }
+
+ @mixin text-select-remove(){
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin scroll-bar($element, $color){
+  .#{$element}::-webkit-scrollbar {
+      width: 10px;
+  }
+  
+  .#{$element}:hover::-webkit-scrollbar-thumb {
+      background-color: $color;
+  }
+  .#{$element}::-webkit-scrollbar-thumb {
+      background-color: $color;
+      border-radius: 1px;
+  }
+  .#{$element}::-webkit-scrollbar-track {
+      border-radius: 5px;
+      box-shadow: inset 0 0 10px transparent;
+      position: relative;
+  }
+}

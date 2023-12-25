@@ -1,0 +1,15 @@
+{
+  "name": "fetch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "cypress"
+  },
+  "author": "Lévy Stéphane NGUEMA EKOMOE",
+  "license": "ISC"
+}

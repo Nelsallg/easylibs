@@ -1,0 +1,54 @@
+
+@mixin scale-up-ver-center($element,$time:.5s,$y:0.4){
+  #{$element}.scale-up-ver-center {
+    animation: scale-up-ver-center $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  }
+  @keyframes scale-up-ver-center {
+    0% {
+      -webkit-transform: scaleY($y);
+              transform: scaleY($y);
+    }
+    100% {
+      -webkit-transform: scaleY(1);
+              transform: scaleY(1);
+    }
+  }
+}
+  
+  @mixin scal-up-bottom($element,$time:.5s,$origin:100%,$scale:.5){
+  #{$element}.scale-up-bottom {
+    animation: scale-up-bottom $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  }
+  @keyframes scale-up-bottom {
+    0% {
+      -webkit-transform: scale($scale);
+              transform: scale($scale);
+      -webkit-transform-origin: calc($scale * 2);
+              transform-origin: calc($scale * 2);
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      -webkit-transform-origin: calc($origin / 2) $origin;
+              transform-origin: calc($origin / 2) $origin;
+    }
+  }
+  
+}
+
+  
+//BACKGROUND SCALE
+@mixin background-scale($element){
+    .#{$element}.bg-scale {
+        animation: bg-pan-bl 8s both;
+    }
+  @keyframes bg-pan-bl {
+    0% {
+      background-position: 100% 0%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
+  
+  }
