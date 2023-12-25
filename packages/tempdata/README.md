@@ -7,7 +7,7 @@ The `ProcessIndexedDB` class provides a set of methods for interacting with an I
 To use the `ProcessIndexedDB` class, you can install it from npm:
 
 ```bash
-npm install process-indexeddb
+npm install libbest/process-indexeddb
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install process-indexeddb
 Once you have installed the `ProcessIndexedDB` class, you can import it into your project and start using it. Here's an example of how to use the class to add data to an IndexedDB database:
 
 ```typescript
-import { ProcessIndexedDB } from 'process-indexeddb';
+import { ProcessIndexedDB } from 'libbest/process-indexeddb';
 
 const database = new ProcessIndexedDB('my-database', 'my-object-store');
 

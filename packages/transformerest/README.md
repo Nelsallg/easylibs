@@ -21,7 +21,7 @@ This library provides a set of interfaces and classes for transforming files, bl
 To install the library, run the following command:
 
 ```bash
-npm install file-transformer
+npm install libbest/file-transformer
 ```
 
 ## Usage

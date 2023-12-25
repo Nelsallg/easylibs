@@ -1,57 +1,72 @@
-import {$$} from './dom'
+// Import statements
+import { $$ } from './dom';
 import { processNodes } from './convert-type';
+
 /**
- * Initialise les fonctionnalités de la case à cocher dans un élément parent spécifié.
- * @param parentElement Sélecteur CSS de l'élément parent contenant les cases à cocher.
+ * CheckboxManager class to initialize checkbox functionality in a specified parent element.
  */
-export function checkbox(parentElement: string){
-    const content = $$(parentElement);
-    if(null !== content){
-        processNodes(content,function(node){
-            init(node);
-        });
-    }
-}
+export class CheckboxManager {
+    private parentElement: string;
 
-function init(content:HTMLElement){
-    const parentCheckbox = content.querySelector('.parent-checkbox') as HTMLInputElement;
-    const childrenCheckboxes = content.querySelectorAll('.child-checkbox') as NodeListOf<HTMLInputElement>;
-    let parentChecked = parentCheckbox.checked;
-    /**
-    * Bascule l'état de sélection des cases à cocher enfants.
-    * @param checked État de sélection des cases à cocher.
-    */
-    const toggleChildrenCheckboxes = function (checked:boolean) {
-        childrenCheckboxes.forEach((checkbox) => {
-            checkbox.checked = checked;
-        });
+    constructor(parentElement: string) {
+        this.parentElement = parentElement;
     }
-    /**
-    * Gestionnaire d'événement pour la case à cocher parent.
-    * Met à jour l'état de sélection des cases à cocher enfants.
-    * @param e Événement de clic.
-    */
-    parentCheckbox.addEventListener('click', (e) => {
-        parentChecked = parentCheckbox.checked;
-        toggleChildrenCheckboxes(parentChecked);
-    });
 
-    childrenCheckboxes.forEach((checkbox) => {
+    /**
+     * Initializes the checkbox functionality in the specified parent element.
+     */
+    public initializeCheckbox() {
+        const content = $$(this.parentElement);
+
+        if (content !== null) {
+            processNodes(content, (node: HTMLElement) => {
+                this.init(node);
+            });
+        }
+    }
+
+    private init(content: HTMLElement) {
+        const parentCheckbox = content.querySelector('.parent-checkbox') as HTMLInputElement;
+        const childrenCheckboxes = content.querySelectorAll('.child-checkbox') as NodeListOf<HTMLInputElement>;
+        let parentChecked = parentCheckbox.checked;
+
         /**
-        * Gestionnaire d'événement pour les cases à cocher enfants.
-        * Met à jour l'état de sélection de la case à cocher parent en fonction des cases à cocher enfants.
-        */
-        checkbox.addEventListener('click', () => {
-            if(!checkbox.checked && parentChecked){
-                parentCheckbox.checked = false;
-                parentChecked = false;
-            }else if(checkbox.checked && !parentChecked){
-                const allChildrenChecked = Array.from(childrenCheckboxes).every((c) => c.checked);
-                if(allChildrenChecked){
-                    parentCheckbox.checked = true;
-                    parentChecked = true;
-                }
-            }
+         * Toggles the selection state of child checkboxes.
+         * @param checked Selection state of checkboxes.
+         */
+        const toggleChildrenCheckboxes = (checked: boolean) => {
+            childrenCheckboxes.forEach((checkbox) => {
+                checkbox.checked = checked;
+            });
+        };
+
+        /**
+         * Event handler for the parent checkbox.
+         * Updates the selection state of child checkboxes.
+         * @param e Click event.
+         */
+        parentCheckbox.addEventListener('click', (e) => {
+            parentChecked = parentCheckbox.checked;
+            toggleChildrenCheckboxes(parentChecked);
         });
-    });
+
+        childrenCheckboxes.forEach((checkbox) => {
+            /**
+             * Event handler for child checkboxes.
+             * Updates the selection state of the parent checkbox based on child checkboxes.
+             */
+            checkbox.addEventListener('click', () => {
+                if (!checkbox.checked && parentChecked) {
+                    parentCheckbox.checked = false;
+                    parentChecked = false;
+                } else if (checkbox.checked && !parentChecked) {
+                    const allChildrenChecked = Array.from(childrenCheckboxes).every((c) => c.checked);
+                    if (allChildrenChecked) {
+                        parentCheckbox.checked = true;
+                        parentChecked = true;
+                    }
+                }
+            });
+        });
+    }
 }

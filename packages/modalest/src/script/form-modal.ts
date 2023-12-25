@@ -33,24 +33,6 @@ export class FormModal{
         return this;
     }
     public setAnimation(animation?:{type:string,position:string},display:string = "flex",animateElement?:HTMLElement){
-        // const onElement = document.querySelector(`modal-dispatcher-${this.modalIdentifier}`) as HTMLElement;
-        // let dispatcher:{onElement?:HTMLElement,active:boolean}|undefined;
-        // if(onElement){
-        //     const dispatcherStatus = onElement.getAttribute(`modal-dispatcher-${this.modalIdentifier}`);
-        //     try {
-        //         if("" === dispatcherStatus){
-        //             dispatcher = {onElement,active:true};
-        //         }
-        //         if("true" !== dispatcherStatus && "false" !== dispatcherStatus && "" !== dispatcherStatus){
-        //             throw new Error('Dispatch status is invalid');
-        //         }
-        //         const active = Boolean(dispatcherStatus);
-        //         dispatcher = {onElement,active};
-        //     } catch (error) {
-                
-        //     }
-        // }else{dispatcher = {onElement:undefined,active:true};}
-        
         if (animation && this.modal && this.closingButton && this.openingButton) {
         animeInOut({
             openButton: this.openingButton,
@@ -58,7 +40,6 @@ export class FormModal{
             display,
             animation,
             closeButton: this.closingButton,
-            // dispatchCloseEvent: dispatcher,
         });
         }
 
