@@ -1,5 +1,5 @@
 {
-  "name": "fetch",
+  "name": "fetchest",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,7 +8,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "cypress"
+    "test": "cypress",
+    "tsc": "tsc"
   },
   "author": "Lévy Stéphane NGUEMA EKOMOE",
   "license": "ISC"

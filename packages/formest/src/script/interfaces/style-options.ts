@@ -1,4 +1,4 @@
-export interface ProgressFormStyleOptions {
+export interface StyleOptions {
     form?: {
         width?:string ,
         height?:string ,

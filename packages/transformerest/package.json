@@ -1,12 +1,12 @@
 {
-  "name": "data-transformer",
-  "version": "0.0.0",
+  "name": "transformerest",
+  "version": "1.0.0",
   "description": "Now I’m the model of a modern major general / The venerated Virginian veteran whose men are all / Lining up, to put me up on a pedestal / Writin’ letters to relatives / Embellishin’ my elegance and eloquence / But the elephant is in the room / The truth is in ya face when ya hear the British cannons go / BOOM",
   "keywords": [],
   "author": "nelsallg <nels.holy.allg@gmail.com>",
-  "homepage": "https://github.com/Nelsallg/Evangzat.libs/tree/main/packages/data-transformer#readme",
+  "homepage": "https://github.com/Nelsallg/Evangzat.libs/tree/main/packages/transformerest#readme",
   "license": "ISC",
-  "main": "lib/data-transformer.js",
+  "main": "lib/transformerest.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/Nelsallg/libbest.git"
   },
   "scripts": {
-    "ntest": "node ./__tests__/data-transformer.test.js",
+    "ntest": "node ./__tests__/transformerest.test.js",
     "test": "cypress",
     "build": "build.js",
     "tsc": "tsc"

@@ -1,6 +1,6 @@
 import anime from "animejs";
-import { focusInBlock, getFocusableElements } from "../functions/focus-in-block";
-import { ProgressFormStyleOptions } from "../interface/progress-form-style-options";
+import { focusInBlock, getFocusableElements } from "./functions/focus-in-block";
+import { StyleOptions } from "./interfaces/style-options";
 
 let fieldSetElement:HTMLElement|null = null;
 // window.addEventListener('keydown', (e) => {
@@ -28,7 +28,7 @@ export class ProgressForm
     constructor(enableDefaultCssStyle:boolean = true){
         this.enableDefaultCssStyle  = enableDefaultCssStyle
     }
-    public run<T extends ProgressFormType>(params:T,styleOptions?: ProgressFormStyleOptions)
+    public run<T extends ProgressFormType>(params:T,styleOptions?: StyleOptions)
     {
         const fieldSets = params.form.querySelectorAll('fieldset');
         const progressElement = params.progress?.progressElement;
@@ -165,7 +165,7 @@ export class ProgressForm
     protected cssStyle<T extends ProgressFormType>(
         params:T,
         fieldSets:NodeListOf<HTMLFieldSetElement>,
-        styleOptions?:ProgressFormStyleOptions)
+        styleOptions?:StyleOptions)
     {
         const defaultFormStyle = {
             width: '545px',

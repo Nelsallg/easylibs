@@ -1,8 +1,8 @@
 {
-    "name": "form",
+    "name": "formest",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/main.ts",
     "type": "module",
     "scripts": {
       "test": "cypress",
@@ -19,8 +19,11 @@
       "url": "https://github.com/Nelsallg/Evangzat.libs/issues"
     },
     "homepage": "https://github.com/Nelsallg/Evangzat.libs#readme",
+    "dependencies": {
+      "animejs": "^3.2.1"
+    },
     "devDependencies": {
-    
+      
     }
   }
   

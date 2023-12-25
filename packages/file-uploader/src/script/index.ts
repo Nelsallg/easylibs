@@ -1,5 +1,6 @@
-import { $$ } from "../functions/dom";
-import { processNodes, textHtmlToNode } from "../functions/convert-type";
+import { $$ } from "../../../utils/src/dom";
+import { textHtmlToNode } from "../../../utils/src/convert-type";
+import { processNodes } from "../../../utils/src/process-node";
 
 declare type FileUploaderType =
   | Array<{

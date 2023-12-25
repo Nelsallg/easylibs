@@ -22,12 +22,12 @@
   "workspaces": [
     "packages/animatest",
     "packages/transformerest",
-    "packages/dragndrop",
-    "packages/fetch",
+    "packages/dragdroppest",
+    "packages/fetchest",
     "packages/fieldest",
     "packages/file-uploader",
     "packages/flashest",
-    "packages/form",
+    "packages/formest",
     "packages/imagest",
     "packages/modalest",
     "packages/paginatest",
@@ -45,6 +45,7 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "file-uploader": "^1.0.0",
     "nx": "^17.2.7"
   }
 }
