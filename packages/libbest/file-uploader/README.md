@@ -1,10 +1,10 @@
 # File Uploader
 
-The `FileUploader` class provides a simple way to upload files to a server. It can be used to upload single or multiple files, and it provides progress feedback for each file.
+The File Uploader class provides a simple and customizable way to upload files in a web application. It supports single and multiple file uploads, and can display progress bars for each file.
 
 ## Installation
 
-To install the `FileUploader` class, simply add the following line to your `package.json` file:
+To install the File Uploader, simply add the following script to your HTML file:
 
 ```bash
 npm install libbest/file-uploader
@@ -12,60 +12,58 @@ npm install libbest/file-uploader
 
 ## Usage
 
-To use the `FileUploader` class, first create an instance of the class and pass in the input element that you want to use to select files. You can also optionally pass in a second element that you want to use to display the uploaded files.
+To use the File Uploader, create a new instance of the class and pass in the input element that will receive the files. You can also optionally pass in a file element to display the uploaded files, and a progress container element to display progress bars.
 
 ```typescript
-const uploader = new FileUploader(input, fileElement);
+const uploader = new FileUploader(input, fileElement, autoEvent, progressContainer);
 ```
 
-Once you have created an instance of the `FileUploader` class, you can call the `load` method to start uploading files. The `load` method takes a callback function as its only argument. This callback function will be called once all of the files have been uploaded.
+The `autoEvent` parameter determines whether the uploader will automatically start uploading files when they are selected. If set to `false`, you will need to manually call the `load()` method to start the upload.
 
-```typescript
-uploader.load((files) => {
-  // Do something with the uploaded files
-});
-```
+The `progressContainer` parameter specifies the element that will contain the progress bars. If not specified, the progress bars will be appended to the body of the document.
 
-The `files` argument passed to the callback function is an array of objects. Each object in the array represents a single file that was uploaded. The object contains the following properties:
+## Methods
 
-* `name`: The name of the file.
-* `base64String`: A base64-encoded string of the file contents.
-* `contentType`: The content type of the file.
-* `size`: The size of the file in bytes.
-* `arrayBuffer`: An `ArrayBuffer` containing the file contents.
+The File Uploader class has the following methods:
 
-## Progress Feedback
-
-The `FileUploader` class provides progress feedback for each file that is uploaded. The progress feedback is displayed in a progress bar that is appended to the `progressContainer` element.
-
-The `progressContainer` element is an optional parameter to the `FileUploader` constructor. If you do not specify a `progressContainer` element, the progress bar will be appended to the body of the document.
+* `load()`: Starts the upload process.
+* `singleUploading()`: Uploads a single file.
+* `multipleUploading()`: Uploads multiple files.
+* `progress()`: Displays a progress bar for a file.
 
 ## Example
 
-The following code shows how to use the `FileUploader` class to upload a single file:
+The following code shows how to use the File Uploader to upload a single file:
 
-```html
-<input type="file" id="file-input">
-<div id="file-display"></div>
+```typescript
+const uploader = new FileUploader(input);
 
-<script>
-  const input = document.getElementById('file-input');
-  const fileElement = document.getElementById('file-display');
-  const uploader = new FileUploader(input, fileElement);
-
-  uploader.load((files) => {
-    // Process uploaded files
-    files.forEach(file => {
-      // Access file properties
-      console.log('Uploaded File:', file.name);
-      console.log('File Size:', file.size);
-      // ... other file properties
-
-      // Example: Display uploaded file names
-      const fileNameElement = document.createElement('p');
-      fileNameElement.textContent = `Uploaded: ${file.name}`;
-      fileElement.appendChild(fileNameElement);
-    });
-  });
-</script>
+uploader.load((file) => {
+  // Do something with the uploaded file
+});
 ```
+
+The following code shows how to use the File Uploader to upload multiple files:
+
+```typescript
+const uploader = new FileUploader(input, fileElement, false);
+
+uploader.load((files) => {
+  // Do something with the uploaded files
+});
+
+uploader.input.addEventListener("change", () => {
+  uploader.load();
+});
+```
+
+## Customization
+
+The File Uploader can be customized by overriding the following methods:
+
+* `progressHTML()`: Generates the HTML for the progress bars.
+* `createInput()`: Creates the input element that will receive the files.
+
+## Conclusion
+
+The File Uploader is a simple and customizable way to upload files in a web application.
