@@ -7,7 +7,7 @@ The `FileUploader` class provides a simple way to upload files to a server. It c
 To install the `FileUploader` class, simply add the following line to your `package.json` file:
 
 ```bash
-npm install file-uploader
+npm install libbest/file-uploader
 ```
 
 ## Usage
