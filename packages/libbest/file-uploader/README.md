@@ -58,7 +58,7 @@ const progressContainer = document.querySelector('.progress-container');
 const uploader = new FileUploader(input, fileElement, progressContainer);
 
 uploader.load((files) => {
-  foreach((file)=>{
+  files.foreach((file)=>{
     console.log(`File ${file.name} was loaded`);
   })
 });
