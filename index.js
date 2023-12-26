@@ -1,4 +1,4 @@
-
+import { FileUploader } from "libbest/file-uploader";
 
 
 const uploader = new FileUploader("#avatar");

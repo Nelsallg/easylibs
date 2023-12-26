@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileUploader = void 0;
-const dom_1 = require("./utils/dom");
-const convert_type_1 = require("./utils/convert-type");
-const process_node_1 = require("./utils/process-node");
+const dom_1 = require("../../utils/src/dom");
+const convert_type_1 = require("../../utils/src/convert-type");
+const process_node_1 = require("../../utils/src/process-node");
 class FileUploader {
     /**
      * @param input La balise input qui recevra l'image

@@ -19,6 +19,8 @@ exec:
 # Exécute une commande spécifique dans tous les packages
 run:
 	lerna run ${commande}
+test:
+	lerna run test --scope=${lib}
 
 # Publie les packages modifiés dans le monorepo
 publish:
