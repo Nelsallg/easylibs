@@ -1,4 +1,3 @@
-import anime from "animejs";
 import { focusInBlock, getFocusableElements } from "./script/focus-in-block";
 import { StyleOptions } from "./script/style-options";
 
@@ -83,11 +82,11 @@ export class ProgressForm
                         this.setFocusInFieldsest(fieldSetElement);
                         getFocusableElements(fieldSetElement);
                     }
-                    anime({
-                        targets: targets,
-                        translateX: nextTranslateX,
-                        easing: 'easeInOutExpo'
-                    });
+                    // anime({
+                    //     targets: targets,
+                    //     translateX: nextTranslateX,
+                    //     easing: 'easeInOutExpo'
+                    // });
                     
                     if(progressElement)
                     {progressElement.style.width = `${nextProgress??0}%`;}
@@ -108,11 +107,11 @@ export class ProgressForm
                     this.setFocusInFieldsest(fieldSetElement);
                     getFocusableElements(fieldSetElement);
                 }
-                anime({
-                    targets: targets,
-                    translateX: prevTranslateX,
-                    easing: 'easeInOutExpo'
-                });
+                // anime({
+                //     targets: targets,
+                //     translateX: prevTranslateX,
+                //     easing: 'easeInOutExpo'
+                // });
                 if(progressElement)
                 {progressElement.style.width = `${prevProgress??0}%`;}
              });
