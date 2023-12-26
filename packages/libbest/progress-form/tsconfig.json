@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "declaration": true,
+    "outDir": "lib",
+    "declarationDir": "@types"
+  },
+  "include": ["src/**/*.ts", "src/index.ts"],
+  "exclude": ["node_modules", "lib", "progress-form"]
+}

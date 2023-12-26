@@ -1,0 +1,67 @@
+@mixin rubberBand(){
+    .rubberBand {
+        animation: rubberBand 0.7s both;
+    }
+    .likeRotation{
+        animation: likeRotation 0.7s both;
+    }
+    .dislikeRotation{
+        animation: dislikeRotation 0.7s both;
+    }
+    @keyframes rubberBand {
+        0% {
+            transform: scale(1) rotate(0deg) translateY(0px);
+        }
+        30% {
+            transform: scale(1.25) rotate(-15deg) translateY(-3px);
+        }
+        40% {
+            transform: scale(0.95) rotate(-15deg) translateY(-3px);
+        }
+        50% {
+            transform: scale(1.05) rotate(0deg) translateY(0px);
+        }
+        65% {
+            transform: scale(0.98) rotate(0deg) translateY(0px);
+        }
+        75% {
+            transform: scale(1.02) rotate(0deg) translateY(0px);
+        }
+        100% {
+            transform: scale(1) rotate(0deg) translateY(0px);
+        }
+    }
+    @keyframes likeRotation {
+        0%{
+            transform: rotate(0deg) translateY(0px);
+        }
+        50%{
+            transform: rotate(-15deg) translateY(-3px);
+            color: #33CC36;
+        }
+        55%{
+            transform: rotate(-15deg) translateY(-3px);
+            color: #B8CC33;
+        }
+        100%{
+            transform: rotate(0deg) translateY(0px);
+        }
+    }
+    
+    @keyframes dislikeRotation {
+        0% {
+            transform: rotate(0deg) translateY(0px);
+        }
+        50% {
+            transform: rotate(-15deg) translateY(3px);
+            color: #FCCA00;
+        }
+        55% {
+            transform: rotate(-15deg) translateY(3px);
+            color: #33CC36;
+        }
+        100% {
+            transform: rotate(0deg) translateY(0px);
+        }
+    }
+}

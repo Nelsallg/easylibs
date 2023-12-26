@@ -1,6 +1,6 @@
 import { forbiddener } from "../customs/spin-loaders";
-import { processNodes } from "./convert-type";
-import { FileTransformer } from "./data-transfomer";
+import { processNodes } from "./process-node";
+import { FileTransformer } from "../../transformer/src";
 import { $$ } from "./dom";
 
 export function shortenedText(text: string, maxLength: number = 14): string {

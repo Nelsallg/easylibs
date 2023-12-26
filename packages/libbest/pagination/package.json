@@ -1,26 +1,33 @@
 {
-    "name": "pagination",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-      "test": "cypress",
-      "build": "build.js",
-      "tsc": "tsc"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/Nelsallg/Evangzat.libs.git"
-    },
-    "author": "Lévy Stéphane NGUEMA EKOMOE",
-    "license": "ISC",
-    "bugs": {
-      "url": "https://github.com/Nelsallg/Evangzat.libs/issues"
-    },
-    "homepage": "https://github.com/Nelsallg/Evangzat.libs#readme",
-    "devDependencies": {
-    
-    }
-  }
-  
+  "name": "pagination",
+  "version": "1.0.0",
+  "description": "",
+  "author": "nelsallg <nels.holy.allg@gmail.com>",
+  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/pagination#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "types": "@types/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "cytest": "cypress",
+    "nodetest": "node ./__tests__/process-backend.test.js",
+    "build": "build.js",
+    "tsc": "tsc",
+    "postbuild": "node ../../scripts/post-build.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nelsallg/libbest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nelsallg/libbest.git/issues"
+  },
+  "devDependencies": {}
+}

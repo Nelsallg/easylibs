@@ -1,0 +1,109 @@
+@mixin fade-in($element, $time:.5s){
+  #{$element}.fade-in {
+    animation: fade-in $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+
+@mixin fade-out($element, $time:.5s){
+  #{$element}.fade-out {
+    animation: fade-in $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+@mixin fade-in-top($element, $time:.5s, $top){
+  #{$element}.fade-in-top {
+      animation: fade-in-top $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;
+  }
+  
+  @keyframes fade-in-top {
+    0% {
+      -webkit-transform: translateY($top);
+              transform: translateY($top);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+}
+
+@mixin fade-out-top($element, $time, $bottom){
+  #{$element}.fade-out-top {
+        animation: fade-out-top $time cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+  @keyframes fade-out-top {
+    0% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateY($bottom);
+              transform: translateY($bottom);
+      opacity: 0;
+    }
+  }
+}
+
+
+@mixin fade-in-fwd($element,$time:.5s){
+  #{$element}.fade-in-fwd {
+    animation: fade-in-fwd $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  }
+@keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+}
+
+  
+@mixin fade-out-bck($element,$time:.5s){
+  #{$element}.fade-out-bck {
+    animation: fade-out-bck $time cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+@keyframes fade-out-bck {
+  0% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+}
+
+}
+
+
+

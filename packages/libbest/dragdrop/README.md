@@ -2,7 +2,7 @@
 
 The Drag and Drop Manager is a JavaScript class that provides an easy way to implement drag and drop functionality in your web applications. It supports both HTML5 drag and drop and pointer events, and it can be used with any type of element.
 
-### Installation
+## Installation
 
 To install the Drag and Drop Manager, simply add the following script to your HTML document:
 
