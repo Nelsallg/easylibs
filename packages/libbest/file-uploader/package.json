@@ -1,8 +1,9 @@
 {
-  "name": "evangzat-bundle",
+  "name": "file-uploader",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "@types/index.d.ts",
   "type": "module",
   "scripts": {
     "test": "cypress",
@@ -19,23 +20,5 @@
     "url": "https://github.com/Nelsallg/Evangzat.libs/issues"
   },
   "homepage": "https://github.com/Nelsallg/Evangzat.libs#readme",
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "@types/fs-extra": "^11.0.1",
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.10.5",
-    "lerna": "^7.4.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sass": "^1.63.6",
-    "sass-loader": "^13.3.2",
-    "ts-node": "^10.9.2",
-    "vite": "^4.3.9"
-  },
-  "dependencies": {
-    "animejs": "^3.2.2",
-    "nx": "^17.2.7"
-  }
+  "devDependencies": {}
 }

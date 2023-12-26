@@ -1,9 +1,9 @@
 {
-    "name": "file-uploader",
+    "name": "libbest",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "index.js",
+    "types": "index.d.ts",
     "type": "module",
     "scripts": {
       "test": "cypress",
