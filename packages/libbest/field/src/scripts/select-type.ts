@@ -1,4 +1,4 @@
-import { $$ } from "./dom";
+import { $$ } from "../../../utils/src/dom";
 /**
  * Cette fonction redimensionne automatiquement un élément "select"
  * en fonction de la longueur du texte sélectionné

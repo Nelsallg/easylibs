@@ -99,7 +99,7 @@ export class DragAndDropManager<T extends DragAnimation> {
               },
               display: null,
             });
-            element.insertBefore(this.dragged, this.afterElement);
+            element.insertBefore(this.dragged as Node, this.afterElement);
           }
           if ("bottom" === this.slip) {
             animeIn({
@@ -112,7 +112,7 @@ export class DragAndDropManager<T extends DragAnimation> {
               display: null,
             });
             element.insertBefore(
-              this.dragged,
+              this.dragged as Node,
               this.afterElement?.nextElementSibling as Node
             );
           }
@@ -185,7 +185,7 @@ export class DragAndDropManager<T extends DragAnimation> {
             if (null != tr) {
               let dropzoneParent = tr.parentElement;
               if (null != dropzoneParent) {
-                dropzoneParent.appendChild(this.dragged);
+                dropzoneParent.appendChild(this.dragged as Node);
               }
               tr.remove();
               return dropzoneParent;
@@ -202,7 +202,7 @@ export class DragAndDropManager<T extends DragAnimation> {
     }
   }
 
-  private hundleDraggedPosition(dropzone: Element): Element {
+  private hundleDraggedPosition(dropzone: Element): Element|undefined {
     const siblingElements = Array.from(dropzone!.children);
     const dropIndex = siblingElements.indexOf(dropzone);
     console.log({ dropIndex, siblingElements, dropzone });
@@ -231,7 +231,7 @@ export class DragAndDropManager<T extends DragAnimation> {
   public draggablePlaceholder(
     skeleton?: string | Element,
     animationType?: string
-  ): HTMLElement {
+  ): HTMLElement|undefined {
     if (!skeleton) {
       skeleton = document.createElement("tr");
       const td = document.createElement("td");

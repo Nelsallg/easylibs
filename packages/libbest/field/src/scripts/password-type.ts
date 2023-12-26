@@ -1,5 +1,6 @@
-import { processNodes, textHtmlToNode } from "../functions/convert-type";
-import { findComputedStyle } from "../functions/utils";
+import { processNodes } from "../../../utils/src/process-node";
+import { textHtmlToNode } from "../../../utils/src/convert-type";
+import { findComputedStyle } from "../../../utils/src/utils";
 
 export class PasswordVisibility{
     private iconPath: { hide: string; show: string; };

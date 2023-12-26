@@ -1,4 +1,4 @@
-define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./data-transfomer", "./dom"], function (require, exports, spin_loaders_1, convert_type_1, data_transfomer_1, dom_1) {
+define(["require", "exports", "../customs/spin-loaders", "./process-node", "../../transformer/src", "./dom"], function (require, exports, spin_loaders_1, process_node_1, src_1, dom_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.autoUploadFile = exports.debounce = exports.formatHTMLAttributes = exports.findHTMLElementBy = exports.escape = exports.findComputedStyle = exports.findChar = exports.findObjectDataByKeyName = exports.hasKeyWithNameSubstring = exports.setAsteriskToRequiredField = exports.tripleDotSpinner = exports.desactivatorElement = exports.changeInputTextTypeToNumberType = exports.buttonLoader = exports.shortenedText = void 0;
@@ -16,7 +16,7 @@ define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./da
             loader =
                 '<div class="loader_container"><div class="triple-dot-loader"></div></div>';
         }
-        (0, convert_type_1.processNodes)((0, dom_1.$$)(attr), function (button) {
+        (0, process_node_1.processNodes)((0, dom_1.$$)(attr), function (button) {
             button.addEventListener("click", function () {
                 const button_content = escape(button.innerHTML);
                 button.innerHTML = loader;
@@ -39,7 +39,7 @@ define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./da
     }
     exports.buttonLoader = buttonLoader;
     function changeInputTextTypeToNumberType(attr, limit, priceType = false, decimal) {
-        (0, convert_type_1.processNodes)((0, dom_1.$$)(attr), function (element) {
+        (0, process_node_1.processNodes)((0, dom_1.$$)(attr), function (element) {
             let input = element;
             if (input) {
                 input.addEventListener("input", function () {
@@ -72,7 +72,7 @@ define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./da
             if (!trigger && !buttons) {
                 throw new Error("Aucun bouton avec l'attribut <desactivator> n'est détecté, vous pouvez le passer manuellement");
             }
-            (0, convert_type_1.processNodes)(buttons, (button) => {
+            (0, process_node_1.processNodes)(buttons, (button) => {
                 button.addEventListener("click", function () {
                     const self = button.hasAttribute("self-deactivatable");
                     let item = self
@@ -127,7 +127,7 @@ define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./da
   </svg>`;
         const labels = document.querySelectorAll("label[required-field]");
         if (labels) {
-            (0, convert_type_1.processNodes)(labels, (node) => {
+            (0, process_node_1.processNodes)(labels, (node) => {
                 const rang = document.createRange();
                 const fragment = rang.createContextualFragment(asterisk);
                 node.appendChild(fragment);
@@ -245,9 +245,9 @@ define(["require", "exports", "../customs/spin-loaders", "./convert-type", "./da
     }
     exports.debounce = debounce;
     function autoUploadFile() {
-        const transformer = new data_transfomer_1.FileTransformer();
+        const transformer = new src_1.FileTransformer();
         const images = document.querySelectorAll("input[type='file']");
-        (0, convert_type_1.processNodes)(images, (image) => {
+        (0, process_node_1.processNodes)(images, (image) => {
             const value = image.dataset.value;
             if (value && value !== "") {
                 const file = transformer.fromBase64String(value, null, null, false);
