@@ -1,2 +1,8 @@
-import anime from "animejs";
-import fileUploader from "file-uploader/index";
+
+
+
+const uploader = new FileUploader("#avatar");
+uploader.load((files)=>{
+    console.log(files);
+})
+alert("d")

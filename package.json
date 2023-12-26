@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "animejs": "^3.2.2",
+    "file-uploader": "^1.0.0",
+    "libbest": "^1.0.0",
     "nx": "^17.2.7"
   }
 }
