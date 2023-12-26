@@ -1,4 +1,4 @@
-import { animeIn } from "../../animation/src/script/animation";
+import * as animation from "libbest/animation"
 import { textHtmlToNode } from "../../utils/src/convert-type";
 import { enableScrollBehavior } from "../../utils/src/scroll-behavior";
 

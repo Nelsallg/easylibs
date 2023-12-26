@@ -9,5 +9,5 @@
     "declarationDir": "@types"
   },
   "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "lib", "input-type"]
+  "exclude": ["node_modules", "lib", "animation"]
 }

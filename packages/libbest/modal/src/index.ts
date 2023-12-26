@@ -1,5 +1,5 @@
 // import DOMPurify from 'dompurify';
-import { animeInOut } from "../../animation/src/script/animation";
+import { animeInOut } from "../../animation/src";
 import { processNodes } from "../../utils/src/process-node";
 
 export class FormModal{

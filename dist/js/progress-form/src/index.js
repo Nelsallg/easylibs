@@ -1,11 +1,7 @@
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define(["require", "exports", "animejs", "./script/focus-in-block"], function (require, exports, animejs_1, focus_in_block_1) {
+define(["require", "exports", "./script/focus-in-block"], function (require, exports, focus_in_block_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ProgressForm = void 0;
-    animejs_1 = __importDefault(animejs_1);
     let fieldSetElement = null;
     class ProgressForm {
         constructor(enableDefaultCssStyle = true) {
@@ -70,11 +66,11 @@ define(["require", "exports", "animejs", "./script/focus-in-block"], function (r
                             this.setFocusInFieldsest(fieldSetElement);
                             (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                         }
-                        (0, animejs_1.default)({
-                            targets: targets,
-                            translateX: nextTranslateX,
-                            easing: 'easeInOutExpo'
-                        });
+                        // anime({
+                        //     targets: targets,
+                        //     translateX: nextTranslateX,
+                        //     easing: 'easeInOutExpo'
+                        // });
                         if (progressElement) {
                             progressElement.style.width = `${nextProgress !== null && nextProgress !== void 0 ? nextProgress : 0}%`;
                         }
@@ -92,11 +88,11 @@ define(["require", "exports", "animejs", "./script/focus-in-block"], function (r
                         this.setFocusInFieldsest(fieldSetElement);
                         (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                     }
-                    (0, animejs_1.default)({
-                        targets: targets,
-                        translateX: prevTranslateX,
-                        easing: 'easeInOutExpo'
-                    });
+                    // anime({
+                    //     targets: targets,
+                    //     translateX: prevTranslateX,
+                    //     easing: 'easeInOutExpo'
+                    // });
                     if (progressElement) {
                         progressElement.style.width = `${prevProgress !== null && prevProgress !== void 0 ? prevProgress : 0}%`;
                     }

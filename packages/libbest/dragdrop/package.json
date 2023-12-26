@@ -21,5 +21,8 @@
     "url": "https://github.com/Nelsallg/Evangzat.libs/issues"
   },
   "homepage": "https://github.com/Nelsallg/Evangzat.libs#readme",
+  "dependencies": {
+    "libbest/animation": "^1.0.0"
+  },
   "devDependencies": {}
 }

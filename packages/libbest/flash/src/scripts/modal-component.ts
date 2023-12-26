@@ -1,5 +1,5 @@
 import { setAudio } from "../../../utils/src/audio";
-import { animeOut, animeIn } from "../../../animation/src/script/animation";
+import { animeOut, animeIn } from "../../../animation/src";
 
 export class ModalComponent{
   protected modal: Element;

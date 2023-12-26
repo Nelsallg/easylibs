@@ -1,4 +1,3 @@
-
 export class ColorType{
     protected colorPicker: string | HTMLInputElement;
     constructor(colorPicker:string|HTMLInputElement){

@@ -9,5 +9,5 @@
     "declarationDir": "@types"
   },
   "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "lib", "fetch-request"]
+  "exclude": ["node_modules", "lib", "form-input"]
 }

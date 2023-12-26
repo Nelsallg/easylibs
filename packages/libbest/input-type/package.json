@@ -1,9 +1,9 @@
 {
-  "name": "fetch-request",
+  "name": "form-input",
   "version": "1.0.0",
   "description": "",
   "author": "nelsallg <nels.holy.allg@gmail.com>",
-  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/fetch-request#readme",
+  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/form-input#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -17,7 +17,7 @@
   "type": "module",
   "scripts": {
     "cytest": "cypress",
-    "nodetest": "node ./__tests__/fetch-request.test.js",
+    "nodetest": "node ./__tests__/form-input.test.js",
     "build": "build.js",
     "tsc": "tsc",
     "postbuild": "node ../../scripts/post-build.ts"
