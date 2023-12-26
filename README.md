@@ -1,6 +1,6 @@
-## Evangzat.libs
+# Evangzat.libs
 
-### Introduction
+## Introduction
 
 The `Evangzat.libs` library is a collection of reusable JavaScript modules that can be used to build web applications. The library includes modules for file uploading, image processing, and data validation.
 

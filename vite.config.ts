@@ -36,9 +36,9 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@': '/packages/flash/src/script',
-      '@js': '/packages/flash/dist/js',
-      '@styles': '/packages/flash/dist/css', 
+      '@': '/packages/libbest/flash/src/script',
+      '@js': '/packages/libbest/flash/dist/js',
+      '@styles': '/packages/libbest/flash/dist/css', 
     },
   },
 
