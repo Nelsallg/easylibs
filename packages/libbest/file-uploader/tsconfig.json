@@ -5,9 +5,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "lib",
     "declarationDir": "@types"
   },
   "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "dist", "file-uploader"]
+  "exclude": ["node_modules", "lib", "file-uploader"]
 }
