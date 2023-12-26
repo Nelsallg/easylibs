@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-define(["require", "exports", "../../fetch-request/src/index", "../functions/data-transfomer", "../../utils/src/utils"], function (require, exports, index_1, data_transfomer_1, utils_1) {
+define(["require", "exports", "../../fetch-request/src/index", "../../transformer/src/script/blob-transformer", "../../utils/src/utils"], function (require, exports, index_1, blob_transformer_1, utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ProcessBackend = void 0;
@@ -131,7 +131,7 @@ define(["require", "exports", "../../fetch-request/src/index", "../functions/dat
          * @returns The normalized FormData object.
          */
         normalizeArrayField(datas) {
-            const transformer = new data_transfomer_1.BlobTransformer();
+            const transformer = new blob_transformer_1.BlobTransformer();
             let index = 0;
             return datas.reduce((result, data) => {
                 const objectsFormData = Object.keys(data).reduce((formData, key) => {

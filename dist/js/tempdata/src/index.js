@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-define(["require", "exports", "../functions/data-transfomer", "../../utils/src/utils"], function (require, exports, data_transfomer_1, utils_1) {
+define(["require", "exports", "../../transformer/src/script/formdata-transformer", "../../utils/src/utils"], function (require, exports, formdata_transformer_1, utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.ProcessIndexedDB = void 0;
@@ -140,7 +140,7 @@ define(["require", "exports", "../functions/data-transfomer", "../../utils/src/u
                 const objectData = yield this.getIndexedData();
                 if (index >= 0 && index < objectData.length) {
                     const transformer = "form-data" === dataType
-                        ? new data_transfomer_1.ObjectToFormData(objectData[index])
+                        ? new formdata_transformer_1.FormDataTransformer(objectData[index])
                         : objectData[index];
                     return "form-data" === dataType ? transformer.transform() : transformer;
                 }

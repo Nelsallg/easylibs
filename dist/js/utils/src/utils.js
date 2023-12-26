@@ -1,4 +1,4 @@
-define(["require", "exports", "../customs/spin-loaders", "./process-node", "../../transformer/src", "./dom"], function (require, exports, spin_loaders_1, process_node_1, src_1, dom_1) {
+define(["require", "exports", "../../utils/src/spin-loaders", "./process-node", "../../transformer/src/script/file-tranformer", "./dom"], function (require, exports, spin_loaders_1, process_node_1, file_tranformer_1, dom_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.autoUploadFile = exports.debounce = exports.formatHTMLAttributes = exports.findHTMLElementBy = exports.escape = exports.findComputedStyle = exports.findChar = exports.findObjectDataByKeyName = exports.hasKeyWithNameSubstring = exports.setAsteriskToRequiredField = exports.tripleDotSpinner = exports.desactivatorElement = exports.changeInputTextTypeToNumberType = exports.buttonLoader = exports.shortenedText = void 0;
@@ -245,7 +245,7 @@ define(["require", "exports", "../customs/spin-loaders", "./process-node", "../.
     }
     exports.debounce = debounce;
     function autoUploadFile() {
-        const transformer = new src_1.FileTransformer();
+        const transformer = new file_tranformer_1.FileTransformer();
         const images = document.querySelectorAll("input[type='file']");
         (0, process_node_1.processNodes)(images, (image) => {
             const value = image.dataset.value;
