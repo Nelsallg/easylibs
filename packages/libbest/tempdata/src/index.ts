@@ -1,4 +1,4 @@
-import { ObjectToFormData } from "../functions/data-transfomer";
+import { FormDataTransformer } from "../../transformer/src/script/formdata-transformer";
 import { findChar, hasKeyWithNameSubstring } from "../../utils/src/utils";
 export class ProcessIndexedDB {
   protected databasename: string;
@@ -128,7 +128,7 @@ export class ProcessIndexedDB {
     if (index >= 0 && index < objectData.length) {
       const transformer =
         "form-data" === dataType
-          ? new ObjectToFormData(objectData[index])
+          ? new FormDataTransformer(objectData[index])
           : objectData[index];
       return "form-data" === dataType ? transformer.transform() : transformer;
     }

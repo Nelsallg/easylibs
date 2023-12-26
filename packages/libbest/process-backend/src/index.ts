@@ -1,6 +1,6 @@
 import { FetchRequest } from "../../fetch-request/src/index";
 import { ProcessIndexedDB } from "../../tempdata/src";
-import { BlobTransformer } from "../functions/data-transfomer";
+import { BlobTransformer } from "../../transformer/src/script/blob-transformer";
 import { escape } from "../../utils/src/utils";
 
 export class ProcessBackend {
