@@ -1,0 +1,48 @@
+{
+  "name": "easylibs",
+  "version": "0.0.1",
+  "title": "Easylibs Bundle",
+  "description": "",
+  "homepage": "https://github.com/Nelsallg/easylibs",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "@easylibs/fetch-request": "~0.0.1",
+    "@easylibs/file-uploader": "~0.0.1"
+  },
+  "type": "module",
+  "keywords": [
+    "request",
+    "file",
+    "uploader",
+    "fetch"
+  ],
+  "bugs": "https://github.com/Nelsallg/easylibs.git/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nelsallg/easylibs.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Lévy Stéphane NGUEMA-EKOMOE",
+    "email": "nelsallg@contact.com",
+    "url": "http://nelsallg.com/"
+  },
+  "copyright": "2023 Evangzat.libs",
+  "types": "./@types/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.global.min.js",
+  "jsdelivr": "./dist/index.global.min.js",
+  "exports": {
+    "./package.json": "./package.json",
+    "./dist/index.cjs": "./dist/index.cjs",
+    "./dist/index.js": "./dist/index.js",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  }
+}

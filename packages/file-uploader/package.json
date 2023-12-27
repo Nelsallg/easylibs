@@ -1,0 +1,35 @@
+{
+  "name": "@easylibs/file-uploader",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Lévy Stéphane NGUEMA-EKOMOE <nels.holy.allg@gmail.com>",
+  "homepage": "https://github.com/Nelsallg/easylibs.libs/tree/main/packages/file-uploader#readme",
+  "license": "ISC",
+  "main": "dist/file-uploader.js",
+  "module": "dist/file-uploader.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__",
+    "dist": "dist"
+  },
+  "files": [
+    "./lib",
+    "./dist",
+    "./@types"
+  ],
+  "types": "@types/file-uploader.d.ts",
+  "scripts": {
+    "cytest": "cypress",
+    "nodetest": "node ./__tests__/file-uploader.test.js",
+    "build": "build.js",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nelsallg/easylibs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nelsallg/easylibs.git/issues"
+  },
+  "devDependencies": {}
+}

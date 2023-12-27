@@ -32,3 +32,6 @@ build-lib:
 
 build-lib-c:
 	lerna run tsc --scope=${lib}
+
+build:
+	lerna run build --scope=${lib}
