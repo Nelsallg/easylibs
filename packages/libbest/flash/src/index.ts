@@ -1,4 +1,4 @@
-import { $$ } from "../../utils/src/dom";
+import { $$ } from "../../utils/src/functions/dom";
 import { ModalComponent } from "./scripts/modal-component"
 import { FlashInterface, FlashOptions } from "./scripts/iflash";
 import { flashTemplate } from "./scripts/template";

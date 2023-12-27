@@ -1,4 +1,4 @@
-import { $$ } from "../../utils/src/dom";
+import { $$ } from "../../utils/src/functions/dom";
 import { textHtmlToNode } from "../../utils/src/functions/convert-type";
 import { processNodes } from "../../utils/src/functions/process-node";
 
