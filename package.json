@@ -1,5 +1,5 @@
 {
-  "name": "evangzat-bundle",
+  "name": "libbest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -37,7 +37,6 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
-    "libbest": "^1.0.0",
     "nx": "^17.2.7"
   }
 }
