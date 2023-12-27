@@ -2,25 +2,26 @@
   "name": "fetch-request",
   "version": "1.0.0",
   "description": "",
-  "author": "nelsallg <nels.holy.allg@gmail.com>",
+  "author": "Lévy Stéphane NGUEMA-EKOMOE <nels.holy.allg@gmail.com>",
   "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/fetch-request#readme",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/fetch-requestjs",
+  "module": "dist/fetch-requestjs",
   "directories": {
     "lib": "lib",
-    "test": "__tests__"
+    "test": "__tests__",
+    "dist": "dist"
   },
   "files": [
-    "lib"
+    "./lib",
+    "./dist"
   ],
-  "types": "@types/index.d.ts",
-  "type": "module",
+  "types": "@types/fetch-request.d.ts",
   "scripts": {
     "cytest": "cypress",
     "nodetest": "node ./__tests__/fetch-request.test.js",
     "build": "build.js",
-    "tsc": "tsc",
-    "postbuild": "node ../../scripts/post-build.ts"
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",

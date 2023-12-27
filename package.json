@@ -37,7 +37,6 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
-    "animejs": "^3.2.2",
     "libbest": "^1.0.0",
     "nx": "^17.2.7"
   }

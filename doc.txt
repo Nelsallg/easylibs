@@ -41,4 +41,7 @@
   "exclude": ["node_modules", "lib"]
 }
 
+
+version des lib 
+'major', 'minor', 'patch', 'premajor', 'preminor', 'prepatch', 'prerelease', 'from-git', or 'from-package'.
   

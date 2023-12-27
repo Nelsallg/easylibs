@@ -24,7 +24,7 @@ test:
 
 # Publie les packages modifiés dans le monorepo
 publish:
-	lerna publish
+	lerna publish --version ${version} ${path}
 
 # Compile une bibliothèque spécifique (remplacer @monorepo/library1 par le nom de votre bibliothèque)
 build-lib:
