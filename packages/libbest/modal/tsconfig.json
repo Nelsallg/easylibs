@@ -5,9 +5,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "declaration": true,
-    "outDir": "dist",
+    "outDir": "lib",
     "declarationDir": "@types"
   },
   "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "dist", "modal"]
+  "exclude": ["node_modules", "lib", "modal"]
 }

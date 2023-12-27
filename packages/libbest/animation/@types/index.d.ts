@@ -19,7 +19,7 @@ declare type AnimeOptions = {
     delay?: number;
     fromInToOut?: boolean;
 };
-declare class AnimationHandler {
+export declare class AnimationHandler {
     static stopPropagation(e: Event): void;
     /**
    * Effectue une animation de commutation sur un élément HTML spécifié.
@@ -60,4 +60,4 @@ declare class AnimationHandler {
    */
     static animeInOut<T extends AnimeOptions>(options: T): void;
 }
-export default AnimationHandler;
+export {};

@@ -1,6 +1,6 @@
 import * as animation from "libbest/animation"
-import { textHtmlToNode } from "../../utils/src/convert-type";
-import { enableScrollBehavior } from "../../utils/src/scroll-behavior";
+import { textHtmlToNode } from "../../utils/src/functions/convert-type";
+import { enableScrollBehavior } from "../../utils/src/functions/scroll-behavior";
 
 type Draggable = HTMLElement;
 type DraggedElement = HTMLElement;

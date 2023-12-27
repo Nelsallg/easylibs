@@ -9,7 +9,7 @@ declare type AnimeOptions = {
   delay?: number;
   fromInToOut?: boolean;
 };
-class AnimationHandler {
+export class AnimationHandler {
   static stopPropagation(e: Event): void {
     e.stopPropagation();
   }
@@ -19,7 +19,7 @@ class AnimationHandler {
  * @param fromInToOut - Détermine si l'animation va de l'état "in" (entrée) à l'état "out" (sortie) ou vice versa.
  * @param animation - Les informations sur le type et la position de l'animation (facultatif).
  */
-  private static switchAnimation(
+  private switchAnimation(
     element: HTMLElement,
     fromInToOut: boolean,
     animation?: { type: string; position: string; clearAfterApplying?: boolean }
@@ -57,7 +57,7 @@ class AnimationHandler {
  * @param options.display - La valeur de la propriété CSS "display" à appliquer à l'élément après l'animation (facultatif).
  * @param options.fromInToOut - Détermine si l'animation va de l'état "in" (entrée) à l'état "out" (sortie) ou vice versa lors de l'utilisation de la fonction `switchAnimation`.
  */
-  public static animeIn<T extends AnimeOptions>(options: T): void {
+  public animeIn<T extends AnimeOptions>(options: T): void {
     const fromInToOut = options.fromInToOut ?? true;
     const { animation } = options;
     const _element = options.element;
@@ -81,7 +81,7 @@ class AnimationHandler {
  * @param options.closeButton - Le bouton de fermeture lié à l'élément (facultatif).
  * @param options.fromInToOut - Détermine si l'animation va de l'état "in" (entrée) à l'état "out" (sortie) ou vice versa.
  */
-  public static animeOut<T extends AnimeOptions>(options: T): void {
+  public animeOut<T extends AnimeOptions>(options: T): void {
     const { animation } = options;
     const _element = options.element;
     const animateElement = _element instanceof HTMLElement ? undefined : _element?.animateElement;
@@ -135,7 +135,7 @@ class AnimationHandler {
  * @param options.dispatchCloseEvent.value - La valeur associée à l'événement de fermeture.
  * @param options.delay - Le délai en millisecondes avant de masquer ou de supprimer l'élément (facultatif).
  */
-  public static animeInOut<T extends AnimeOptions>(options: T): void {
+  public animeInOut<T extends AnimeOptions>(options: T): void {
     let modalIsOpen = false;
     const { element, openButton, closeButton, animation } = options;
     const display = options.display ?? "block";
@@ -242,5 +242,3 @@ class AnimationHandler {
     }
   }
 }
-
-export default AnimationHandler;

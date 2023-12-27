@@ -1,6 +1,6 @@
 // Import statements
 import { $$ } from '../../../utils/src/dom';
-import { processNodes } from '../../../utils/src/process-node';
+import { processNodes } from '../../../utils/src/functions/process-node';
 
 /**
  * CheckboxManager class to initialize checkbox functionality in a specified parent element.

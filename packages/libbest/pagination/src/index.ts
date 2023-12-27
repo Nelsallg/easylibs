@@ -1,7 +1,7 @@
 import { FetchRequest } from "../../fetch-request/src/index";
-import { textHtmlToNode } from "../../utils/src/convert-type";
+import { textHtmlToNode } from "../../utils/src/functions/convert-type";
 import { $$ } from "../../utils/src/dom";
-import { isEndScrolling } from "../../utils/src/scroll-behavior";
+import { isEndScrolling } from "../../utils/src/functions/scroll-behavior";
 
 interface PaginatorOptions {
     parentElement: HTMLElement | string;

@@ -1,12 +1,13 @@
 // import DOMPurify from 'dompurify';
-import { animeInOut } from "../../animation/src";
-import { processNodes } from "../../utils/src/process-node";
+import { AnimationHandler } from "../../animation/src/index";
+import { processNodes } from "../../utils/src/functions/process-node";
 
 export class FormModal{
     private openingButton?: HTMLElement;
     private modal?: HTMLElement;
     private closingButton?: HTMLElement;
     private modalIdentifier?: string;
+    private animation = new AnimationHandler();
     
     public init(){
         const modals = document.querySelectorAll('[data-modal^="modal-bg"]');
@@ -34,7 +35,7 @@ export class FormModal{
     }
     public setAnimation(animation?:{type:string,position:string},display:string = "flex",animateElement?:HTMLElement){
         if (animation && this.modal && this.closingButton && this.openingButton) {
-        animeInOut({
+        this.animation.animeInOut({
             openButton: this.openingButton,
             element: animateElement ? {element:this.modal,animateElement}:this.modal,
             display,

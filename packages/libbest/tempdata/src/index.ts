@@ -1,5 +1,5 @@
 import { FormDataTransformer } from "../../transformer/src/script/formdata-transformer";
-import { findChar, hasKeyWithNameSubstring } from "../../utils/src/utils";
+import { findChar, hasKeyWithNameSubstring } from "../../utils/src/functions/utils";
 export class ProcessIndexedDB {
   protected databasename: string;
   protected objectstorename: string;

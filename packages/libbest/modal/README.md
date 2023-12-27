@@ -1,117 +1,57 @@
 # Form Modal
 
-This library provides a simple and customizable way to create modal windows in your web application. It uses CSS animations to create a smooth opening and closing effect, and it can be easily integrated into your existing codebase.
+The `FormModal` class provides a way to easily create and manage modal windows for forms. It handles the opening and closing of the modal, as well as the animation of the modal window.
 
 ## Installation
 
-To install the library, simply add the following script tag to your HTML file:
+To install the `FormModal` class, you can use npm:
 
-```html
-<script src="form-modal.js"></script>
+```bash
+npm install libbest/form-modal
 ```
 
 ## Usage
 
-To use the library, first create a modal window by adding a `<div>` element with the `data-modal` attribute. The value of the `data-modal` attribute should be `modal-bg`, followed by a unique identifier for the modal window. For example:
-
-```html
-<div data-modal="modal-bg-my-modal">
-  <!-- Modal content goes here -->
-</div>
-```
-
-Next, create an open button for the modal window by adding a `<button>` element with the `modal-openbtn` attribute. The value of the `modal-openbtn` attribute should be the same as the unique identifier for the modal window. For example:
-
-```html
-<button modal-openbtn="my-modal">Open Modal</button>
-```
-
-Finally, create a close button for the modal window by adding a `<button>` element with the `modal-closebtn` attribute. The value of the `modal-closebtn` attribute should be the same as the unique identifier for the modal window. For example:
-
-```html
-<button modal-closebtn="my-modal">Close Modal</button>
-```
-
-## Configuration
-
-The library can be configured to use different CSS animations for opening and closing the modal window. To do this, simply pass an object with the `animation` property to the `setAnimation()` method. The `animation` object should have two properties: `type` and `position`. The `type` property can be one of the following values:
-
-* `fade`
-* `slide-up`
-* `slide-down`
-* `slide-left`
-* `slide-right`
-
-The `position` property can be one of the following values:
-
-* `top`
-* `bottom`
-* `left`
-* `right`
-
-For example, to use a fade animation to open the modal window from the top, you would use the following code:
-
-```javascript
-formModal.setAnimation({ type: 'fade', position: 'top' });
-```
-
-# Modal Component
-
-The `ModalComponent` class encapsulates the logic related to manipulating modals, including opening, closing, managing audio, duration, and animation. It provides a simple interface to interact with modals.
-
-## Usage
-
-To use the `ModalComponent`, you first need to create an instance of the class. You can do this by passing the modal element to the constructor.
+To use the `FormModal` class, you first need to create an instance of the class. You can do this by calling the `init()` method.
 
 ```typescript
-const modal = document.getElementById('my-modal');
-const modalComponent = new ModalComponent(modal);
+const formModal = new FormModal().init();
 ```
 
-Once you have created an instance of the `ModalComponent`, you can use the following methods to open and close the modal:
+Once you have created an instance of the `FormModal` class, you can use the following methods to manage your modal windows:
 
-* `open()`: Opens the modal.
-* `close()`: Closes the modal.
-
-You can also set the following properties to customize the behavior of the modal:
-
-* `audio`: The audio file to play when the modal is opened.
-* `volume`: The volume of the audio file.
-* `duration`: The duration of the modal in milliseconds.
-* `container`: The container element to insert the modal into.
-* `animation`: The animation options for the modal.
+* `setAnimation(animation, display, animateElement)`: This method sets the animation that will be used to open and close the modal window. The `animation` parameter is an object that specifies the type of animation and the position of the animation. The `display` parameter specifies the CSS display property that will be used to show or hide the modal window. The `animateElement` parameter specifies the element that will be animated.
+* `checkExistingData(identifier)`: This method checks if there are any existing modal windows with the same identifier. If there are, it throws an error.
 
 ## Example
 
-The following code shows how to use the `ModalComponent` to create a modal that plays an audio file when it is opened:
+The following code shows how to use the `FormModal` class to create a modal window for a form:
 
-```typescript
-const modal = document.getElementById('my-modal');
-const modalComponent = new ModalComponent(modal);
+```html
+<div data-modal="modal-bg-form">
+  <div class="modal-content">
+    <form>
+      <input type="text" name="name">
+      <input type="email" name="email">
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
 
-modalComponent.audio = 'path/to/audio.mp3';
-modalComponent.volume = 0.5;
-modalComponent.duration = 5000;
-
-modalComponent.open();
+<button modal-openbtn-form>Open Modal</button>
 ```
 
-## Step-by-Step Explanation
+```typescript
+const formModal = new FormModal().init();
 
-The `ModalComponent` class has the following properties:
+formModal.setAnimation({
+  type: 'fade',
+  position: 'top',
+}, 'flex', document.querySelector('.modal-content'));
+```
 
-* `modal`: The modal element to manipulate.
-* `audio`: The audio file to play when the modal is opened.
-* `volume`: The volume of the audio file.
-* `duration`: The duration of the modal in milliseconds.
-* `container`: The container element to insert the modal into.
-* `animation`: The animation options for the modal.
+This code will create a modal window that fades in from the top of the screen when the "Open Modal" button is clicked. The modal window will contain a form with two input fields and a submit button.
 
-The `ModalComponent` class also has the following methods:
+## Conclusion
 
-* `open()`: Opens the modal.
-* `close()`: Closes the modal.
-* `autoClose()`: Manages the automatic closing of the modal.
-* `clearProperties()`: Cleans up the attributes of the modal.
-
-The `open()` method does the following:
+The `FormModal` class is a powerful tool for creating and managing modal windows for forms.

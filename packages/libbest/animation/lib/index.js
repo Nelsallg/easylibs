@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnimationHandler = void 0;
 class AnimationHandler {
     static stopPropagation(e) {
         e.stopPropagation();
@@ -217,4 +218,4 @@ class AnimationHandler {
         }
     }
 }
-exports.default = AnimationHandler;
+exports.AnimationHandler = AnimationHandler;
