@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   mode: 'production',
   entry: {
-    fetch_request: './src/fetch-request.ts',
+    "fetch-request": './src/fetch-request.ts',
   },
   output: {
     filename: '[name].js',
