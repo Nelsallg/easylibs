@@ -9,6 +9,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
   },
-  "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts", "src/fetch-request.ts"],
+  "exclude": ["node_modules", "dist", "@types"]
 }

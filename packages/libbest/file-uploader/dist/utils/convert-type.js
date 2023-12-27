@@ -10,3 +10,4 @@ function textHtmlToNode(textHtml, targetName = "div", children = false) {
     return target.firstElementChild;
 }
 exports.textHtmlToNode = textHtmlToNode;
+//# sourceMappingURL=convert-type.js.map

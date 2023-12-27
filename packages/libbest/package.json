@@ -2,7 +2,7 @@
   "name": "libbest",
   "version": "1.0.0",
   "description": "",
-  "author": "nelsallg <nels.holy.allg@gmail.com>",
+  "author": "Lévy Stéphane NGUEMA-EKOMOE <nels.holy.allg@gmail.com>",
   "homepage": "https://github.com/Nelsallg/libbest/tree/main/packages/libbest#README.md",
   "license": "ISC",
   "main": "lib/index.js",
@@ -10,8 +10,7 @@
   "type": "module",
   "scripts": {
     "build": "build.js",
-    "tsc": "tsc",
-    "postbuild": "node ../../scripts/post-build.ts"
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",

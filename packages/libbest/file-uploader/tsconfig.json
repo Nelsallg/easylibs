@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
     "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationDir": "@types",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "lib",
-    "declarationDir": "@types"
   },
-  "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "lib", "file-uploader"]
+  "include": ["src/**/*.ts", "src/file-uploader.ts"],
+  "exclude": ["node_modules", "dist", "@types"]
 }

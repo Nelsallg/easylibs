@@ -132,4 +132,4 @@ class FetchRequest {
     }
 }
 exports.FetchRequest = FetchRequest;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=fetch-request.js.map

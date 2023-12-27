@@ -1,26 +1,28 @@
 {
-  "name": "file-uploader",
+  "name": "@libbest/file-uploader",
   "version": "1.0.0",
   "description": "",
-  "author": "nelsallg <nels.holy.allg@gmail.com>",
+  "author": "Lévy Stéphane NGUEMA-EKOMOE <nels.holy.allg@gmail.com>",
   "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/file-uploader#readme",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/file-uploader.js",
+  "module": "dist/file-uploader.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__"
+    "test": "__tests__",
+    "dist": "dist"
   },
   "files": [
-    "lib"
+    "./lib",
+    "./dist",
+    "./@types"
   ],
-  "types": "@types/index.d.ts",
-  "type": "module",
+  "types": "@types/file-uploader.d.ts",
   "scripts": {
     "cytest": "cypress",
     "nodetest": "node ./__tests__/file-uploader.test.js",
     "build": "build.js",
-    "tsc": "tsc",
-    "postbuild": "node ../../scripts/post-build.ts"
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
