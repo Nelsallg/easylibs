@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FetchRequest = void 0;
 /**
  * Cette classe est une classe utilitaire conçue pour faciliter l'envoi de requêtes Fetch dans une application web.
  * Elle offre une interface simple pour effectuer des requêtes HTTP
@@ -131,5 +130,5 @@ class FetchRequest {
         return this._response;
     }
 }
-exports.FetchRequest = FetchRequest;
+exports.default = FetchRequest;
 //# sourceMappingURL=fetch-request.js.map

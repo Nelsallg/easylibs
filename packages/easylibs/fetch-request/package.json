@@ -1,9 +1,9 @@
 {
-  "name": "@libbest/fetch-request",
+  "name": "fetch-request",
   "version": "1.0.0",
   "description": "",
   "author": "Lévy Stéphane NGUEMA-EKOMOE <nels.holy.allg@gmail.com>",
-  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/fetch-request#readme",
+  "homepage": "https://github.com/Nelsallg/easylibs.libs/tree/main/packages/fetch-request#readme",
   "license": "ISC",
   "main": "dist/fetch-request.js",
   "module": "dist/fetch-request.js",
@@ -15,7 +15,8 @@
   "files": [
     "./lib",
     "./dist",
-    "./@types"
+    "./@types",
+    "./__tests__"
   ],
   "types": "@types/fetch-request.d.ts",
   "scripts": {
@@ -26,10 +27,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nelsallg/libbest.git"
+    "url": "git+https://github.com/Nelsallg/easylibs.git"
   },
   "bugs": {
-    "url": "https://github.com/Nelsallg/libbest.git/issues"
+    "url": "https://github.com/Nelsallg/easylibs.git/issues"
   },
   "devDependencies": {}
 }

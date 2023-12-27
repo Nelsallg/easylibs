@@ -28,7 +28,7 @@ declare type FetchRequestType = {
  * Elle offre une interface simple pour effectuer des requêtes HTTP 
  * et gérer les actions avant et après l'envoi de la requête.
  */
-export class FetchRequest{
+export default class FetchRequest{
     protected options: FetchRequestType;
     protected _response: any;
     constructor(options: FetchRequestType) {
