@@ -19,7 +19,7 @@ yarn install @easylibs/fetch-request
 Installing `FetchRequest` with cdn:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.5/dist/fetch-request.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.7/dist/fetch-request.min.js"></script>
 ```
 
 ## Usage
@@ -68,20 +68,28 @@ const request = new FetchRequest({
 |-------------------------|-------------------------|---------------|
 |  credentials            |`"omit" \| "same-origin"`|               |
 |-------------------------|-------------------------|---------------|
-|  mode                   |`"cors" \| "no-cors"`    |               |
-|                         |    `\|"same-origin"`    |               |
+|                         |`"cors" \| "no-cors"`    |               |
+|  mode                   |    `\|"same-origin"`    |               |
+|                         |                         |               |
 |-------------------------|-------------------------|---------------|
-|  cache                  |                         |               |
+|                         | `"default" \| "reload"` |               |
+|                         |     `\|"no-cache"`      |               |
+|  cache                  |   `\|"force-cache"`     |               |
+|                         |  `\| "only-if-cached"`  |               |
+|                         |                         |               |
 |-------------------------|-------------------------|---------------|
-|  timeOut                |                         |               |
+|  timeOut                |       `number`          |               |
 |-------------------------|-------------------------|---------------|
-|  fetchOptions           |                         |               |
+|  fetchOptions           |     `RequestInit`       |               |
 |-------------------------|-------------------------|---------------|
-|  isBinaryFileDownload   |                         |               |
+|  isBinaryFileDownload   |        `boolean`        |               |
 |-------------------------|-------------------------|---------------|
-|  contentType            |                         |               |
+|  contentType            |        `string`         |               |
 |-------------------------|-------------------------|---------------|
-|  acceptDataFormat       |                         |               |
+|                         |      `"form-data"`      |               |
+|                         | `\| "classic-object"`   |               |
+|   acceptDataFormat      |      `\| "array"`       |               |
+|                         |                         |               |
 |-------------------------|-------------------------|---------------|
 
 * `onPreFetch`: A function to be called before the request is sent.
