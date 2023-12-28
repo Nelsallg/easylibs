@@ -1,88 +1,61 @@
-# ProcessIndexedDB
+# Utils.ts: A Comprehensive JavaScript Utility Library
 
-The `ProcessIndexedDB` class provides a set of methods for interacting with an IndexedDB database. It allows you to add, retrieve, delete, and refactor data in the database.
+## Introduction
+
+The `Utils.ts` file is a comprehensive JavaScript utility library that provides a wide range of functions to enhance the development of web applications. This library offers a variety of features, including audio element creation, HTML element manipulation, regular expression generation, path resolution, and more.
 
 ## Installation
 
-To use the `ProcessIndexedDB` class, you can install it from npm:
+To use the `Utils.ts` library in your project, you can either directly include the `Utils.ts` file in your HTML document or install it as a module using a package manager like npm.
+
+### Direct Inclusion
+
+To include the `Utils.ts` library directly in your HTML document, simply add the following script tag to the `<head>` section of your document:
+
+```html
+<script src="path/to/Utils.ts"></script>
+```
+
+### npm Installation
+
+To install the `Utils.ts` library as a module using npm, run the following command in your terminal:
 
 ```bash
-npm install libbest/process-indexeddb
+npm install @easylibs/utils
 ```
 
-## Getting Started
+Once installed, you can import the library into your JavaScript files using the following syntax:
 
-To use the `ProcessIndexedDB` class, you first need to create an instance of the class. You can do this by providing the name of the database, the name of the object store, and the version of the database.
-
-```typescript
-const processIndexedDB = new ProcessIndexedDB('my-database', 'my-object-store', 1);
+```javascript
+import Utils from '@easylibs/utils';
 ```
 
-## Adding Data
+## Usage
 
-To add data to the database, you can use the `add` method. This method takes an object as an argument and adds it to the object store.
+The `Utils.ts` library provides a wide range of functions that can be used in various scenarios. Here are some examples of how you can use the library:
 
-```typescript
-const data = {
-  name: 'John Doe',
-  age: 30
-};
+### Creating Audio Elements
 
-processIndexedDB.add(data).then((result) => {
-  console.log(result);
-});
+The `setAudio()` function allows you to create audio elements with a specified audio path and optional CSS class. Here's an example of how to use it:
+
+```javascript
+const audio = Utils.setAudio('path/to/audio.mp3', 'my-audio-class');
+document.body.appendChild(audio);
 ```
 
-The `add` method returns a promise that resolves to an object indicating the success of the operation. The object has the following properties:
+### Manipulating HTML Elements
 
-* `success`: A boolean value indicating whether the operation was successful.
-* `elementObject`: The object that was added to the database.
+The `textToHTMLElement()` function converts a string of HTML code into an HTML element. It also provides options to return the first child element or all children elements of the created element. Here's an example of how to use it:
 
-## Retrieving Data
-
-To retrieve data from the database, you can use the `getIndexedData` method. This method returns a promise that resolves to an array containing all the elements from the object store.
-
-```typescript
-processIndexedDB.getIndexedData().then((data) => {
-  console.log(data);
-});
+```javascript
+const divElement = Utils.textToHTMLElement('<div>Hello World!</div>');
+document.body.appendChild(divElement);
 ```
 
-The `getIndexedData` method can also be used to retrieve a specific element from the database. To do this, you can pass the ID of the element as an argument to the method.
+### Generating Regular Expressions
 
-```typescript
-processIndexedDB.getIndexedData(1).then((data) => {
-  console.log(data);
-});
+The `getRegexp()` function generates regular expressions based on a specified type. It supports various types of regular expressions, including email, phone number, strong password, and more. Here's an example of how to use it:
+
+```javascript
+const emailRegex = Utils.getRegexp('email');
 ```
-
-This code creates a new IndexedDB database called `my-database` with an object store called `my-object-store`. It then adds the data object to the object store. The `add` method returns a promise that resolves to an object indicating the success of the operation.
-
-## Deleting Data
-
-To delete data from the database, you can use the `delete` method. This method takes the ID of the element to be deleted as an argument.
-
-```typescript
-processIndexedDB.delete(1).then(() => {
-  console.log('Element deleted');
-});
-```
-
-## Refactoring Indexes
-
-The `refactorIndexes` method can be used to refactor the indexes of the indexed data based on a provided string. This
-
-## Methods
-
-The `ProcessIndexedDB` class provides the following methods:
-
-* `add(data)`: Adds a new element to the IDBObjectStore with the provided object.
-* `getIndexedData()`: Retrieves all elements from the IDBObjectStore and returns them as an array.
-* `clearIndexedDB()`: Clears the entire IndexedDB database by deleting the database.
-* `delete(id)`: Deletes the object with the specified ID from the IDBObjectStore.
-* `_getData(index, dataType)`: Retrieves the form data at the specified index from the array of object data obtained from `getIndexedData`.
-* `_isEmpty()`: Checks if the array of elements obtained from `getIndexedData` is empty.
-* `_length()`: Retrieves the length of the object store.
-* `_getObjectStore(access)`: Retrieves the IDBObjectStore with the specified access mode from the opened database.
-* `refactorIndexes(stringBeforeExistingKey)`: Refactors the indexes of the indexed data based on the provided string.
-* `replaceIndexedData(object)`: Replaces the indexed data in the object store with the
