@@ -9,7 +9,7 @@ declare type FetchRequestType = {
         credentials?: "omit" | "same-origin";
         mode?: "cors" | "no-cors" | "same-origin";
         cache?: "default" | "reload" | "no-cache" | "force-cache" | "only-if-cached";
-        timeout?: number;
+        timeOut?: number;
         fetchOptions?: RequestInit;
         isBinaryFileDownload?: boolean;
         contentType?: string;
@@ -19,7 +19,6 @@ declare type FetchRequestType = {
     onPreFetch?: (that?: any) => any;
     onSuccess?: (response: any) => any;
     onError?: (error: unknown, status: number) => any;
-    onProgressUpdate?: (progressEvent: ProgressEvent) => void;
 };
 /**
  * Cette classe est une classe utilitaire conçue pour faciliter l'envoi de requêtes Fetch dans une application web.
