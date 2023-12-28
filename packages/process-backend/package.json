@@ -29,5 +29,10 @@
   "bugs": {
     "url": "https://github.com/Nelsallg/libbest.git/issues"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "peerDependencies": {
+    "@easylibs/fetch-request": "^0.0.4",
+    "@easylibs/tempdata": "^0.0.4",
+    "@easylibs/transformer": "^0.0.4"
+  }
 }

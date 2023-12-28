@@ -1,4 +1,4 @@
-import { FetchRequest } from "../../fetch-request/src/index";
+import FetchRequest from "@easylibs/fetch-request";
 import { ProcessIndexedDB } from "../../tempdata/src/index";
 import { BlobTransformer } from "../../transformer/src/script/blob-transformer";
 import { escape } from "../../utils/src/functions/utils";
@@ -62,7 +62,7 @@ export class ProcessBackend {
     new FetchRequest({
       uri: this._uri,
       data: formData,
-      postFetchAction: setResponse,
+      onPostFetch: setResponse,
       options: {
         method: "POST",
         acceptDataFormat: "form-data",
@@ -101,7 +101,7 @@ export class ProcessBackend {
       if (true === isEmpty && form.checkValidity()) {
         const formData = new FormData(form);
         if(data.preFetchAction){data.preFetchAction(formData);}
-        const postFetchAction = function () {
+        const onPostFetch = function () {
           const { response } = request;
           data.submiter.innerHTML = innerSubmiter;
           if (data.redirectUrl && response["success"] === true) {
@@ -113,7 +113,7 @@ export class ProcessBackend {
         const request = new FetchRequest({
           uri: this._uri,
           data: formData,
-          postFetchAction,
+          onPostFetch,
           options: {
             method: "POST",
             acceptDataFormat: "form-data",
@@ -135,7 +135,7 @@ export class ProcessBackend {
    * @param datas - The array of data objects to be normalized.
    * @returns The normalized FormData object.
    */
-  protected normalizeArrayField(datas: Array<any>): FormData {
+  private normalizeArrayField(datas: Array<any>): FormData {
     const transformer = new BlobTransformer();
     let index = 0;
     return datas.reduce((result: FormData, data) => {

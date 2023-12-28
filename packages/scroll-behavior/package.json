@@ -1,9 +1,9 @@
 {
-  "name": "tempdata",
+  "name": "@easylibs/scroll-behavior",
   "version": "1.0.0",
   "description": "",
   "author": "nelsallg <nels.holy.allg@gmail.com>",
-  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/tempdata#readme",
+  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/scroll-behavior#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -17,7 +17,7 @@
   "type": "module",
   "scripts": {
     "cytest": "cypress",
-    "nodetest": "node ./__tests__/tempdata.test.js",
+    "nodetest": "node ./__tests__/scroll-behavior.test.js",
     "build": "build.js",
     "tsc": "tsc",
     "postbuild": "node ../../scripts/post-build.ts"
@@ -29,8 +29,5 @@
   "bugs": {
     "url": "https://github.com/Nelsallg/libbest.git/issues"
   },
-  "devDependencies": {},
-  "peerDependencies": {
-    "@easylibs/transformer": "^0.0.4"
-  }
+  "devDependencies": {}
 }

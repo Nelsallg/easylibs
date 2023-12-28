@@ -7,12 +7,12 @@ const packages = fs.readdirSync(packagesDir);
 
 const webpackConfigs = packages.map(packageName => {
   const isGlobal = process.argv.includes('--global');
-  const isProduction = process.argv.includes('--mode=production');
+  const isProduction = process.argv.includes('--mode production');
 
   return {
     entry: path.resolve(packagesDir, packageName, `src/${packageName}.ts`),
     output: {
-      filename: isProduction ? 'minified.js' : (isGlobal ? 'global.js' : 'commonjs.js'),
+      filename: isProduction ? `${packageName}.min.js` : (isGlobal ? `${packageName}.global.js` : `${packageName}.cjs.js`),
       path: path.resolve(packagesDir, packageName, 'dist'),
       library: packageName,
       libraryTarget: 'umd',

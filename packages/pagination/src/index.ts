@@ -1,4 +1,4 @@
-import { FetchRequest } from "../../fetch-request/src/index";
+import FetchRequest from "@easylibs/fetch-request";
 import { textHtmlToNode } from "../../utils/src/functions/convert-type";
 import { $$ } from "../../utils/src/dom";
 import { isEndScrolling } from "../../utils/src/functions/scroll-behavior";
@@ -33,7 +33,7 @@ export function paginator(options: PaginatorOptions): void {
                 nextPageNumber !== "null" &&
                 lastRequestSuccessfully
             ) {
-                const preFetchAction = async function () {
+                const onPreFetch = async function () {
                     if (scroll === "y") {
                         let cartProcess = cardProcess();
                         let skeletonLoadingContainer = null;
@@ -77,7 +77,7 @@ export function paginator(options: PaginatorOptions): void {
                     return (lastRequestSuccessfully = false);
                 };
 
-                const postFetchAction = function () {
+                const onPostFetch = function () {
                     const { response } = request;
                     return response;
                 };
@@ -88,8 +88,8 @@ export function paginator(options: PaginatorOptions): void {
                         next_page_number: nextPageNumber,
                         _csrf_token: csrfToken,
                     },
-                    preFetchAction,
-                    postFetchAction,
+                    onPreFetch,
+                    onPostFetch,
                     options: {
                         method: "POST",
                         acceptDataFormat: "form-data",
