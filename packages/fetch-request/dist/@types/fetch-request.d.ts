@@ -15,10 +15,10 @@ declare type FetchRequestType = {
         contentType?: string;
         acceptDataFormat?: "form-data" | "classic-object" | "array";
     };
-    onPostFetch?: (data?: any) => any;
-    onPreFetch?: () => any;
+    onPostFetch?: (response?: any) => any;
+    onPreFetch?: (that?: any) => any;
     onSuccess?: (response: any) => any;
-    onError?: (error: unknown) => any;
+    onError?: (error: unknown, status: number) => any;
     onProgressUpdate?: (progressEvent: ProgressEvent) => void;
 };
 /**
@@ -30,8 +30,8 @@ export default class FetchRequest {
     private options;
     private _response;
     constructor(options: FetchRequestType);
-    private preFetch;
     private fetchData;
+    private preFetch;
     private postFetch;
     private submitForm;
     private createFormData;

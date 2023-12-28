@@ -12,7 +12,10 @@ return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 505:
+/***/ "./src/fetch-request.ts":
+/*!******************************!*\
+  !*** ./src/fetch-request.ts ***!
+  \******************************/
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33,24 +36,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
  */
 class FetchRequest {
     constructor(options) {
-        this.preFetch = () => __awaiter(this, void 0, void 0, function* () {
-            if (typeof this.options.onPreFetch === 'function') {
-                let data = yield this.options.onPreFetch();
-                if (data) {
-                    this.options.data = data.data;
-                }
-            }
-        });
         this.fetchData = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 if (!this.options) {
                     throw new Error(`Missing Options for the request`);
                 }
                 if (!this.options.uri) {
-                    throw new Error("L'URI est obligatoire");
+                    throw new Error("URI is required");
                 }
                 if (!this.options.options || !this.options.options.method) {
-                    throw new Error("La méthode d'appel est obligatoire");
+                    throw new Error("The calling method is required");
                 }
                 const response = yield fetch(this.options.uri, {
                     method: this.options.options.method,
@@ -64,15 +59,23 @@ class FetchRequest {
                 if (this.options.onPostFetch) {
                     this.options.onPostFetch(dataResponse);
                 }
-                if (this.options.onSuccess) {
+                if (this.options.onSuccess && response.status === 200) {
                     return this.options.onSuccess(dataResponse);
                 }
             }
             catch (error) {
-                if (this.options.onError) {
-                    return this.options.onError(error);
+                if (this.options.onError && this._response.status !== 200) {
+                    return this.options.onError(error, this._response.status);
                 }
                 console.error(error);
+            }
+        });
+        this.preFetch = () => __awaiter(this, void 0, void 0, function* () {
+            if (typeof this.options.onPreFetch === 'function') {
+                let data = yield this.options.onPreFetch(this.options.data);
+                if (data) {
+                    this.options.data = data.data;
+                }
             }
         });
         this.postFetch = () => __awaiter(this, void 0, void 0, function* () {
@@ -92,7 +95,7 @@ class FetchRequest {
                 }
             }
             catch (error) {
-                console.error('Erreur lors de l\'envoi du formulaire : ', error);
+                console.error('Error executing query : ', error);
             }
         });
         this.createFormData = (data) => {
@@ -138,7 +141,7 @@ class FetchRequest {
                         }
                         break;
                     default:
-                        throw Error(`Le format ${acceptDataFormat} n'est pas supporté`);
+                        throw Error(`The ${acceptDataFormat} format is not supported`);
                 }
             }
         }
@@ -159,7 +162,7 @@ exports["default"] = FetchRequest;
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__[505](0, __webpack_exports__);
+/******/ 	__webpack_modules__["./src/fetch-request.ts"](0, __webpack_exports__);
 /******/ 	
 /******/ 	return __webpack_exports__;
 /******/ })()

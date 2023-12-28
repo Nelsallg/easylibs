@@ -57,19 +57,32 @@ const request = new FetchRequest({
 * `submiter`: The HTML element that triggers the request.
 
 * `options`: An object containing the request options.
-| Option                  | Type                                       | Description                                                  |
-|-------------------------|--------------------------------------------|--------------------------------------------------------------|
-| method                  | 'GET' \| 'POST'                            | The HTTP request method.                                     |
-| headers                 | Object                                     | Additional headers to include in the request.               |
-| body                    | any                                        | The request body.                                            |
-| credentials             | "omit" \| "same-origin"                    | Indicates whether to include credentials (cookies, HTTP authentication) with the request. |
-| mode                    | "cors" \| "no-cors" \| "same-origin"       | The request mode.                                            |
-| cache                   | "default" \| "reload" \| "no-cache" \| "force-cache" \| "only-if-cached" | The caching mode.                         |
-| timeout                 | number                                     | The request timeout in milliseconds.                         |
-| fetchOptions            | RequestInit                                | Additional options for the `fetch` function.                |
-| isBinaryFileDownload   | boolean                                    | Indicates whether the response should be treated as a binary file download. |
-| contentType             | string                                     | The content type of the request body.                       |
-| acceptDataFormat       | "form-data" \| "classic-object" \| "array"  | The format in which data is accepted.                        |
+
+|  Options                |     type                |  Description  |
+|-------------------------|-------------------------|---------------|
+|  method                 |    `'GET' \| 'POST'`    |               |
+|-------------------------|-------------------------|---------------|
+|  headers                |        `Object`         |               |
+|-------------------------|-------------------------|---------------|
+|  body                   |         `any`           |               |
+|-------------------------|-------------------------|---------------|
+|  credentials            |`"omit" \| "same-origin"`|               |
+|-------------------------|-------------------------|---------------|
+|  mode                   |`"cors" \| "no-cors"`    |               |
+|                         |    `\|"same-origin"`    |               |
+|-------------------------|-------------------------|---------------|
+|  cache                  |                         |               |
+|-------------------------|-------------------------|---------------|
+|  timeOut                |                         |               |
+|-------------------------|-------------------------|---------------|
+|  fetchOptions           |                         |               |
+|-------------------------|-------------------------|---------------|
+|  isBinaryFileDownload   |                         |               |
+|-------------------------|-------------------------|---------------|
+|  contentType            |                         |               |
+|-------------------------|-------------------------|---------------|
+|  acceptDataFormat       |                         |               |
+|-------------------------|-------------------------|---------------|
 
 * `onPreFetch`: A function to be called before the request is sent.
 
