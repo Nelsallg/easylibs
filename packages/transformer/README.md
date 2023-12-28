@@ -1,6 +1,10 @@
-# File Transformer
+# Transformer: A Comprehensive Data Transformation Library
 
-This library provides a set of interfaces and classes for transforming files, blobs, and form data. It includes the following features:
+## Introduction
+
+The Transformer library provides a comprehensive set of tools for transforming data between various formats, including base64 strings, Uint8Arrays, Blobs, and File objects. It also includes a FormDataTransformer class for converting between FormData objects and JavaScript objects.
+
+It includes the following features:
 
 - Convert a Uint8Array to a Blob
 - Convert a File to a Blob
@@ -21,7 +25,7 @@ This library provides a set of interfaces and classes for transforming files, bl
 To install the library, run the following command:
 
 ```bash
-npm install libbest/file-transformer
+npm install @easylibs/transformer
 ```
 
 ## Usage
@@ -70,3 +74,45 @@ const object = formDataTransformer.reverse();
 ```
 
 The `FormDataTransformer` interface also provides an `option()` method that allows you to specify a transformation option. The
+
+### Base64Transformer
+
+The Base64Transformer class provides methods for converting between base64 strings and other file formats.
+
+#### toFile()
+
+The `toFile()` method converts a base64 string into a File object.
+
+```typescript
+const base64String = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+
+const file = new Transformer.Base64Transformer().toFile(base64String);
+```
+
+#### fromFile()
+
+The `fromFile()` method converts a File object into a base64 string.
+
+```typescript
+const file = new File(["Hello, world!"], "hello.txt", { type: "text/plain" });
+
+const base64String = await new Transformer.Base64Transformer().fromFile(file);
+```
+
+#### toUint8Array()
+
+The `toUint8Array()` method converts a base64 string into a Uint8Array.
+
+```typescript
+const base64String = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+
+const uint8Array = new Transformer.Base64Transformer().toUint8Array(base64String);
+```
+
+#### fromUint8Array()
+
+The `fromUint8Array()` method converts a Uint8Array into a base64 string.
+
+```typescript
+const uint8Array = new Uint
+```
