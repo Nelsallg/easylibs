@@ -4,30 +4,32 @@ The `FetchRequest` class is a utility class designed to simplify sending `Fetch`
 
 ## Installation
 
-To install the `FetchRequest` class, you can use npm:
+Installing `FetchRequest` with npm:
 
-```bash
+```powershell
 npm install @easylibs/fetch-request
+```
+
+Installing `FetchRequest` with yarn:
+
+```powershell
+yarn install @easylibs/fetch-request
+```
+
+Installing `FetchRequest` with cdn:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.5/dist/fetch-request.min.js"></script>
 ```
 
 ## Usage
 
-To use the `FetchRequest` class, you first need to create an instance of the class. You can do this by passing an options object to the constructor. The options object can contain the following properties:
-
-* `uri`: The URI of the request.
-* `data`: The data to be sent with the request.
-* `submiter`: The HTML element that triggers the request.
-* `options`: An object containing the request options.
-* `onPreFetch`: A function to be called before the request is sent.
-* `onPostFetch`: A function to be called after the request is sent.
-* `onSuccess`: A function to be called if the request is successful.
-* `onError`: A function to be called if the request fails.
-* `onProgressUpdate`: A function to be called if the request progress is updated.
+To use the `FetchRequest` class, you first need to create an instance of the class. You can do this by passing an options object to the constructor.
 
 The following code shows how to create an instance of the `FetchRequest` class:
 
 ```typescript
-import FetchRequest from '@easylibs/fetch-request';
+import FetchRequest from '@easylibs/fetch-request'; // if you use the cdn, this line is not necessary
 
 const request = new FetchRequest({
   uri: 'https://example.com/api/endpoint',
@@ -41,21 +43,74 @@ const request = new FetchRequest({
     headers: {
       'Content-Type': 'application/json',
     },
-  },
+    acceptDataFormat:"form-data"
+  }
+})
+```
+
+## Properties
+
+* `uri`: The URI of the request.
+
+* `data`: The data to be sent with the request.
+
+* `submiter`: The HTML element that triggers the request.
+
+* `options`: An object containing the request options.
+| Option                  | Type                                       | Description                                                  |
+|-------------------------|--------------------------------------------|--------------------------------------------------------------|
+| method                  | 'GET' \| 'POST'                            | The HTTP request method.                                     |
+| headers                 | Object                                     | Additional headers to include in the request.               |
+| body                    | any                                        | The request body.                                            |
+| credentials             | "omit" \| "same-origin"                    | Indicates whether to include credentials (cookies, HTTP authentication) with the request. |
+| mode                    | "cors" \| "no-cors" \| "same-origin"       | The request mode.                                            |
+| cache                   | "default" \| "reload" \| "no-cache" \| "force-cache" \| "only-if-cached" | The caching mode.                         |
+| timeout                 | number                                     | The request timeout in milliseconds.                         |
+| fetchOptions            | RequestInit                                | Additional options for the `fetch` function.                |
+| isBinaryFileDownload   | boolean                                    | Indicates whether the response should be treated as a binary file download. |
+| contentType             | string                                     | The content type of the request body.                       |
+| acceptDataFormat       | "form-data" \| "classic-object" \| "array"  | The format in which data is accepted.                        |
+
+* `onPreFetch`: A function to be called before the request is sent.
+
+```javascript
+onPreFetch(that){}
+```
+
+* Note: By default, the value of the `that` parameter is set from the value of the `data` key.
+* If a value is returned in the `onPreFetch` method, it will replace the 'data' key's value.
+
+* Example
+
+```javascript
+const request = new FetchRequest({
+  uri: 'https://example.com/api/endpoint',
   onPreFetch: () => {
-    // Do something before the request is sent.
+    return {
+      name: 'kelly Ondo',
+      email: 'kellyondo@gmail.com'
+    };
   },
-  onPostFetch: () => {
-    // Do something after the request is sent.
-  },
-  onSuccess: (response) => {
-    // Do something if the request is successful.
-  },
-  onError: (error) => {
-    // Do something if the request fails.
-  },
-  onProgressUpdate: (progressEvent) => {
-    // Do something if the request progress is updated.
-  },
+  data: , // That will be {name: 'kelly Ondo', email: 'kellyondo@gmail.com'}
 });
+```
+
+In this way, the `onPreFetch()` method can be used either to define the data to be sent to the server —in this case, the `data` key is no longer necessary— or it can be used to perform other tasks before sending the data, or both.
+
+* `onPostFetch`: This method returns the response from the server
+
+```javascript
+onPostFetch(response){}
+```
+
+* `onSuccess`: A function which returns the response from the server in case of success of the request with a status 200.
+
+```javascript
+onSuccess(response){}
+```
+
+* `onError`: A function that returns a error and the status of error in the event of a request failure with a status other than 200.
+
+```javascript
+onError(error, status){}
 ```

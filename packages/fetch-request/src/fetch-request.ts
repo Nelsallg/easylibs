@@ -15,10 +15,10 @@ declare type FetchRequestType = {
         contentType?: string,
         acceptDataFormat?: "form-data" | "classic-object" | "array",
     }
-    onPostFetch?: (data?:any) => any,
-    onPreFetch?: () => any,
+    onPostFetch?: (response?:any) => any,
+    onPreFetch?: (that?:any) => any,
     onSuccess?: (response:any) => any,
-    onError?: (error: unknown) => any,
+    onError?: (error: unknown, status:number) => any,
     onProgressUpdate?: (progressEvent: ProgressEvent) => void,
 }
 /**
@@ -37,24 +37,16 @@ export default class FetchRequest{
             this.submitForm()
         }
     }
-    private preFetch = async () => {
-        if(typeof this.options.onPreFetch === 'function') {
-            let data = await this.options.onPreFetch();
-            if(data){
-                this.options.data = data.data;
-            }
-        }
-    }
     private fetchData = async () => {
         try {
             if(!this.options){
                 throw new Error(`Missing Options for the request`)
             }
             if(!this.options.uri){
-                throw new Error("L'URI est obligatoire");
+                throw new Error("URI is required");
             }
             if(!this.options.options || !this.options.options.method){
-                throw new Error("La méthode d'appel est obligatoire");
+                throw new Error("The calling method is required");
             }
             const response = await fetch(this.options.uri, {
                 method: this.options.options.method ,
@@ -67,14 +59,23 @@ export default class FetchRequest{
             this._response = dataResponse;
             if(this.options.onPostFetch)
             {this.options.onPostFetch(dataResponse);}
-            if(this.options.onSuccess){
+            if(this.options.onSuccess && response.status === 200){
                 return this.options.onSuccess(dataResponse);
             }
+            
         } catch (error) {
-            if(this.options.onError){
-                return this.options.onError(error);
+            if(this.options.onError && this._response.status !== 200){
+                return this.options.onError(error, this._response.status);
             }
             console.error(error);
+        }
+    }
+    private preFetch = async () => {
+        if(typeof this.options.onPreFetch === 'function') {
+            let data = await this.options.onPreFetch(this.options.data);
+            if(data){
+                this.options.data = data.data;
+            }
         }
     }
     private postFetch = async () => {
@@ -88,7 +89,7 @@ export default class FetchRequest{
             await this.fetchData();
             if(this.options.onPostFetch){await this.postFetch();}
         }catch(error){
-            console.error('Erreur lors de l\'envoi du formulaire : ', error);
+            console.error('Error executing query : ', error);
         }
     };
     private createFormData = (data: object) => {
@@ -125,7 +126,7 @@ export default class FetchRequest{
                         }
                         break;
                     default:
-                        throw Error(`Le format ${acceptDataFormat} n'est pas supporté`);
+                        throw Error(`The ${acceptDataFormat} format is not supported`);
                 }
             }
             }
