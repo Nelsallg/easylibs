@@ -20,11 +20,11 @@ Installing `FetchRequest` with cdn:
 
 ```html
 <--MINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.7/dist/fetch-request.min.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@0.0.7/dist/fetch-request.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.8/dist/fetch-request.min.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@0.0.8/dist/fetch-request.min.js"></script>
 <--UNINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.7/dist/fetch-request.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@0.0.7/dist/fetch-request.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.8/dist/fetch-request.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@0.0.8/dist/fetch-request.js"></script>
 ```
 
 ## Usage
@@ -66,27 +66,27 @@ const request = new FetchRequest({
 |  Options                |                                     type                                  |
 |-------------------------|---------------------------------------------------------------------------|
 |  method                 |  `'GET' \| 'POST'`                                                        |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  headers                |  `Object`                                                                 |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  body                   |  `any`                                                                    |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  credentials            |  `"omit" \| "same-origin"`                                                |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  mode                   |  `"cors" \| "no-cors" \|"same-origin"`                                    |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  cache                  |  `"default" \| "reload" \  "no-cache" \|"force-cache" \| "only-if-cached"`|
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  timeOut                |  `number`                                                                 |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  fetchOptions           |  `RequestInit`                                                            |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  isBinaryFileDownload   |  `boolean`                                                                |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  contentType            |  `string`                                                                 |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 |  acceptDataFormat       |   `"form-data" \| "classic-object" \| "array"`                            |
-|-------------------------|---------------------------------------------------------------------------|
+|                         |                                                                           |
 
 * `onPreFetch`: A function to be called before the request is sent.
 
