@@ -76,7 +76,6 @@ const request = new FetchRequest({
 |                         |     `\|"no-cache"`      |               |
 |  cache                  |   `\|"force-cache"`     |               |
 |                         |  `\| "only-if-cached"`  |               |
-|                         |                         |               |
 |-------------------------|-------------------------|---------------|
 |  timeOut                |       `number`          |               |
 |-------------------------|-------------------------|---------------|
@@ -89,7 +88,6 @@ const request = new FetchRequest({
 |                         |      `"form-data"`      |               |
 |                         | `\| "classic-object"`   |               |
 |   acceptDataFormat      |      `\| "array"`       |               |
-|                         |                         |               |
 |-------------------------|-------------------------|---------------|
 
 * `onPreFetch`: A function to be called before the request is sent.
