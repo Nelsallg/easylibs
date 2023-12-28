@@ -11,7 +11,7 @@
   "license": "ISC",
   "main": "dist/fetch-request.js",
   "types": "dist/@types/fetch-request.d.ts",
-  "type": "module",
+  "type": "commonjs",
   "module": "dist/fetch-request.js",
   "keywords": [
     "fetch",
@@ -20,8 +20,8 @@
   ],
   "scripts": {
     "babel": "babel assets/app.js --out-file public/script/app.js",
-    "dev": "webpack --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
+    "dev": "webpack --config webpack.config.js --mode=development",
+    "build": "webpack --config webpack.config.js --mode=production",
     "test": "node ./__tests__/fetch-request.test.js",
     "tsc": "tsc",
     "prepublishOnly": "npm run build"

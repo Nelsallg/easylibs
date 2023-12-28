@@ -1,2 +1,168 @@
-(()=>{"use strict";({505:function(t,o){var i=this&&this.__awaiter||function(t,o,i,s){return new(i||(i=Promise))((function(e,n){function r(t){try{a(s.next(t))}catch(t){n(t)}}function h(t){try{a(s.throw(t))}catch(t){n(t)}}function a(t){var o;t.done?e(t.value):(o=t.value,o instanceof i?o:new i((function(t){t(o)}))).then(r,h)}a((s=s.apply(t,o||[])).next())}))};Object.defineProperty(o,"__esModule",{value:!0});o.default=class{constructor(t){this.preFetch=()=>i(this,void 0,void 0,(function*(){if("function"==typeof this.options.onPreFetch){let t=yield this.options.onPreFetch();t&&(this.options.data=t.data)}})),this.fetchData=()=>i(this,void 0,void 0,(function*(){try{if(!this.options)throw new Error("Missing Options for the request");if(!this.options.uri)throw new Error("L'URI est obligatoire");if(!this.options.options||!this.options.options.method)throw new Error("La méthode d'appel est obligatoire");const t=yield fetch(this.options.uri,{method:this.options.options.method,body:this._formData,headers:{"X-Requested-With":"XMLHttpRequest"}}),o=yield t.json();if(this._response=o,this.options.onPostFetch&&this.options.onPostFetch(o),this.options.onSuccess)return this.options.onSuccess(o)}catch(t){if(this.options.onError)return this.options.onError(t)}})),this.postFetch=()=>i(this,void 0,void 0,(function*(){return this.options.submiter instanceof HTMLButtonElement&&this.options.submiter.removeAttribute("disabled"),this.options.onPostFetch?this.options.onPostFetch():void 0})),this.submitForm=()=>i(this,void 0,void 0,(function*(){try{this.options.onPreFetch&&(yield this.preFetch()),yield this.fetchData(),this.options.onPostFetch&&(yield this.postFetch())}catch(t){}})),this.createFormData=t=>{const o=new FormData;for(const[i,s]of Object.entries(t))o.append(i,null!=s?s:"");return o},this.createJSON=t=>JSON.stringify({data:t}),this.options=t,t.submiter?t.submiter.addEventListener("click",this.submitForm):this.submitForm()}get _formData(){const t=t=>t instanceof FormData,o=t=>Array.isArray(t),i=t=>"object"==typeof t&&Object.keys(t).length>0;if(this.options.options){const s=this.options.options.acceptDataFormat;if(s)switch(s){case"form-data":if(t(this.options.data))return this.options.data;if(o(this.options.data))return this.createJSON(this.options.data);if(i(this.options.data))return this.createFormData(this.options.data);break;case"classic-object":if(t(this.options.data)||o(this.options.data)||i(this.options.data))return this.createJSON((o(this.options.data),this.options.data));break;default:throw Error(`Le format ${s} n'est pas supporté`)}}}get response(){return this._response}}}})[505](0,{})})();
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("fetch-request", [], factory);
+	else if(typeof exports === 'object')
+		exports["fetch-request"] = factory();
+	else
+		root["fetch-request"] = factory();
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 505:
+/***/ (function(__unused_webpack_module, exports) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * Cette classe est une classe utilitaire conçue pour faciliter l'envoi de requêtes Fetch dans une application web.
+ * Elle offre une interface simple pour effectuer des requêtes HTTP
+ * et gérer les actions avant et après l'envoi de la requête.
+ */
+class FetchRequest {
+    constructor(options) {
+        this.preFetch = () => __awaiter(this, void 0, void 0, function* () {
+            if (typeof this.options.onPreFetch === 'function') {
+                let data = yield this.options.onPreFetch();
+                if (data) {
+                    this.options.data = data.data;
+                }
+            }
+        });
+        this.fetchData = () => __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!this.options) {
+                    throw new Error(`Missing Options for the request`);
+                }
+                if (!this.options.uri) {
+                    throw new Error("L'URI est obligatoire");
+                }
+                if (!this.options.options || !this.options.options.method) {
+                    throw new Error("La méthode d'appel est obligatoire");
+                }
+                const response = yield fetch(this.options.uri, {
+                    method: this.options.options.method,
+                    body: this._formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                const dataResponse = yield response.json();
+                this._response = dataResponse;
+                if (this.options.onPostFetch) {
+                    this.options.onPostFetch(dataResponse);
+                }
+                if (this.options.onSuccess) {
+                    return this.options.onSuccess(dataResponse);
+                }
+            }
+            catch (error) {
+                if (this.options.onError) {
+                    return this.options.onError(error);
+                }
+                console.error(error);
+            }
+        });
+        this.postFetch = () => __awaiter(this, void 0, void 0, function* () {
+            if (this.options.submiter instanceof HTMLButtonElement) {
+                this.options.submiter.removeAttribute('disabled');
+            }
+            return this.options.onPostFetch ? this.options.onPostFetch() : undefined;
+        });
+        this.submitForm = () => __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (this.options.onPreFetch) {
+                    yield this.preFetch();
+                }
+                yield this.fetchData();
+                if (this.options.onPostFetch) {
+                    yield this.postFetch();
+                }
+            }
+            catch (error) {
+                console.error('Erreur lors de l\'envoi du formulaire : ', error);
+            }
+        });
+        this.createFormData = (data) => {
+            const formData = new FormData();
+            for (const [key, value] of Object.entries(data)) {
+                formData.append(key, value !== null && value !== void 0 ? value : "");
+            }
+            return formData;
+        };
+        this.createJSON = (data) => {
+            return JSON.stringify({ data: data });
+        };
+        this.options = options;
+        if (options.submiter) {
+            options.submiter.addEventListener('click', this.submitForm);
+        }
+        else {
+            this.submitForm();
+        }
+    }
+    get _formData() {
+        const isFormData = (data) => data instanceof FormData;
+        const isArray = (data) => Array.isArray(data);
+        const isObject = (data) => typeof data === 'object' && Object.keys(data).length > 0;
+        if (this.options.options) {
+            const acceptDataFormat = this.options.options.acceptDataFormat;
+            if (acceptDataFormat) {
+                switch (acceptDataFormat) {
+                    case "form-data":
+                        if (isFormData(this.options.data)) {
+                            return this.options.data;
+                        }
+                        else if (isArray(this.options.data)) {
+                            return this.createJSON(this.options.data);
+                        }
+                        else if (isObject(this.options.data)) {
+                            return this.createFormData(this.options.data);
+                        }
+                        break;
+                    case "classic-object":
+                        if (isFormData(this.options.data) || isArray(this.options.data) || isObject(this.options.data)) {
+                            return this.createJSON(isArray(this.options.data) ? this.options.data : this.options.data);
+                        }
+                        break;
+                    default:
+                        throw Error(`Le format ${acceptDataFormat} n'est pas supporté`);
+                }
+            }
+        }
+    }
+    get response() {
+        return this._response;
+    }
+}
+exports["default"] = FetchRequest;
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__[505](0, __webpack_exports__);
+/******/ 	
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
 //# sourceMappingURL=fetch-request.js.map

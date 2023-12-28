@@ -1,37 +1,24 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 
+const isGlobal = process.argv.includes('--global');
+const isProduction = process.argv.includes('--mode=production');
+
 module.exports = {
-  mode: 'production',
+  mode: isProduction ? "production" : "development",
   entry: {
     "fetch-request": './src/fetch-request.ts',
   },
   output: {
-    filename: '[name].js',
+    filename: isProduction ? '[name].min.js' : (isGlobal ? '[name].global.js' : '[name].js'),
     path: path.resolve(__dirname, 'dist'),
+    library: '[name]',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
   },
   devtool: 'source-map',
   optimization: {
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          sourceMap: true,
-          compress: {
-            drop_console: true,
-          },
-        },
-      }),
-    ],
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          chunks: 'initial',
-          name: 'vendor',
-          enforce: true,
-        },
-      },
-    },
+    minimizer: isProduction ? [new TerserPlugin()] : []
   },
   module: {
     rules: [
