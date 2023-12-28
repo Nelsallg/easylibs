@@ -32,7 +32,7 @@ import Utils from '@easylibs/utils';
 
 ## Usage
 
-The `Utils.ts` library provides a wide range of functions that can be used in various scenarios. Here are some examples of how you can use the library:
+The `Utils` library provides a wide range of methods that can be used in various scenarios. Here are some examples of how you can use the library:
 
 ### Creating Audio Elements
 
