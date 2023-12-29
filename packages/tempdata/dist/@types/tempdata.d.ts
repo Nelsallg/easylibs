@@ -1,4 +1,4 @@
-export declare class ProcessIndexedDB {
+export default class TempData {
     protected databasename: string;
     protected objectstorename: string;
     protected version: number;

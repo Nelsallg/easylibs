@@ -1,6 +1,7 @@
-import { FormDataTransformer } from "../../transformer/src/script/formdata-transformer";
-import { findChar, hasKeyWithNameSubstring } from "../../utils/src/functions/utils";
-export class ProcessIndexedDB {
+import {Transformer} from "@easylibs/transformer";
+import Utils from "@easylibs/utils";
+
+export default class TempData {
   protected databasename: string;
   protected objectstorename: string;
   protected version: number;
@@ -128,7 +129,7 @@ export class ProcessIndexedDB {
     if (index >= 0 && index < objectData.length) {
       const transformer =
         "form-data" === dataType
-          ? new FormDataTransformer(objectData[index])
+          ? new Transformer.FormDataTransformer(objectData[index])
           : objectData[index];
       return "form-data" === dataType ? transformer.transform() : transformer;
     }
@@ -268,9 +269,9 @@ export class ProcessIndexedDB {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const keyParts = key.split(stringBeforeExistingKey);
         const keyPart = keyParts[1];
-        _token = hasKeyWithNameSubstring(object, "token");
+        _token = Utils.hasKeyWithNameSubstring(object, "token");
         if(null !== _token){
-          tokenKey = hasKeyWithNameSubstring(object, "token", true);
+          tokenKey = Utils.hasKeyWithNameSubstring(object, "token", true);
         }
         if ("@base64String" === key) {
           base64String = object[key];
@@ -280,7 +281,7 @@ export class ProcessIndexedDB {
         }
         
         if (keyPart) {
-          const findchar = findChar(keyPart, length);
+          const findchar = Utils.findChar(keyPart, length);
           const char = findchar ?? "0";
           const newKeyPart = keyPart.replace(`[${char}]`, `[${i.toString()}]`);
           const newKey = `${keyParts[0]}${stringBeforeExistingKey}${newKeyPart}`;
