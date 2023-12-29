@@ -4,16 +4,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isGlobal = process.argv.includes('--global');
 const isProduction = process.argv.includes('--mode=production');
-console.log(__dirname);
+console.log({isProduction});
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
     'flash': './src/flash.ts',
-    'flash-runner': './src/scripts/flash-runner.ts',
-    'icon': './src/scripts/icon.ts',
-    'iflash': './src/scripts/iflash.ts',
-    'styleTs': './src/scripts/style.ts',
     'flash-style': './src/assets/scss/flash-style.scss',
     'icon': './src/assets/icon/icon.svg'
   },
