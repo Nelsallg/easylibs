@@ -1,5 +1,5 @@
-import { ProcessIndexedDB } from "./tempdata/index";
-export declare class ProcessBackend {
+import TempData from "@easylibs/tempdata";
+export default class ProcessBackend {
     private _uri;
     private _database;
     private _response;
@@ -8,7 +8,7 @@ export declare class ProcessBackend {
      * @param database - base de données
      * @param uri - L'URL de destination où les données du formulaire seront envoyées.
      */
-    constructor(database: ProcessIndexedDB, uri: string);
+    constructor(database: TempData, uri: string);
     /**
      * Persists data to the server.
      *
@@ -39,7 +39,7 @@ export declare class ProcessBackend {
      * @param datas - The array of data objects to be normalized.
      * @returns The normalized FormData object.
      */
-    protected normalizeArrayField(datas: Array<any>): FormData;
+    private normalizeArrayField;
     /**
      * Retourne la réponse du serveur.
      */

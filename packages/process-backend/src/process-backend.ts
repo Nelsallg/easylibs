@@ -1,18 +1,18 @@
 import FetchRequest from "@easylibs/fetch-request";
-import { ProcessIndexedDB } from "../../tempdata/src/index";
-import { BlobTransformer } from "../../transformer/src/script/blob-transformer";
-import { escape } from "../../utils/src/functions/utils";
+import TempData from "@easylibs/tempdata";
+import {Transformer} from "@easylibs/transformer";
+import Utils from "@easylibs/utils";
 
-export class ProcessBackend {
+export default class ProcessBackend {
   private _uri: string;
-  private _database: ProcessIndexedDB;
+  private _database: TempData;
   private _response: any = null;
   /**
    *
    * @param database - base de données
    * @param uri - L'URL de destination où les données du formulaire seront envoyées.
    */
-  constructor(database: ProcessIndexedDB, uri: string) {
+  constructor(database: TempData, uri: string) {
     this._database = database;
     this._uri = uri;
   }
@@ -94,7 +94,7 @@ export class ProcessBackend {
       if (true === isEmpty && !form.checkValidity()) {
         return form.reportValidity();
       }
-      const innerSubmiter = escape(data.submiter.innerHTML);
+      const innerSubmiter = Utils.escape(data.submiter.innerHTML);
       if (data.loader) {
         data.submiter.innerHTML = data.loader;
       }
@@ -136,7 +136,7 @@ export class ProcessBackend {
    * @returns The normalized FormData object.
    */
   private normalizeArrayField(datas: Array<any>): FormData {
-    const transformer = new BlobTransformer();
+    const transformer = new Transformer.BlobTransformer();
     let index = 0;
     return datas.reduce((result: FormData, data) => {
       const objectsFormData = Object.keys(data).reduce((formData, key) => {
