@@ -9,7 +9,7 @@ Flash is a JavaScript library that allows you to easily create and display flash
 To install Flash, simply add the following script tag to your HTML document:
 
 ```bash
-npm install libbest/flash
+npm install @easylibs/flash
 ```
 
 ## Usage

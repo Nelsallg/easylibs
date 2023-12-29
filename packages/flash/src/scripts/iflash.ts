@@ -1,6 +1,5 @@
-import { Flash } from "../index";
+import Flash from "../flash";
 import { SVG } from "./icon";
-import '../assets/index.scss';
 
 export declare type FlashOptions = {
   message: string,
@@ -15,8 +14,7 @@ export declare type FlashOptions = {
 
 export interface FlashInterface {
   addFlash(params:FlashOptions): Flash;
-  // show(props:string|FlashOptions, container?: HTMLElement): Flash;
-  flashHTMLModel(params:FlashOptions): flashHTMLModel | string;
+  flashHTMLModel(params:FlashOptions): flashHTMLModel | Node;
 }
 
 export class flashHTMLModel {
