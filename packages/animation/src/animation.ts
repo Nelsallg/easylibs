@@ -9,7 +9,7 @@ declare type AnimeOptions = {
   delay?: number;
   fromInToOut?: boolean;
 };
-export class AnimationHandler {
+export default class Animation {
   static stopPropagation(e: Event): void {
     e.stopPropagation();
   }
@@ -192,7 +192,7 @@ export class AnimationHandler {
             }
           });
 
-          dispElement.addEventListener("click", AnimationHandler.stopPropagation);
+          dispElement.addEventListener("click", Animation.stopPropagation);
         }
 
         return;
@@ -217,7 +217,7 @@ export class AnimationHandler {
           });
 
           if (_element) {
-            _element.addEventListener("click", AnimationHandler.stopPropagation);
+            _element.addEventListener("click", Animation.stopPropagation);
           }
         } else {
           const dispElement = dispatchCloseEvent.key as HTMLElement;
@@ -234,7 +234,7 @@ export class AnimationHandler {
             }
           });
 
-          dispElement.addEventListener("click", AnimationHandler.stopPropagation);
+          dispElement.addEventListener("click", Animation.stopPropagation);
         }
       }
     } catch (error) {
