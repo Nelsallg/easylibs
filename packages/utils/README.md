@@ -6,7 +6,7 @@ The `Utils` class is a comprehensive JavaScript utility library that provides a 
 
 ## Installation
 
-To use the `Utils.ts` library in your project, you can either directly include the `Utils.ts` file in your HTML document or install it as a module using a package manager like npm.
+To use the `Utils` library in your project, you can either directly include the `Utils` cdn in your HTML document or install it as a module using a package manager like npm.
 
 ### Direct Inclusion
 

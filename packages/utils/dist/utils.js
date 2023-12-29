@@ -26,7 +26,7 @@ class Utils {
      * @param classname La classe CSS à ajouter à l'élément audio (optionnel).
      * @returns L'élément audio créé.
      */
-    setAudio(audioPath, classname = null) {
+    static setAudio(audioPath, classname = null) {
         const audio = document.createElement('audio');
         if (classname != null) {
             audio.classList.add(classname);
@@ -37,7 +37,7 @@ class Utils {
         audio.appendChild(source);
         return audio;
     }
-    textToHTMLElement(textHtml, targetName = "div", children = false) {
+    static textToHTMLElement(textHtml, targetName = "div", children = false) {
         const target = document.createElement(`${targetName}`);
         target.innerHTML = textHtml;
         if (true === children) {
@@ -48,7 +48,7 @@ class Utils {
     /**
      * retourne un élément du dom
      */
-    $$(element) {
+    static $$(element) {
         if (element instanceof HTMLElement || element instanceof HTMLCollection) {
             return element;
         }
@@ -74,7 +74,7 @@ class Utils {
      * @param callback Une fonction de rappel à exécuter sur chaque élément du tableau.
      * @returns
      */
-    processNodes(nodeList, callback = (node, index) => { }) {
+    static processNodes(nodeList, callback = (node, index) => { }) {
         if (nodeList instanceof NodeList || Array.isArray(nodeList)) {
             return Array.from(nodeList).forEach((node, i) => {
                 callback(node, i);
@@ -89,25 +89,25 @@ class Utils {
      * @param type Le type d'expression régulière demandé.
      * @returns L'expression régulière correspondante.
      */
-    getRegexp(type) {
+    static getRegexp(type) {
         switch (type) {
             case 'email':
                 return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-            case 'phoneNumber':
+            case 'phone-number':
                 return new RegExp(/^(0|\\+[1-9]{1,3})[0-9 ]+$/);
             case 'number':
                 return new RegExp(/^[0-9]+$/);
-            case 'strongPassword':
+            case 'strong-password':
                 return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
             case 'url':
                 return new RegExp(/^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/);
-            case 'defaultText':
+            case 'default-text':
                 return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
-            case 'frText':
+            case 'fr-text':
                 return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
-            case 'enText':
+            case 'en-text':
                 return new RegExp(/^[a-zA-Z '-]{1,40}$/);
-            case 'trText':
+            case 'tr-text':
                 return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
             default:
                 throw new Error('Type d\'expression régulière non pris en charge.');
@@ -118,7 +118,7 @@ class Utils {
      * @param path Le chemin de la ressource.
      * @returns Le chemin résolu de la ressource.
      */
-    resolvePath(path) {
+    static resolvePath(path) {
         const PROJECT_NAME = window.location.pathname.split("/")[1];
         const ORIGIN = window.location.origin;
         const PORT = window.location.port;
@@ -140,7 +140,7 @@ class Utils {
      * @param backgroundColor La couleur d'arrière-plan de la zone interdite (par défaut : '#FFFFFF').
      * @returns Un élément HTML représentant une zone interdite.
      */
-    forbiddener(tag = 'td', backgroundColor) {
+    static forbiddener(tag = 'td', backgroundColor) {
         let forbiddenTag = document.createElement(tag);
         forbiddenTag.setAttribute('class', 'forbidden');
         const style = {
@@ -160,7 +160,7 @@ class Utils {
      * @param maxLength La longueur maximale de la chaîne résultante (par défaut : 14).
      * @returns La chaîne de texte réduite.
      */
-    reduceText(text, maxLength = 14) {
+    static reduceText(text, maxLength = 14) {
         text = typeof text === "string" ? text.trim() : "";
         if (text.length > maxLength) {
             return `${text.substring(0, maxLength)}...`;
@@ -176,7 +176,7 @@ class Utils {
      * @param priceType - (Optional) A boolean flag indicating whether the input represents a price. If true, the input is expected to be a number with an optional decimal part.
      * @param decimal - (Optional) The number of decimal places to round to. If provided, the input values will be rounded to the specified decimal places.
      */
-    changeInputTextTypeToNumberType(attr, limit, priceType = false, decimal) {
+    static changeInputTextTypeToNumberType(attr, limit, priceType = false, decimal) {
         this.processNodes(this.$$(attr), function (element) {
             let input = element;
             if (input) {
@@ -206,7 +206,7 @@ class Utils {
      * @param trigger - The trigger element (button) to activate the function (default: undefined).
      * @param backgroundColor - The background color for the forbidden tag (default: undefined).
      */
-    disablor(tag = "td", target, trigger, backgroundColor) {
+    static disablor(tag = "td", target, trigger, backgroundColor) {
         const buttons = document.querySelectorAll("[disablor],[self-disablor]");
         try {
             if (!trigger && !buttons) {
@@ -239,9 +239,9 @@ class Utils {
      * of the 'required-field' attribute. The function utilizes the processNodes method
      * to iterate through the matched labels and append the asterisk.
      */
-    setAsteriskToRequiredField() {
+    static setAsteriskToRequiredField() {
         const asterisk = `<svg class="required-svg">
-        <use xlink:href="/svg/form.svg#asterisk"></use>
+        <use xlink:href="../asset/icon.svg#asterisk"></use>
         </svg>`;
         const labels = document.querySelectorAll("label[required-field]");
         if (labels) {
@@ -261,7 +261,7 @@ class Utils {
      *               If false or not provided, the method will return the value corresponding to the key.
      * @returns The value or key of the first matching property if found, otherwise false.
      */
-    hasKeyWithNameSubstring(object, substring, getKey) {
+    static hasKeyWithNameSubstring(object, substring, getKey) {
         for (let key in object) {
             if (key.includes(substring)) {
                 if (undefined === getKey || false === getKey) {
@@ -283,7 +283,7 @@ class Utils {
      *            If false or not provided, the function will return the value corresponding to the key.
      * @returns The value or key of the first matching property if found, otherwise false.
      */
-    findObjectDataByKeyName(object, keyOrShorKey, key) {
+    static findObjectDataByKeyName(object, keyOrShorKey, key) {
         Object.keys(object).forEach((key) => {
             if (key.includes(keyOrShorKey)) {
                 return object[key];
@@ -291,7 +291,7 @@ class Utils {
         });
         return false;
     }
-    findChar(string, limit, returnBool = false) {
+    static findChar(string, limit, returnBool = false) {
         for (let i = 0; i <= limit; i++) {
             const index = string.indexOf(i.toString());
             if (index !== -1) {
@@ -300,7 +300,7 @@ class Utils {
         }
         return returnBool ? false : null;
     }
-    findComputedStyle(element, property) {
+    static findComputedStyle(element, property) {
         const styles = window.getComputedStyle(element);
         const propertiesObject = {};
         try {
@@ -330,7 +330,7 @@ class Utils {
      * @param str - The input string to be escaped.
      * @returns - The escaped string with special characters replaced with their HTML entity equivalents.
      */
-    escape(str) {
+    static escape(str) {
         if (!str) {
             return "";
         }
@@ -346,7 +346,7 @@ class Utils {
      * @param target - The CSS selector used to find the desired element.
      * @returns The first Element with a matching target, or null if no such element is found.
      */
-    findHTMLElementBy(referent, target) {
+    static findHTMLElementBy(referent, target) {
         let currentElement = referent;
         if (currentElement) {
             while ((currentElement = currentElement.previousElementSibling)) {
@@ -364,7 +364,7 @@ class Utils {
      * @param attributes - An object containing HTML attributes.
      * @returns A string representing the attributes.
      */
-    formatHTMLAttributes(attributes) {
+    static formatHTMLAttributes(attributes) {
         let attrs = "";
         if (attributes) {
             for (const [key, value] of Object.entries(attributes)) {
