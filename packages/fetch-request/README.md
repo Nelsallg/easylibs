@@ -4,27 +4,23 @@ The `FetchRequest` class is a utility class designed to simplify sending `Fetch`
 
 ## Installation
 
-Installing `FetchRequest` with npm:
+Installing `FetchRequest` with npm, yarn or pnpm:
 
-```powershell
+```bash
 npm install @easylibs/fetch-request
-```
-
-Installing `FetchRequest` with yarn:
-
-```powershell
 yarn add @easylibs/fetch-request
+pnpm add @easylibs/fetch-request
 ```
 
-Installing `FetchRequest` with cdn:
+Or use direct inclusion with cdn
 
 ```html
 <--MINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.8/dist/fetch-request.min.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@0.0.8/dist/fetch-request.min.js"></script>
-<--UNINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.8/dist/fetch-request.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@0.0.8/dist/fetch-request.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.9/dist/fetch-request.min.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@0.0.9/dist/fetch-request.min.js"></script>
+<-- OR UNMINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@0.0.9/dist/fetch-request.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@0.0.9/dist/fetch-request.js"></script>
 ```
 
 ## Usage
