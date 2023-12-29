@@ -1,5 +1,4 @@
-import { focusInBlock, getFocusableElements } from "./script/focus-in-block";
-import { StyleOptions } from "./script/style-options";
+import { focusInBlock, getFocusableElements } from "./scripts/focus-in-block";
 
 let fieldSetElement:HTMLElement|null = null;
 // window.addEventListener('keydown', (e) => {
@@ -17,8 +16,36 @@ declare type ProgressFormType = {
     targetMarginWidth?:number,
     fieldsetMargingWidth?:number
 }
+declare interface StyleOptions {
+    form?: {
+        width?:string ,
+        height?:string ,
+        boxSizing?:string ,
+    };
+    fieldsetContainer?: {
+        width?:string ,
+        height?:string ,
+        overflow?:string ,
+        display?:string ,
+        justifyContent?:string ,
+        alignItems?:string,
+    };
+    fieldset?: {
+        width?:string ,
+        transition?:string ,
+        backgroundColor?:string ,
+        justifyContent?:string ,
+        alignItems?:string ,
+        display?:string ,
+        flexDirection?:string ,
+        padding?:string ,
+        border?:string ,
+        boxShadow?:string ,
+        borderRadius?:string ,
+    };
+}
 
-export class ProgressForm
+export default class ProgressForm
 {
     protected element:HTMLElement|null = null;
     protected targetWidth:number = -625;

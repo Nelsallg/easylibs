@@ -1,4 +1,3 @@
-import { StyleOptions } from "./script/style-options";
 declare type ProgressFormType = {
     form: HTMLFormElement;
     fieldsetContainer: HTMLElement;
@@ -9,7 +8,35 @@ declare type ProgressFormType = {
     targetMarginWidth?: number;
     fieldsetMargingWidth?: number;
 };
-export declare class ProgressForm {
+declare interface StyleOptions {
+    form?: {
+        width?: string;
+        height?: string;
+        boxSizing?: string;
+    };
+    fieldsetContainer?: {
+        width?: string;
+        height?: string;
+        overflow?: string;
+        display?: string;
+        justifyContent?: string;
+        alignItems?: string;
+    };
+    fieldset?: {
+        width?: string;
+        transition?: string;
+        backgroundColor?: string;
+        justifyContent?: string;
+        alignItems?: string;
+        display?: string;
+        flexDirection?: string;
+        padding?: string;
+        border?: string;
+        boxShadow?: string;
+        borderRadius?: string;
+    };
+}
+export default class ProgressForm {
     protected element: HTMLElement | null;
     protected targetWidth: number;
     fieldsetLength: number;

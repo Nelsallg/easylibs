@@ -11,7 +11,11 @@ The `ProgressForm` class provides a way to create a multi-step form with a progr
 To install the `ProgressForm` class, you can use npm:
 
 ```bash
-npm install libbest/progress-form
+npm install @easylibs/progress-form
+# Or
+yarn add @easylibs/progress-form
+# Or
+pnpm add @easylibs/progress-form
 ```
 
 ## Usage
@@ -23,14 +27,19 @@ To use the `ProgressForm` class, you need to create a form element and add the f
   <fieldset>
     <label for="name">Name:</label>
     <input type="text" id="name">
+    <button type="button">next</button>
   </fieldset>
   <fieldset>
     <label for="email">Email:</label>
     <input type="email" id="email">
+    <button type="button">previous</button>
+    <button type="button">next</button>
   </fieldset>
   <fieldset>
     <label for="password">Password:</label>
     <input type="password" id="password">
+    <button type="button">previous</button>
+    <button type="button">submit</button>
   </fieldset>
 </form>
 ```
@@ -38,6 +47,7 @@ To use the `ProgressForm` class, you need to create a form element and add the f
 Next, you need to create a `ProgressForm` object and pass the form element to the constructor.
 
 ```javascript
+import ProgressForm from "@easylibs/progress-form";
 const progressForm = new ProgressForm(document.getElementById('progress-form'));
 ```
 

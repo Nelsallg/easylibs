@@ -1,7 +1,98 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProgressForm = void 0;
-const focus_in_block_1 = require("./script/focus-in-block");
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("progress-form", [], factory);
+	else if(typeof exports === 'object')
+		exports["progress-form"] = factory();
+	else
+		root["progress-form"] = factory();
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/scripts/focus-in-block.ts":
+/*!***************************************!*\
+  !*** ./src/scripts/focus-in-block.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getFocusableElements = exports.focusInBlock = void 0;
+/**
+ * Gère le focus clavier sur les éléments d'un bloc HTML spécifié.
+ * @param key - L'événement clavier qui a déclenché la fonction.
+ * @param block - L'élément HTML qui représente le bloc sur lequel on souhaite gérer le focus.
+ */
+function focusInBlock(key, block) {
+    key.preventDefault();
+    const focusables = getFocusableElements(block);
+    let index = focusables.findIndex(f => f === block.querySelector(':focus'));
+    (key.shiftKey === true) ? index-- : index++;
+    console.log({ focusables, block });
+    if (index >= focusables.length) {
+        index = 0;
+    }
+    if (index < 0) {
+        index = focusables.length - 1;
+    }
+    const FIELD = focusables[index];
+    FIELD.focus();
+}
+exports.focusInBlock = focusInBlock;
+/**
+ * Récupère tous les éléments focusables dans un bloc HTML spécifié.
+ * @param block - L'élément HTML qui représente le bloc contenant les éléments focusables.
+ * @returns Un tableau d'éléments focusables présents dans le bloc.
+ */
+function getFocusableElements(block) {
+    let focusableSelector = "button, select, input, a, textarea";
+    return Array.from(block.querySelectorAll(focusableSelector));
+}
+exports.getFocusableElements = getFocusableElements;
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+var exports = __webpack_exports__;
+/*!******************************!*\
+  !*** ./src/progress-form.ts ***!
+  \******************************/
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const focus_in_block_1 = __webpack_require__(/*! ./scripts/focus-in-block */ "./src/scripts/focus-in-block.ts");
 let fieldSetElement = null;
 class ProgressForm {
     constructor(enableDefaultCssStyle = true) {
@@ -181,4 +272,12 @@ class ProgressForm {
         params.fieldsetContainer.style.width = `${fieldsetContainerWidth}px`;
     }
 }
-exports.ProgressForm = ProgressForm;
+exports["default"] = ProgressForm;
+
+})();
+
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
+//# sourceMappingURL=progress-form.js.map
