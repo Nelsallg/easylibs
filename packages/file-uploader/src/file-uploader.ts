@@ -1,5 +1,5 @@
 import Utils from "@easylibs/utils";
-import FileTransformer from '@easylibs/transformer';
+import { Transformer } from '@easylibs/transformer';
 
 declare type FileUploaderType =
   | Array<{
@@ -16,7 +16,7 @@ declare type FileUploaderType =
       size: number;
       arrayBuffer: ArrayBuffer;
     };
-export class FileUploader {
+export default class FileUploader {
   private input: Element | HTMLCollection | NodeListOf<Element> | undefined;
   private fileElement:
     | Element
@@ -36,9 +36,8 @@ export class FileUploader {
     autoEvent: boolean = true,
     progressContainer?: HTMLElement | string
   ) {
-    this.utils = new Utils();
-    this.input = this.utils.$$(input);
-    this.fileElement = fileElement ? this.utils.$$(fileElement) : null;
+    this.input = Utils.$$(input);
+    this.fileElement = fileElement ? Utils.$$(fileElement) : null;
     this.autoEvent = autoEvent;
     this.progressContainer = progressContainer instanceof HTMLElement ? progressContainer : document.querySelector(`${progressContainer}`) as HTMLElement;
   }
@@ -97,7 +96,7 @@ export class FileUploader {
         size: file.size,
         arrayBuffer: await file.arrayBuffer(),
       };
-      this.utils.processNodes(this.fileElement, (element: HTMLImageElement) => {
+      Utils.processNodes(this.fileElement, (element: HTMLImageElement) => {
         element.src = `${base64String}`;
       });
       return callback(_file);
@@ -135,9 +134,9 @@ export class FileUploader {
     }
   }
   public autoUploadFile() {
-    const transformer = new FileTransformer();
+    const transformer = new Transformer.FileTransformer();
     const filesInput = document.querySelectorAll("input[type='file']") as NodeListOf<HTMLInputElement>;
-    this.utils.processNodes(filesInput, (fileInput: HTMLInputElement) => {
+    Utils.processNodes(filesInput, (fileInput: HTMLInputElement) => {
       const value = fileInput.dataset.value;
       if (value && value !== "") {
         const file = transformer.fromBase64String(value, null, null, false);
@@ -186,7 +185,7 @@ export class FileUploader {
     let target = `<div id="progress-container">
         <div id="progress-bar"></div>
     </div>`;
-    const element = this.utils.textToHTMLElement(target) as HTMLElement;
+    const element = Utils.textToHTMLElement(target) as HTMLElement;
     element.style.position = 'absolute';
     return element;
   }
