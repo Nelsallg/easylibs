@@ -114,5 +114,5 @@ const uint8Array = new Transformer.Base64Transformer().toUint8Array(base64String
 The `fromUint8Array()` method converts a Uint8Array into a base64 string.
 
 ```typescript
-const uint8Array = new Uint
+const uint8Array = new Uint8Array
 ```

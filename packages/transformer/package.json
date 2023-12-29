@@ -14,13 +14,10 @@
   "type": "commonjs",
   "module": "dist/transformer.js",
   "keywords": [
-    "audio","HTMLElement","required",
-    "dom", "node","field",
-    "regexp", "resolve","substring",
-    "path", "forbiddener","key",
-    "reduce", "text","findChar",
-    "disable", "number", "style",
-    "escape","html","attribute"
+    "transformer","base64","uint8",
+    "array", "file","blob",
+    "mime", "form","data",
+    "path", "forbiddener","transform"
   ],
   "scripts": {
     "babel": "babel assets/app.js --out-file public/script/app.js",
