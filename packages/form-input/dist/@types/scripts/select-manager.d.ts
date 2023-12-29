@@ -1,4 +1,4 @@
-export declare class SelectType {
+export default class SelectManager {
     /**
      * Cette méthode redimensionne automatiquement un élément "select"
      * en fonction de la longueur du texte sélectionné

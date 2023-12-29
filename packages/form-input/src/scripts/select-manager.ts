@@ -1,13 +1,13 @@
-import { $$ } from "../../../utils/src/dom";
+import Utils from "@easylibs/utils";
 
-export class SelectType {
+export default class SelectManager {
   /**
    * Cette méthode redimensionne automatiquement un élément "select"
    * en fonction de la longueur du texte sélectionné
    * @param select
    */
   static autoResize(select: string | HTMLSelectElement): void {
-    let field = $$(select);
+    let field = Utils.$$(select);
     if (field instanceof HTMLSelectElement) {
       field.addEventListener('change', (event) => {
         let tempSelect = document.createElement('select'),
@@ -39,7 +39,7 @@ export class SelectType {
    * @param {string | HTMLSelectElement} select
    */
   static addIconToOptions(select: string | HTMLSelectElement): void {
-    let input = $$(select);
+    let input = Utils.$$(select);
     if (input instanceof HTMLSelectElement) {
       input.addEventListener('change', function () {
         if (null !== input && input instanceof HTMLSelectElement) {

@@ -1,8 +1,12 @@
-import { processNodes } from "../../../utils/src/functions/process-node";
-import { textHtmlToNode } from "../../../utils/src/functions/convert-type";
-import { findComputedStyle } from "../../../utils/src/functions/utils";
+import Utils from "@easylibs/utils";
 
-export class PasswordVisibility{
+export default class PasswordManager{
+    public passwordVisibility(){
+        return PasswordVisibility
+    }
+}
+
+class PasswordVisibility{
     private iconPath: { hide: string; show: string; };
     private showIconsToClick: boolean;
    
@@ -12,14 +16,14 @@ export class PasswordVisibility{
     }
     public active = () => {
         const fieldContainer = document.querySelectorAll("password");
-        processNodes(fieldContainer, (container:HTMLElement) => {
+        Utils.processNodes(fieldContainer, (container:HTMLElement) => {
             container.setAttribute('pws-target','');
             const field = container.querySelector("input[type='password']") as HTMLInputElement;
             const html = this.html();
             container.appendChild(html);
             const iconHide = container.querySelector(".hide-eye") as HTMLElement;
             const iconShow = container.querySelector(".show-eye") as HTMLElement;
-            const fieldBorderRadius = findComputedStyle(field, "border-radius");
+            const fieldBorderRadius = Utils.findComputedStyle(field, "border-radius");
             if("" !== fieldBorderRadius){
                 container.style.borderTopRightRadius = fieldBorderRadius;
                 container.style.borderBottomRightRadius = fieldBorderRadius;
@@ -64,7 +68,7 @@ export class PasswordVisibility{
             alignItems: 'center',
             backgroundColor: '#d5e3ec'
         }
-        let node = textHtmlToNode(html,"div") as HTMLElement;
+        let node = Utils.textToHTMLElement(html,"div") as HTMLElement;
         Object.assign(node.style, htmlstyle);
         return this.iconStyle(node) as HTMLElement;
     }
@@ -72,7 +76,7 @@ export class PasswordVisibility{
     {
         let svg = html.querySelectorAll('svg');
         html.innerHTML = "";
-        processNodes(svg, (iconSvg:SVGSVGElement) => {
+        Utils.processNodes(svg, (iconSvg:SVGSVGElement) => {
             const style = {
                 color: '#999',
                 cursor: 'pointer',

@@ -1,4 +1,4 @@
-export class ColorType{
+export default class ColorManager{
     protected colorPicker: string | HTMLInputElement;
     constructor(colorPicker:string|HTMLInputElement){
       this.colorPicker = colorPicker;

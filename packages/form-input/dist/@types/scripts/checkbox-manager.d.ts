@@ -1,7 +1,4 @@
-/**
- * CheckboxManager class to initialize checkbox functionality in a specified parent element.
- */
-export declare class CheckboxManager {
+export default class CheckboxManager {
     private parentElement;
     constructor(parentElement: string);
     /**

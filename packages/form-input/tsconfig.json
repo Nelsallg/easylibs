@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
     "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationDir": "dist/@types",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "lib",
-    "declarationDir": "@types"
+    
   },
-  "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "lib", "form-input"]
+  "include": ["src/**/*.ts", "src/form-input.ts"],
+  "exclude": ["node_modules", "dist"]
 }

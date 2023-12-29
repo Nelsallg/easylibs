@@ -1,4 +1,4 @@
-export declare class DateType {
+export default class DateManager {
     protected fullDate: number;
     startDate: string | HTMLInputElement;
     endDate: string | HTMLInputElement;

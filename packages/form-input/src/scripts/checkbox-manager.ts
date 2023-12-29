@@ -1,40 +1,40 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CheckboxManager = void 0;
-// Import statements
-const dom_1 = require("../../../utils/src/dom");
-const process_node_1 = require("../../../utils/src/process-node");
-/**
- * CheckboxManager class to initialize checkbox functionality in a specified parent element.
- */
-class CheckboxManager {
-    constructor(parentElement) {
+import Utils from "@easylibs/utils";
+
+export default class CheckboxManager {
+    private parentElement: string;
+
+    constructor(parentElement: string) {
         this.parentElement = parentElement;
     }
+
     /**
      * Initializes the checkbox functionality in the specified parent element.
      */
-    initializeCheckbox() {
-        const content = (0, dom_1.$$)(this.parentElement);
+    public initializeCheckbox() {
+        const content = Utils.$$(this.parentElement);
+
         if (content !== null) {
-            (0, process_node_1.processNodes)(content, (node) => {
+            Utils.processNodes(content, (node: HTMLElement) => {
                 this.init(node);
             });
         }
     }
-    init(content) {
-        const parentCheckbox = content.querySelector('.parent-checkbox');
-        const childrenCheckboxes = content.querySelectorAll('.child-checkbox');
+
+    private init(content: HTMLElement) {
+        const parentCheckbox = content.querySelector('.parent-checkbox') as HTMLInputElement;
+        const childrenCheckboxes = content.querySelectorAll('.child-checkbox') as NodeListOf<HTMLInputElement>;
         let parentChecked = parentCheckbox.checked;
+
         /**
          * Toggles the selection state of child checkboxes.
          * @param checked Selection state of checkboxes.
          */
-        const toggleChildrenCheckboxes = (checked) => {
+        const toggleChildrenCheckboxes = (checked: boolean) => {
             childrenCheckboxes.forEach((checkbox) => {
                 checkbox.checked = checked;
             });
         };
+
         /**
          * Event handler for the parent checkbox.
          * Updates the selection state of child checkboxes.
@@ -44,6 +44,7 @@ class CheckboxManager {
             parentChecked = parentCheckbox.checked;
             toggleChildrenCheckboxes(parentChecked);
         });
+
         childrenCheckboxes.forEach((checkbox) => {
             /**
              * Event handler for child checkboxes.
@@ -53,8 +54,7 @@ class CheckboxManager {
                 if (!checkbox.checked && parentChecked) {
                     parentCheckbox.checked = false;
                     parentChecked = false;
-                }
-                else if (checkbox.checked && !parentChecked) {
+                } else if (checkbox.checked && !parentChecked) {
                     const allChildrenChecked = Array.from(childrenCheckboxes).every((c) => c.checked);
                     if (allChildrenChecked) {
                         parentCheckbox.checked = true;
@@ -65,4 +65,3 @@ class CheckboxManager {
         });
     }
 }
-exports.CheckboxManager = CheckboxManager;

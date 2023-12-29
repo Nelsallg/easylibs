@@ -1,4 +1,7 @@
-export declare class PasswordVisibility {
+export default class PasswordManager {
+    passwordVisibility(): typeof PasswordVisibility;
+}
+declare class PasswordVisibility {
     private iconPath;
     private showIconsToClick;
     constructor(iconPath: {
@@ -9,3 +12,4 @@ export declare class PasswordVisibility {
     private html;
     private iconStyle;
 }
+export {};
