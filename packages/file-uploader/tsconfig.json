@@ -5,10 +5,10 @@
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
-    "declarationDir": "@types",
+    "declarationDir": "dist/@types",
     "moduleResolution": "node",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/file-uploader.ts"],
-  "exclude": ["node_modules", "dist", "@types"]
+  "include": ["src/**/*.ts", "src/file-uplader.ts"],
+  "exclude": ["node_modules", "dist"]
 }

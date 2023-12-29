@@ -7,7 +7,22 @@ The File Uploader class provides a simple and customizable way to upload files i
 To install the File Uploader, simply run this promp in your powershell or cmd:
 
 ```bash
-npm install libbest/file-uploader
+npm install @easylibs/file-uploader
+# Or
+yarn add @easylibs/file-uploader
+# Or
+pnpm add @easylibs/file-uploader
+```
+
+Using cdn
+
+```html
+<--MINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/file-uploader@0.0.2/dist/file-uploader.min.js"></script>
+<script src="https://unpkg.com/@easylibs/file-uploader@0.0.2/dist/file-uploader.min.js"></script>
+<-- OR UNMINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/file-uploader@0.0.2/dist/file-uploader.js"></script>
+<script src="https://unpkg.com/@easylibs/file-uploader@0.0.2/dist/file-uploader.js"></script>
 ```
 
 ## Usage
@@ -15,7 +30,7 @@ npm install libbest/file-uploader
 To use the File Uploader, import class, create a new instance and pass in the input element that will receive the files. You can also optionally pass in a file element to display the uploaded files, and a progress container element to display progress bars.
 
 ```typescript
-import FileUploader from "libbest/file-uploader";
+import FileUploader from "@easylibs/file-uploader";
 const uploader = new FileUploader(input, fileElement, progressContainer);
 ```
 
