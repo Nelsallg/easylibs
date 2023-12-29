@@ -1,36 +1,65 @@
 {
-  "name": "pagination",
-  "version": "1.0.0",
+  "name": "@easylibs/pagination",
+  "version": "0.0.1",
   "description": "",
-  "author": "nelsallg <nels.holy.allg@gmail.com>",
-  "homepage": "https://github.com/Nelsallg/libbest.libs/tree/main/packages/pagination#readme",
+  "author": {
+    "name": "Lévy Stéphane NGUEMA-EKOMOE",
+    "email": "nelsallg@contact.com",
+    "url": "http://nelsallg.com/"
+  },
+  "homepage": "https://github.com/Nelsallg/easylibs.libs/tree/main/packages/pagination#readme",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/pagination.js",
+  "types": "dist/@types/pagination.d.ts",
+  "type": "commonjs",
+  "module": "dist/pagination.js",
+  "keywords": [
+    "paginator","pagination"
+  ],
+  "scripts": {
+    "babel": "babel assets/app.js --out-file public/script/app.js",
+    "dev": "webpack --config webpack.config.js --mode=development",
+    "build": "webpack --config webpack.config.js --mode=production",
+    "test": "node ./__tests__/fetch-request.test.js",
+    "tsc": "tsc",
+    "prepublishOnly": "npm run build"
+  },
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "test": "__tests__",
+    "dist": "dist"
   },
   "files": [
-    "lib"
+    "./dist",
+    "./__tests__"
   ],
-  "types": "@types/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "cytest": "cypress",
-    "nodetest": "node ./__tests__/process-backend.test.js",
-    "build": "build.js",
-    "tsc": "tsc",
-    "postbuild": "node ../../scripts/post-build.ts"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nelsallg/libbest.git"
+    "url": "git+https://github.com/Nelsallg/easylibs.git"
   },
   "bugs": {
-    "url": "https://github.com/Nelsallg/libbest.git/issues"
+    "url": "https://github.com/Nelsallg/easylibs.git/issues"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.3",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^9.1.2",
+    "babel-plugin-jsx-pragmatic": "^1.0.2",
+    "cypress": "^13.6.1",
+    "terser-webpack-plugin": "^5.0.0",
+    "ts-loader":"^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.10.0"
+    
+  },
   "peerDependencies": {
-    "@easylibs/fetch-request": "^0.0.4"
+    "@easylibs/fetch-request": "0.0.9",
+    "@easylibs/utils": "0.0.2",
+    "@easylibs/scroll-behavior": "0.0.1"
+  },
+  "sideEffect": false,
+  "publishConfig": {
+    "access": "public"
   }
 }

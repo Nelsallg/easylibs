@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "declaration": true,
     "outDir": "dist",
-    "declarationDir": "@types"
+    "declaration": true,
+    "sourceMap": true,
+    "declarationDir": "dist/@types",
+    "moduleResolution": "node",
+    "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/index.ts"],
-  "exclude": ["node_modules", "dist", "pagination"]
+  "include": ["src/**/*.ts", "src/pagination.ts"],
+  "exclude": ["node_modules", "dist"]
 }

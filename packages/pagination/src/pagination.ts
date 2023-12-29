@@ -1,7 +1,6 @@
 import FetchRequest from "@easylibs/fetch-request";
-import { textHtmlToNode } from "../../utils/src/functions/convert-type";
-import { $$ } from "../../utils/src/dom";
-import { isEndScrolling } from "../../utils/src/functions/scroll-behavior";
+import Utils from "@easylibs/utils";
+import ScrollBehavior from "@easylibs/scroll-behavior";
 
 interface PaginatorOptions {
     parentElement: HTMLElement | string;
@@ -20,10 +19,10 @@ export function paginator(options: PaginatorOptions): void {
         margin,
     } = options;
 
-    const element = $$(parentElement) as HTMLElement;
+    const element = Utils.$$(parentElement) as HTMLElement;
     let lastRequestSuccessfully = true;
 
-    isEndScrolling(element, (is: boolean, scroll: string) => {
+    ScrollBehavior.isEndScrolling(element, (is: boolean, scroll: string) => {
         if (element && is) {
             const nextPageNumber = element.dataset.nextPageNumber;
             const uri = element.dataset.uri as string;
@@ -53,7 +52,7 @@ export function paginator(options: PaginatorOptions): void {
                             if (skeletonLoadingContainer instanceof Element) {
                                 for (let i = 0; i < time; i++) {
                                     skeletonLoadingContainer.appendChild(
-                                        textHtmlToNode(skeletonLoading) as Node
+                                        Utils.textToHTMLElement(skeletonLoading) as Node
                                     );
                                 }
                             } else if (
@@ -61,7 +60,7 @@ export function paginator(options: PaginatorOptions): void {
                             ) {
                                 for (let i = 0; i < time; i++) {
                                     skeletonLoadingContainer.element.appendChild(
-                                        textHtmlToNode(skeletonLoading) as Node
+                                        Utils.textToHTMLElement(skeletonLoading) as Node
                                     );
                                 }
                             }
@@ -70,7 +69,7 @@ export function paginator(options: PaginatorOptions): void {
 
                     if (scroll === "x") {
                         element.appendChild(
-                            textHtmlToNode(skeletonLoading) as Node
+                            Utils.textToHTMLElement(skeletonLoading) as Node
                         );
                     }
 
