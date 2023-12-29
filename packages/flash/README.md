@@ -45,8 +45,8 @@ In addition to using the `addFlash()` method to create flash messages, you can a
 For example, the following code creates a custom flash message that displays a close button:
 
 ```javascript
-// Assuming you have imported the Flash class from 'libbest/flash'
-import Flash from 'libbest/flash';
+// Assuming you have imported the Flash class from '@easylibs/flash'
+import Flash from '@easylibs/flash';
 
 /**
  * CustomFlash class extends the Flash class to create custom flash messages.

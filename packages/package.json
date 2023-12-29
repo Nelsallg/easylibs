@@ -8,7 +8,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "@easylibs/fetch-request": "~0.0.1",
+    "@easylibs/fetch-request": "~0.0.9",
     "@easylibs/file-uploader": "~0.0.1"
   },
   "type": "module",

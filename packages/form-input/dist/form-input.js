@@ -31,19 +31,58 @@ const password_manager_1 = __importDefault(__webpack_require__(/*! ./scripts/pas
 const select_manager_1 = __importDefault(__webpack_require__(/*! ./scripts/select-manager */ "./src/scripts/select-manager.ts"));
 var FormInput;
 (function (FormInput) {
+    /**
+   * Manages the functionality of a group of checkboxes with a parent-child relationship.
+   */
     class CheckboxType extends checkbox_manager_1.default {
+        /**
+         * Constructs a new CheckboxManager instance.
+         * @param parentElement - The selector for the parent element in the DOM.
+         */
+        constructor(parentElement) {
+            super(parentElement);
+        }
     }
     FormInput.CheckboxType = CheckboxType;
+    /**
+     * Manages the color-related functionality, including fetching colors from a URL and handling color selection events.
+     */
     class ColorType extends color_manager_1.default {
     }
     FormInput.ColorType = ColorType;
     class PasswordType extends password_manager_1.default {
+        /**
+        * Constructs a new PasswordVisibility instance.
+        * @param iconPath - The paths for hide and show icons.
+        * @param iconPath.hide - The path for the hide icon.
+        * @param iconPath.show - The path for the show icon.
+        * @param showIconsToClick - Indicates whether to show icons on click or by default.
+       */
+        constructor(iconPath, showIconsToClick = false) {
+            super(iconPath, showIconsToClick);
+        }
     }
     FormInput.PasswordType = PasswordType;
+    /**
+     * Manages functionality related to HTML select elements.
+     */
     class SelectType extends select_manager_1.default {
+        constructor() {
+            super();
+        }
     }
     FormInput.SelectType = SelectType;
     class DateType extends date_manager_1.default {
+        /**
+       * Constructs a new DateManager instance.
+       * @param startDate - The start date input or selector.
+       * @param endDate - The end date input or selector.
+       * @param durationContainer - The container to display the duration.
+       * @param autoSetDuration - Indicates whether to automatically set the duration text.
+       */
+        constructor(startDate, endDate, durationContainer, autoSetDuration = false) {
+            super(startDate, endDate, durationContainer, autoSetDuration);
+        }
     }
     FormInput.DateType = DateType;
 })(FormInput || (exports.FormInput = FormInput = {}));
@@ -64,28 +103,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const utils_1 = __importDefault(__webpack_require__(/*! @easylibs/utils */ "../utils/dist/utils.js"));
+/**
+ * Manages the functionality of a group of checkboxes with a parent-child relationship.
+ */
 class CheckboxManager {
+    /**
+     * Constructs a new CheckboxManager instance.
+     * @param {string} parentElement - The selector for the parent element in the DOM.
+     */
     constructor(parentElement) {
         this.parentElement = parentElement;
     }
     /**
      * Initializes the checkbox functionality in the specified parent element.
+     * Uses the utility function $$ from "@easylibs/utils" to select the parent element.
+     * If the element is found, processes each child node using the init method.
      */
-    initializeCheckbox() {
+    init() {
         const content = utils_1.default.$$(this.parentElement);
         if (content !== null) {
             utils_1.default.processNodes(content, (node) => {
-                this.init(node);
+                this.initializeCheckbox(node);
             });
         }
     }
-    init(content) {
+    /**
+     * Sets up checkbox functionality within a given content (presumably a child node of the parent).
+     * Selects the parent and child checkboxes, sets up event listeners, and handles the logic for toggling checkbox states.
+     * @param {HTMLElement} content - The HTML element representing the content (child node).
+     */
+    initializeCheckbox(content) {
         const parentCheckbox = content.querySelector('.parent-checkbox');
         const childrenCheckboxes = content.querySelectorAll('.child-checkbox');
         let parentChecked = parentCheckbox.checked;
         /**
          * Toggles the selection state of child checkboxes.
-         * @param checked Selection state of checkboxes.
+         * @param {boolean} checked - Selection state of checkboxes.
          */
         const toggleChildrenCheckboxes = (checked) => {
             childrenCheckboxes.forEach((checkbox) => {
@@ -95,7 +148,7 @@ class CheckboxManager {
         /**
          * Event handler for the parent checkbox.
          * Updates the selection state of child checkboxes.
-         * @param e Click event.
+         * @param {Event} e - Click event.
          */
         parentCheckbox.addEventListener('click', (e) => {
             parentChecked = parentCheckbox.checked;
@@ -145,10 +198,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * Manages the color-related functionality, including fetching colors from a URL and handling color selection events.
+ */
 class ColorManager {
+    /**
+     * Constructs a new ColorManager instance.
+     * @param {string | HTMLInputElement} colorPicker - The selector or HTMLInputElement representing the color picker.
+     */
     constructor(colorPicker) {
         this.colorPicker = colorPicker;
     }
+    /**
+     * Fetches colors from the specified URL and populates the color picker's datalist.
+     * Also logs the selected color when an input event occurs.
+     * @param {string} url - The URL from which to fetch color data.
+     */
     fetchColors(url) {
         document.addEventListener("DOMContentLoaded", () => __awaiter(this, void 0, void 0, function* () {
             const colorPicker = this.colorPicker instanceof HTMLInputElement ? this.colorPicker : document.getElementById(this.colorPicker);
@@ -157,7 +222,7 @@ class ColorManager {
             try {
                 const response = yield fetch(url);
                 const data = yield response.json();
-                if (response) {
+                if (response.ok) {
                     const colors = data.colors;
                     colors.forEach((color) => {
                         const option = document.createElement("option");
@@ -165,12 +230,15 @@ class ColorManager {
                         datalist.appendChild(option);
                     });
                 }
+                else {
+                    console.error("Error fetching colors:", response.statusText);
+                }
             }
             catch (error) {
-                console.error("Erreur lors du chargement des couleurs :", error);
+                console.error("Error loading colors:", error);
             }
             colorPicker.addEventListener("input", function () {
-                console.log("Couleur sélectionnée :", colorPicker.value);
+                console.log("Selected color:", colorPicker.value);
             });
         }));
     }
@@ -189,7 +257,17 @@ exports["default"] = ColorManager;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * Manages date-related functionality, including calculating durations and handling date inputs.
+ */
 class DateManager {
+    /**
+     * Constructs a new DateManager instance.
+     * @param {string | HTMLInputElement} startDate - The start date input or selector.
+     * @param {string | HTMLInputElement} endDate - The end date input or selector.
+     * @param {HTMLElement} [durationContainer] - The container to display the duration.
+     * @param {boolean} [autoSetDuration=false] - Indicates whether to automatically set the duration text.
+     */
     constructor(startDate, endDate, durationContainer, autoSetDuration = false) {
         this.fullDate = 0;
         this.startDate = startDate;
@@ -197,6 +275,9 @@ class DateManager {
         this.durationContainer = durationContainer;
         this.autoSetDuration = autoSetDuration;
     }
+    /**
+     * Finds the duration between the start and end dates and updates the duration container if specified.
+     */
     findDurationBetweenToDate() {
         let start_date = null;
         let fullDate = 0;
@@ -217,7 +298,7 @@ class DateManager {
                 if (start_date && start_date < end_date) {
                     endDate.value = end_date.toISOString().split("T")[0];
                     this.fullDate = end_date.getTime() - start_date.getTime();
-                    if (true === this.autoSetDuration && this.durationContainer) {
+                    if (this.autoSetDuration && this.durationContainer) {
                         const text = this.fullDurationText;
                         const duration = this.durationContainer;
                         if (duration) {
@@ -228,12 +309,20 @@ class DateManager {
             });
         }
     }
+    /**
+     * Converts the full date difference to the number of days.
+     * @returns {number} The number of days in the full date difference.
+     */
     convertFullDateToDays() {
         let one_day = 24 * 60 * 60 * 1000;
         let absValue = Math.abs(this.fullDate);
         return Math.floor(absValue / one_day);
     }
-    ;
+    /**
+     * Converts the full date difference to the number of weeks and remaining days.
+     * @param {number} [extDays] - Extra days to consider in the calculation.
+     * @returns {Object} An object containing the number of weeks and remaining days.
+     */
     convertFullDateToWeeks(extDays) {
         let totalDaysNumber = extDays;
         let weeksNumber = 0;
@@ -246,6 +335,10 @@ class DateManager {
         }
         return { weeks: weeksNumber, extDays: extDays };
     }
+    /**
+     * Converts the full date difference to the number of months, weeks, and remaining days.
+     * @returns {Object} An object containing the number of days, weeks, and months.
+     */
     convertFullDateToMonths() {
         let totalDaysNumber = this.convertFullDateToDays();
         let monthsNumber = Math.floor(totalDaysNumber / 30);
@@ -265,6 +358,13 @@ class DateManager {
         }
         return { days, weeks, months };
     }
+    /**
+     * Generates a text representation of the duration.
+     * @param {number} [day] - Number of days.
+     * @param {number} [week] - Number of weeks.
+     * @param {number} [month] - Number of months.
+     * @returns {Object} An object containing text representations for days, weeks, and months.
+     */
     durationText(day, week, month) {
         let dayText = "";
         (day && day > 1) ? dayText = `${day} jours` : dayText = `${day} jour`;
@@ -283,16 +383,25 @@ class DateManager {
         }
         return { dayText, weekText, monthText };
     }
+    /**
+     * Gets the full duration text based on the converted months, weeks, and days.
+     * @returns {string} The full duration text.
+     */
     get fullDurationText() {
         var _a, _b, _c;
-        let fulleMonth = this.convertFullDateToMonths();
-        const day = fulleMonth.days;
-        const week = fulleMonth.weeks;
-        const month = fulleMonth.months;
+        let fullMonths = this.convertFullDateToMonths();
+        const day = fullMonths.days;
+        const week = fullMonths.weeks;
+        const month = fullMonths.months;
         let durationText = this.durationText(day, week, month);
         console.log({ durationText, month });
         return ` ${(_a = durationText.monthText) !== null && _a !== void 0 ? _a : ""} ${(_b = durationText.weekText) !== null && _b !== void 0 ? _b : ""} ${(_c = durationText.dayText) !== null && _c !== void 0 ? _c : ""}`;
     }
+    /**
+     * Sets the full duration text to the specified element.
+     * @param {HTMLElement} element - The HTML element to set the duration text.
+     * @param {string} text - The duration text to set.
+     */
     setFullDurationText(element, text) {
         if (element instanceof HTMLInputElement) {
             element.value = text;
@@ -321,24 +430,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const utils_1 = __importDefault(__webpack_require__(/*! @easylibs/utils */ "../utils/dist/utils.js"));
 class PasswordManager {
-    passwordVisibility() {
-        return PasswordVisibility;
+    constructor(iconPath, showIconsToClick = false) {
+        new PasswordVisibility(iconPath, showIconsToClick);
     }
 }
 exports["default"] = PasswordManager;
+/**
+ * Manages the visibility of password fields, allowing users to toggle between password and text visibility.
+ */
 class PasswordVisibility {
+    /**
+     * Constructs a new PasswordVisibility instance.
+     * @param {Object} iconPath - The paths for hide and show icons.
+     * @param {string} iconPath.hide - The path for the hide icon.
+     * @param {string} iconPath.show - The path for the show icon.
+     * @param {boolean} [showIconsToClick=false] - Indicates whether to show icons on click or by default.
+     */
     constructor(iconPath, showIconsToClick = false) {
-        this.active = () => {
-            const fieldContainer = document.querySelectorAll("password");
-            utils_1.default.processNodes(fieldContainer, (container) => {
+        /**
+         * Activates the password visibility functionality for all password fields within the document.
+         */
+        this.activate = () => {
+            const fieldContainers = document.querySelectorAll("[password]");
+            utils_1.default.processNodes(fieldContainers, (container) => {
                 container.setAttribute('pws-target', '');
                 const field = container.querySelector("input[type='password']");
-                const html = this.html();
+                const html = this.createHtml();
                 container.appendChild(html);
                 const iconHide = container.querySelector(".hide-eye");
                 const iconShow = container.querySelector(".show-eye");
                 const fieldBorderRadius = utils_1.default.findComputedStyle(field, "border-radius");
-                if ("" !== fieldBorderRadius) {
+                if (fieldBorderRadius !== "") {
                     container.style.borderTopRightRadius = fieldBorderRadius;
                     container.style.borderBottomRightRadius = fieldBorderRadius;
                 }
@@ -370,12 +492,17 @@ class PasswordVisibility {
         this.iconPath = iconPath;
         this.showIconsToClick = showIconsToClick;
     }
-    html() {
+    /**
+     * Creates the HTML structure for the password visibility icons.
+     * @returns {HTMLElement} The HTML element containing the hide and show icons.
+     * @private
+     */
+    createHtml() {
         const html = `<div class='eyes-icon'>
             <svg class="hide-eye" style='display:none;'><use xlink:href="/${this.iconPath.hide}"></use></svg>
             <svg class="show-eye"><use xlink:href="/${this.iconPath.show}"></use></svg>
         </div>`;
-        const htmlstyle = {
+        const htmlStyle = {
             display: 'none',
             position: 'absolute',
             top: '0',
@@ -387,13 +514,19 @@ class PasswordVisibility {
             backgroundColor: '#d5e3ec'
         };
         let node = utils_1.default.textToHTMLElement(html, "div");
-        Object.assign(node.style, htmlstyle);
-        return this.iconStyle(node);
+        Object.assign(node.style, htmlStyle);
+        return this.styleIcons(node);
     }
-    iconStyle(html) {
-        let svg = html.querySelectorAll('svg');
+    /**
+     * Styles the password visibility icons.
+     * @param {HTMLElement} html - The HTML element containing the hide and show icons.
+     * @returns {HTMLElement} The HTML element with styled icons.
+     * @private
+     */
+    styleIcons(html) {
+        let svgs = html.querySelectorAll('svg');
         html.innerHTML = "";
-        utils_1.default.processNodes(svg, (iconSvg) => {
+        utils_1.default.processNodes(svgs, (iconSvg) => {
             const style = {
                 color: '#999',
                 cursor: 'pointer',
@@ -423,11 +556,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const utils_1 = __importDefault(__webpack_require__(/*! @easylibs/utils */ "../utils/dist/utils.js"));
+/**
+ * Manages functionality related to HTML select elements.
+ */
 class SelectManager {
     /**
-     * Cette méthode redimensionne automatiquement un élément "select"
-     * en fonction de la longueur du texte sélectionné
-     * @param select
+     * Automatically resizes a "select" element based on the length of the selected text.
+     * @param {string | HTMLSelectElement} select - The selector or HTMLSelectElement to be auto-resized.
      */
     static autoResize(select) {
         let field = utils_1.default.$$(select);
@@ -437,9 +572,9 @@ class SelectManager {
                 if (null !== event.target && event.target instanceof HTMLSelectElement) {
                     tempOption.textContent = event.target.options[event.target.selectedIndex].text;
                     tempSelect.style.cssText += `
-                    visibility: hidden;
-                    position: fixed;
-                    `;
+            visibility: hidden;
+            position: fixed;
+          `;
                     tempSelect.appendChild(tempOption);
                     event.target.after(tempSelect);
                     const tempSelectWidth = tempSelect.getBoundingClientRect().width;
@@ -451,12 +586,12 @@ class SelectManager {
             field.dispatchEvent(new Event('change'));
         }
         else {
-            console.error("Le paramètre n'est pas un élément Select");
+            console.error("Parameter is not an HTMLSelectElement");
         }
     }
     /**
-     * Gestion du select avec les icônes
-     * @param {string | HTMLSelectElement} select
+     * Adds icons to options in a select element and handles icon visibility on change.
+     * @param {string | HTMLSelectElement} select - The selector or HTMLSelectElement for which to add icons to options.
      */
     static addIconToOptions(select) {
         let input = utils_1.default.$$(select);
@@ -477,7 +612,7 @@ class SelectManager {
             });
         }
         else {
-            console.log("Le paramètre est invalide");
+            console.log("Invalid parameter");
         }
     }
 }

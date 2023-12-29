@@ -1,37 +1,32 @@
-// build.js
 import { compile } from 'sass';
 import pkg from 'fs-extra';
+import path from 'path';
+
 const { ensureDirSync, writeFileSync, copySync } = pkg;
+const cssOutputPath = path.resolve(__dirname, 'dist/assets/css');
 
-// Chemin du dossier de sortie pour les fichiers CSS
-const cssOutputPath = 'packages/flash/dist/css';
-
-// Compiler les fichiers SCSS en CSS
 function compileSassFiles() {
-  const flashSassFiles = ['assets/**/*.scss']; // Chemin vers vos fichiers SCSS source
+  const sassFiles = ['src/assets/**/*.scss'];
 
-  flashSassFiles.forEach(file => {
+  sassFiles.forEach(file => {
     const result = compile({ file });
-   
-    const outputFilePath = file.replace('styles', cssOutputPath).replace('.scss', '.css');
+    const outputFilePath = path.resolve(__dirname, file.replace('src/assets', cssOutputPath).replace('.scss', '.css'));
 
-    ensureDirSync(outputFilePath.split('/').slice(0, -1).join('/'));
+    ensureDirSync(path.dirname(outputFilePath));
     writeFileSync(outputFilePath, result.css);
   });
 }
 
-// Copier les fichiers SCSS dans le dossier de sortie
 function copySassFiles() {
-  const sassFiles = ['assets/**/*.scss']; // Chemin vers vos fichiers SCSS source
+  const sassFiles = ['src/assets/**/*.scss'];
 
   sassFiles.forEach(file => {
-    const outputFilePath = file.replace('styles', cssOutputPath);
+    const outputFilePath = path.resolve(__dirname, file.replace('src/assets', cssOutputPath));
+
+    ensureDirSync(path.dirname(outputFilePath));
     copySync(file, outputFilePath);
   });
 }
 
-// Exécuter la compilation des fichiers SCSS en CSS
 compileSassFiles();
-
-// Copier les fichiers SCSS dans le dossier de sortie
 copySassFiles();
