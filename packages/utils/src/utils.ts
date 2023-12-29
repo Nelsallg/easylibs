@@ -219,7 +219,7 @@ export default class Utils{
      */
     public setAsteriskToRequiredField() {
         const asterisk = `<svg class="required-svg">
-        <use xlink:href="/svg/form.svg#asterisk"></use>
+        <use xlink:href="../asset/icon.svg#asterisk"></use>
         </svg>`;
         const labels = document.querySelectorAll("label[required-field]");
         if (labels) {
