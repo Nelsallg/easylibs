@@ -1,8 +1,8 @@
-# Utils.ts: A Comprehensive JavaScript Utility Library
+# Utils: A Comprehensive JavaScript Utility Library
 
 ## Introduction
 
-The `Utils.ts` file is a comprehensive JavaScript utility library that provides a wide range of functions to enhance the development of web applications. This library offers a variety of features, including audio element creation, HTML element manipulation, regular expression generation, path resolution, and more.
+The `Utils` class is a comprehensive JavaScript utility library that provides a wide range of functions to enhance the development of web applications. This library offers a variety of features, including audio element creation, HTML element manipulation, regular expression generation, path resolution, and more.
 
 ## Installation
 
@@ -10,18 +10,25 @@ To use the `Utils.ts` library in your project, you can either directly include t
 
 ### Direct Inclusion
 
-To include the `Utils.ts` library directly in your HTML document, simply add the following script tag to the `<head>` section of your document:
+To include the `Utils` library directly in your HTML document, simply add the following script tag to the `<head>` section of your document:
 
 ```html
-<script src="path/to/Utils.ts"></script>
+<--MINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@0.0.1/dist/utils.min.js"></script>
+<script src="https://unpkg.com/@easylibs/utils@0.0.1/dist/utils.min.js"></script>
+<-- OR UNINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@0.0.1/dist/utils.js"></script>
+<script src="https://unpkg.com/@easylibs/utils@0.0.1/dist/utils.js"></script>
 ```
 
-### npm Installation
+### npm,yarn or pnpm Installation
 
-To install the `Utils.ts` library as a module using npm, run the following command in your terminal:
+To install the `Utils` library as a module using npm, run the following command in your terminal:
 
 ```bash
 npm install @easylibs/utils
+yarn add @easylibs/utils
+pnpm add @easylibs/utils
 ```
 
 Once installed, you can import the library into your JavaScript files using the following syntax:
@@ -56,6 +63,10 @@ document.body.appendChild(divElement);
 
 The `getRegexp()` function generates regular expressions based on a specified type. It supports various types of regular expressions, including email, phone number, strong password, and more. Here's an example of how to use it:
 
+let's test a password which must contain at least one capital letter, a number, a special character and at least 8 characters.
+
 ```javascript
-const emailRegex = Utils.getRegexp('email');
+const strongPasswordRegex = Utils.getRegexp('strong-password');
+strongPasswordRegex.test('1234') // return false
+strongPasswordRegex.test('Azerty@1234') // return true
 ```

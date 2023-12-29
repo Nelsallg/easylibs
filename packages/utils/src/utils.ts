@@ -1,4 +1,4 @@
-declare type RegexType = 'email' | 'phoneNumber' | 'number' | 'strongPassword' | 'url' | 'defaultText' | 'frText' | 'enText' | 'trText';
+declare type RegexType = 'email' | 'phone-number' | 'number' | 'strong-password' | 'url' | 'default-text' | 'fr-text' | 'en-text' | 'tr-text';
 export default class Utils{
     /**
      * Crée un élément audio avec la source audio spécifiée par le chemin audioPath.
@@ -6,7 +6,7 @@ export default class Utils{
      * @param classname La classe CSS à ajouter à l'élément audio (optionnel).
      * @returns L'élément audio créé.
      */
-    public setAudio(audioPath:string, classname=null) {
+    public static setAudio(audioPath:string, classname=null) {
         const audio = document.createElement('audio');
         if(classname != null){audio.classList.add(classname);}
         const source = document.createElement('source');
@@ -15,7 +15,7 @@ export default class Utils{
         audio.appendChild(source);
         return audio;
     }
-    public textToHTMLElement(textHtml:string, targetName="div", children:boolean = false):Element|HTMLCollection|null
+    public static textToHTMLElement(textHtml:string, targetName="div", children:boolean = false):Element|HTMLCollection|null
     {
         const target = document.createElement(`${targetName}`);
         target.innerHTML = textHtml;
@@ -25,7 +25,7 @@ export default class Utils{
     /**
      * retourne un élément du dom
      */
-    public $$(element:Element|HTMLCollection|string){
+    public static $$(element:Element|HTMLCollection|string){
         if (element instanceof HTMLElement || element instanceof HTMLCollection) {
             return element;
         }else if(typeof element === 'string') {
@@ -47,7 +47,7 @@ export default class Utils{
      * @param callback Une fonction de rappel à exécuter sur chaque élément du tableau.
      * @returns 
      */
-    public processNodes(nodeList: any, callback = (node: any, index?:number) => {}){
+    public static processNodes(nodeList: any, callback = (node: any, index?:number) => {}){
         if(nodeList instanceof NodeList || Array.isArray(nodeList)) {
         return Array.from(nodeList).forEach((node,i) => {
             callback(node,i);
@@ -63,25 +63,25 @@ export default class Utils{
      * @param type Le type d'expression régulière demandé.
      * @returns L'expression régulière correspondante.
      */
-    public getRegexp(type: RegexType): RegExp {
+    public static getRegexp(type: RegexType): RegExp {
         switch (type) {
             case 'email':
             return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-            case 'phoneNumber':
+            case 'phone-number':
             return new RegExp(/^(0|\\+[1-9]{1,3})[0-9 ]+$/);
             case 'number':
             return new RegExp(/^[0-9]+$/);
-            case 'strongPassword':
+            case 'strong-password':
             return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
             case 'url':
             return new RegExp(/^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/);
-            case 'defaultText':
+            case 'default-text':
             return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
-            case 'frText':
+            case 'fr-text':
             return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
-            case 'enText':
+            case 'en-text':
             return  new RegExp(/^[a-zA-Z '-]{1,40}$/);
-            case 'trText':
+            case 'tr-text':
             return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
             default:
             throw new Error('Type d\'expression régulière non pris en charge.');
@@ -92,7 +92,7 @@ export default class Utils{
      * @param path Le chemin de la ressource.
      * @returns Le chemin résolu de la ressource.
      */
-    public resolvePath(path:string){
+    public static resolvePath(path:string){
         const PROJECT_NAME = window.location.pathname.split("/")[1];
         const ORIGIN = window.location.origin;
         const PORT = window.location.port;
@@ -113,7 +113,7 @@ export default class Utils{
      * @param backgroundColor La couleur d'arrière-plan de la zone interdite (par défaut : '#FFFFFF').
      * @returns Un élément HTML représentant une zone interdite.
      */
-    private forbiddener(tag:string='td', backgroundColor?:string){
+    private static forbiddener(tag:string='td', backgroundColor?:string){
         let forbiddenTag = document.createElement(tag)
         forbiddenTag.setAttribute('class','forbidden')
         const style = {
@@ -133,7 +133,7 @@ export default class Utils{
      * @param maxLength La longueur maximale de la chaîne résultante (par défaut : 14).
      * @returns La chaîne de texte réduite.
      */
-    public reduceText(text: string, maxLength: number = 14): string {
+    public static reduceText(text: string, maxLength: number = 14): string {
         text = typeof text === "string" ? text.trim() : "";
         if (text.length > maxLength) {
           return `${text.substring(0, maxLength)}...`;
@@ -149,7 +149,7 @@ export default class Utils{
      * @param priceType - (Optional) A boolean flag indicating whether the input represents a price. If true, the input is expected to be a number with an optional decimal part.
      * @param decimal - (Optional) The number of decimal places to round to. If provided, the input values will be rounded to the specified decimal places.
      */
-    public changeInputTextTypeToNumberType(attr: string,limit?: number | null,priceType: boolean = false,decimal?: number) {
+    public static changeInputTextTypeToNumberType(attr: string,limit?: number | null,priceType: boolean = false,decimal?: number) {
         this.processNodes(this.$$(attr), function (element) {
           let input = element as HTMLInputElement;
           if (input) {
@@ -178,7 +178,7 @@ export default class Utils{
      * @param trigger - The trigger element (button) to activate the function (default: undefined).
      * @param backgroundColor - The background color for the forbidden tag (default: undefined).
      */
-    public disablor(tag = "td",target?: HTMLElement,trigger?: HTMLElement,backgroundColor?: string) {
+    public static disablor(tag = "td",target?: HTMLElement,trigger?: HTMLElement,backgroundColor?: string) {
         const buttons = document.querySelectorAll(
         "[disablor],[self-disablor]"
         );
@@ -217,7 +217,7 @@ export default class Utils{
      * of the 'required-field' attribute. The function utilizes the processNodes method
      * to iterate through the matched labels and append the asterisk.
      */
-    public setAsteriskToRequiredField() {
+    public static setAsteriskToRequiredField() {
         const asterisk = `<svg class="required-svg">
         <use xlink:href="../asset/icon.svg#asterisk"></use>
         </svg>`;
@@ -239,7 +239,7 @@ export default class Utils{
      *               If false or not provided, the method will return the value corresponding to the key.
      * @returns The value or key of the first matching property if found, otherwise false.
      */
-    public hasKeyWithNameSubstring(object: any,substring: string,getKey?: boolean) {
+    public static hasKeyWithNameSubstring(object: any,substring: string,getKey?: boolean) {
         for (let key in object) {
           if (key.includes(substring)) {
             if (undefined === getKey || false === getKey) {
@@ -261,7 +261,7 @@ export default class Utils{
      *            If false or not provided, the function will return the value corresponding to the key.
      * @returns The value or key of the first matching property if found, otherwise false.
      */
-    public findObjectDataByKeyName(object: any,keyOrShorKey: string,key?: boolean) {
+    public static findObjectDataByKeyName(object: any,keyOrShorKey: string,key?: boolean) {
         Object.keys(object).forEach((key) => {
           if (key.includes(keyOrShorKey)) {
             return object[key];
@@ -270,7 +270,7 @@ export default class Utils{
         return false;
     }
 
-    public findChar(string: string, limit: number, returnBool:boolean = false) {
+    public static findChar(string: string, limit: number, returnBool:boolean = false) {
         for (let i = 0; i <= limit; i++) {
           const index = string.indexOf(i.toString());
           if (index !== -1) {
@@ -280,7 +280,7 @@ export default class Utils{
         return returnBool ? false : null;
       }
       
-    public findComputedStyle(
+    public static findComputedStyle(
         element: HTMLElement,
         property: string | Array<string>
       ) {
@@ -312,7 +312,7 @@ export default class Utils{
      * @param str - The input string to be escaped.
      * @returns - The escaped string with special characters replaced with their HTML entity equivalents.
      */
-    public escape(str?: string): string {
+    public static escape(str?: string): string {
         if (!str) {
           return "";
         }
@@ -328,7 +328,7 @@ export default class Utils{
      * @param target - The CSS selector used to find the desired element.
      * @returns The first Element with a matching target, or null if no such element is found.
      */
-    public findHTMLElementBy(referent: HTMLElement,target: string): Element | null {
+    public static findHTMLElementBy(referent: HTMLElement,target: string): Element | null {
         let currentElement = referent as Element | null;
         if (currentElement) {
           while ((currentElement = currentElement.previousElementSibling)) {
@@ -346,7 +346,7 @@ export default class Utils{
      * @param attributes - An object containing HTML attributes.
      * @returns A string representing the attributes.
      */
-    public formatHTMLAttributes(attributes: any) {
+    public static formatHTMLAttributes(attributes: any) {
         let attrs = "";
         if (attributes) {
           for (const [key, value] of Object.entries(attributes)) {
