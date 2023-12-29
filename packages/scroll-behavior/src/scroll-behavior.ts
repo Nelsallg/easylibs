@@ -1,15 +1,7 @@
 export default class ScrollBehavior {
-    private initialMouseY = 0;
-    private initialScrollTop = 0;
-    private isRightClickPressed = false;
-  
-    constructor() {
-      this.handleMouseDown = this.handleMouseDown.bind(this);
-      this.handleMouseMove = this.handleMouseMove.bind(this);
-      this.handleMouseUp = this.handleMouseUp.bind(this);
-      this.handleWheel = this.handleWheel.bind(this);
-      this.handleKeyDown = this.handleKeyDown.bind(this);
-    }
+    private static initialMouseY = 0;
+    private static initialScrollTop = 0;
+    private static isRightClickPressed = false;
     /**
     * Cette fonction active les fonctionnalités de défilement et de glissement sur la page. 
     * Elle permet à l'utilisateur d'interagir avec la page en utilisant la souris, 
@@ -17,13 +9,13 @@ export default class ScrollBehavior {
     * En appelant cette fonction, 
     * l'utilisateur peut profiter d'une expérience de navigation plus interactive et personnalisée.
     */
-    public run(): void {
+    public static run(): void {
         window.addEventListener('mousedown', this.handleMouseDown);
         window.addEventListener('wheel', this.handleWheel);
         window.addEventListener('keydown', this.handleKeyDown);
     }
 
-    public isEndScrolling(element: HTMLElement, callback: Function = (is: boolean, scroll: string) => {}, margin?: { x: number, y: number }): boolean {
+    public static isEndScrolling(element: HTMLElement, callback: Function = (is: boolean, scroll: string) => {}, margin?: { x: number, y: number }): boolean {
         let marginX = 0;
         let marginY = 0;
         if (margin) {
@@ -48,7 +40,7 @@ export default class ScrollBehavior {
      * les écouteurs d'événements de mouvement de souris et de relâchement de clic.
      * @param event - L'événement de clic de souris enfoncé.
      */
-    private handleMouseDown(event: MouseEvent): void {
+    private static handleMouseDown(event: MouseEvent): void {
       if (event.button === 2) {
         this.isRightClickPressed = true;
         this.initialMouseY = event.clientY;
@@ -62,7 +54,7 @@ export default class ScrollBehavior {
      * pour effectuer le défilement en fonction du mouvement de la souris.
      * @param event - L'événement de mouvement de souris.
      */
-    private handleMouseMove(event: MouseEvent): void {
+    private static handleMouseMove(event: MouseEvent): void {
       if (this.isRightClickPressed) {
         const deltaY = event.clientY - this.initialMouseY;
         window.scrollTo(0, this.initialScrollTop - deltaY);
@@ -73,7 +65,7 @@ export default class ScrollBehavior {
      * Nettoie les écouteurs d'événements de mouvement de souris et de relâchement de clic.
      * @param event - L'événement de relâchement de clic de souris.
      */
-    private handleMouseUp(event: MouseEvent): void {
+    private static handleMouseUp(event: MouseEvent): void {
       if (event.button === 2) {
         this.isRightClickPressed = false;
         document.removeEventListener('mousemove', this.handleMouseMove);
@@ -87,7 +79,7 @@ export default class ScrollBehavior {
      * Cela offre une alternative pratique à la barre de défilement traditionnelle pour naviguer sur la page.
      * @param event
      */
-    private handleWheel(event?: WheelEvent): void {
+    private static handleWheel(event?: WheelEvent): void {
       if (this.isRightClickPressed) {
         if (event !== undefined) {
           if (event.deltaY > 0) {
@@ -106,7 +98,7 @@ export default class ScrollBehavior {
      * à travers le contenu de la page en utilisant uniquement le clavier.
      * @param event 
      */
-    private handleKeyDown(event?: KeyboardEvent): void {
+    private static handleKeyDown(event?: KeyboardEvent): void {
       if (event !== undefined) {
         if (this.isRightClickPressed && event.key === 'ArrowDown') {
           window.scrollBy(0, 100);
