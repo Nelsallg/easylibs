@@ -1,8 +1,8 @@
-# AnimationHandler.js
+# Animation
 
 ## Introduction
 
-The `AnimationHandler.js` file contains a class that provides a set of functions for handling animations on HTML elements. These functions include:
+The `Animation` is a class that provides a set of functions for handling animations on HTML elements. These functions include:
 
 - `animeIn()`: Performs an "in" animation on an element, making it visible.
 - `animeOut()`: Performs an "out" animation on an element, hiding or removing it.
