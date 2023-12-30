@@ -1,4 +1,5 @@
 import { FlashInterface, FlashOptions } from "./scripts/iflash";
+import "./assets/scss/flash-style.scss";
 export default class Flash implements FlashInterface {
     /**
     * Ajoute un message Flash avec les options spécifiées.

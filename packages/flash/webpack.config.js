@@ -10,8 +10,8 @@ module.exports = {
   mode: isProduction ? 'production' : 'development',
   entry: {
     'flash': './src/flash.ts',
-    'flash-style': './src/assets/scss/flash-style.scss',
-    'icon': './src/assets/icon/icon.svg'
+    // 'flash-style': './src/assets/scss/flash-style.scss',
+    // 'icon': './src/assets/icon/icon.svg'
   },
   output: {
     filename: isProduction ? '[name].min.js' : (isGlobal ? '[name].global.js' : '[name].js'),

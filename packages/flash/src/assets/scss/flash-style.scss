@@ -1,0 +1,132 @@
+@use './mixin';
+@use './animations';
+
+
+@mixin alert($attr, $position, $left, $top){
+  @include animations.slide-out-top('.flash',.4s,-200%);
+  @include animations.slide-in-top('.flash',.4s,-200%);
+  #{$attr}{
+     @include mixin.positions($position, $left, $top, null, null);
+     @include mixin.text-select-remove();
+     @include mixin.proportions(400px, null);
+     background-color: #FFFFFF;
+     text-align: center;
+     z-index: 10;
+     border-radius:10px;
+     min-height: 100px;
+     align-items: center;
+     flex-direction: column;
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);
+   }
+   #{$attr}.danger{
+    border-left: 10px solid #dc3545;
+    border-right: 10px solid #dc3545;
+   }
+   #{$attr}.success{
+    border-left: 10px solid #28a745;
+    border-right: 10px solid #28a745;
+   }
+   #{$attr}.info{
+    border-left: 10px solid #17a2b8;
+    border-right: 10px solid #17a2b8;
+   }
+   #{$attr}.warning{
+    border-left: 10px solid #ffc107;
+    border-right: 10px solid #ffc107;
+   }
+   #{$attr} .alert-header{
+     width: 100%;
+     top:0;
+     left:0;
+     height: 30px;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+    //  position: absolute;
+   }
+   #{$attr} .alert-header h6{
+     font-size: 25px;
+     color:#28a745;
+     width: 150px;
+   }
+   #{$attr}.danger .alert-header h6{
+    color:#dc3545;
+  }
+  #{$attr}.success .alert-header h6{
+    color:#28a745;
+  }#{$attr}.info .alert-header h6{
+    color:#17a2b8;
+  }#{$attr}.warning .alert-header h6{
+    color:#ffc107;
+  }
+   #{$attr} .alert-header svg{
+     font-size: 25px;
+     color:#28a745;
+     position: relative;
+     width: 30px;
+     cursor: pointer;
+    
+   }
+   #{$attr}.danger .alert-header svg, 
+   #{$attr}.danger h6 svg{ 
+    color:#dc3545;
+    }
+  #{$attr}.success .alert-header svg,
+  #{$attr}.success h6 svg{
+    color:#28a745;
+  }#{$attr}.info .alert-header svg,
+  #{$attr}.info h6 svg{
+    color:#17a2b8;
+  }#{$attr}.warning .alert-header svg,
+  #{$attr}.warning h6 svg{
+    color:#ffc107;
+  }
+   
+   #{$attr} .alert-content{
+     display: flex;
+     height: 100%;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     margin-bottom: 10px;
+     svg{
+       width: 30px;
+       height:30px;
+       margin-bottom: 10px;
+     }
+   }
+ 
+   #{$attr} .text{
+     color: #555;
+     justify-content: center;
+     display: flex;
+     font-size: 13px;
+     font-weight: 600;
+     width: 320px;
+     height:100%;
+     flex-direction:column;
+     ul{
+      margin:5px 0 5px 0;
+     }
+     a{
+      color: #17a2b8;
+      text-decoration: underline;
+     }
+   }
+
+ #{$attr} h6 svg{
+     font-size: 35px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+   }
+}
+
+
+@mixin modal($color){
+  width:400px;
+  height:auto;
+  padding: 15px;
+  background-color: $color;
+  color: $color;
+}

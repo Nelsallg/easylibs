@@ -1,6 +1,7 @@
 import Utils from "@easylibs/utils";
 import FlashRunner from "./scripts/flash-runner"
 import { FlashInterface, FlashOptions } from "./scripts/iflash";
+import "./assets/scss/flash-style.scss";
 
 class FormatParamsToObject
 {

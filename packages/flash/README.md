@@ -8,8 +8,23 @@ Flash is a JavaScript library that allows you to easily create and display flash
 
 To install Flash, simply add the following script tag to your HTML document:
 
+```html
+<--MINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/flash@0.0.3/dist/flash.min.js"></script>
+<script src="https://unpkg.com/@easylibs/flash@0.0.3/dist/flash.min.js"></script>
+<-- OR UNMINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/flash@0.0.3/dist/flash.js"></script>
+<script src="https://unpkg.com/@easylibs/flash@0.0.3/dist/flash.js"></script>
+```
+
+Or using npm, pnpm or yarn:
+
 ```bash
 npm install @easylibs/flash
+# OR
+pnpm add @easylibs/flash
+# OR
+yarn add @easylibs/flash
 ```
 
 ## Usage
