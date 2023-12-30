@@ -96,10 +96,10 @@ const focus_in_block_1 = __webpack_require__(/*! ./scripts/focus-in-block */ "./
 let fieldSetElement = null;
 class ProgressForm {
     constructor(enableDefaultCssStyle = true) {
-        this.element = null;
-        this.targetWidth = -625;
+        this.translateX = -530;
         this.fieldsetLength = 0;
         this.enableDefaultCssStyle = enableDefaultCssStyle;
+        this.translateX = this.translateX;
     }
     run(params, styleOptions) {
         var _a;
@@ -110,13 +110,14 @@ class ProgressForm {
         let prevTranslateX = 0;
         this.fieldsetLength = fieldSets.length;
         const { progress } = this;
+        this.isValid(params.form);
         if (fieldSets && fieldSets.length > 1) {
             fieldSets.forEach((fieldSet, i) => {
-                var _a;
-                const nextButton = fieldSet.querySelector(".next-btn");
-                const prevButton = fieldSet.querySelector('.prev-btn');
-                let translateX = params.translateX;
-                const targetMarginWidth = (_a = params.targetMarginWidth) !== null && _a !== void 0 ? _a : 0;
+                var _a, _b;
+                const nextButton = fieldSet.querySelector("[next__btn]");
+                const prevButton = fieldSet.querySelector("[prev__btn]");
+                let translateX = (_a = params.translateX) !== null && _a !== void 0 ? _a : this.translateX;
+                const targetMarginWidth = (_b = params.targetMarginWidth) !== null && _b !== void 0 ? _b : 0;
                 let nextTranslateX = (translateX * nextIndex) - targetMarginWidth;
                 prevTranslateX = (translateX * nextIndex) + Math.abs(translateX * 2);
                 const nextProgress = progress * (i + 2);
@@ -124,9 +125,9 @@ class ProgressForm {
                 fieldSetElement = fieldSet;
                 fieldSet.classList.add(`fieldset${i}`);
                 if (i === 0) {
-                    const fields = fieldSet.querySelectorAll('input, select, textarea');
+                    const fields = fieldSet.querySelectorAll("input:not([type='hidden'],[readonly]), textarea");
                     fields[i].focus();
-                    this.setFocusInFieldsest(fieldSetElement);
+                    this.setFocusInFieldSet(fieldSetElement);
                 }
                 this.next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress);
                 nextIndex++;
@@ -154,7 +155,7 @@ class ProgressForm {
                 if (isValid) {
                     fieldSetElement = document.querySelector(`.fieldset${nextIndex}`);
                     if (fieldSetElement) {
-                        this.setFocusInFieldsest(fieldSetElement);
+                        this.setFocusInFieldSet(fieldSetElement);
                         (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                     }
                     // anime({
@@ -176,7 +177,7 @@ class ProgressForm {
                 e.preventDefault();
                 fieldSetElement = document.querySelector(`.fieldset${prevIndex}`);
                 if (fieldSetElement) {
-                    this.setFocusInFieldsest(fieldSetElement);
+                    this.setFocusInFieldSet(fieldSetElement);
                     (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                 }
                 // anime({
@@ -193,12 +194,12 @@ class ProgressForm {
     get progress() {
         return 100 / this.fieldsetLength;
     }
-    setFocusInFieldsest(fieldSet) {
+    setFocusInFieldSet(fieldSet) {
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Tab' && fieldSet !== null) {
                 (0, focus_in_block_1.focusInBlock)(e, fieldSet);
             }
-        }, { once: true });
+        });
     }
     isValidFieldset(fieldSet) {
         if (fieldSet) {
@@ -230,46 +231,88 @@ class ProgressForm {
         }
     }
     cssStyle(params, fieldSets, styleOptions) {
-        const defaultFormStyle = {
-            width: '545px',
-            height: '100%',
-            boxSizing: 'border-box',
-        };
-        const defaultFieldsetContainerStyle = {
-            width: `1800px`,
-            height: '100%',
-            overflow: 'hidden',
-            display: 'flex',
-            justifyContent: 'space-between',
-        };
-        const defaultFieldsetStyle = {
-            width: ' 25%',
-            transition: 'margin-left 0.4s ease-in-out',
-            backgroundColor: '#FFFFFF',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '30px',
-            border: 'none',
-            boxShadow: '0 0 5px rgba(255, 255, 255, 0.7137254902)',
-            borderRadius: '3px',
-        };
-        // Fusionnez les styles par défaut avec les styles personnalisés
-        const formStyle = Object.assign({}, defaultFormStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.form);
-        const fieldsetContainerStyle = Object.assign({}, defaultFieldsetContainerStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldsetContainer);
-        const fieldsetStyle = Object.assign({}, defaultFieldsetStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldset);
-        Object.assign(params.form.style, formStyle);
-        Object.assign(params.fieldsetContainer.style, fieldsetContainerStyle);
-        fieldSets.forEach((fieldSet, index) => {
-            Object.assign(fieldSet.style, fieldsetStyle);
-            fieldSet.classList.add(`fieldset${index}`);
-        });
-        const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
-        const fieldsetMargingWidth = params.fieldsetMargingWidth || 60;
-        const fieldSetWidth = fieldSets[0].offsetWidth;
-        const fieldsetContainerWidth = this.fieldsetLength * fieldSetWidth + fieldsetMargingWidth;
-        params.fieldsetContainer.style.width = `${fieldsetContainerWidth}px`;
+        const fieldSetParent = params.form.querySelector("[fieldset__parent]");
+        try {
+            if (!fieldSetParent) {
+                throw new Error("The element with the attribute [fieldset__parent] not found in your form");
+            }
+            const fieldsetContainer = fieldSetParent.querySelector("[fieldset__container]");
+            if (!fieldsetContainer) {
+                throw new Error("The element with the attribute [fieldset__container] not found in your fieldset__parent");
+            }
+            const defaultFieldSetParentStyle = {
+                height: '100%',
+                overflow: 'hidden',
+                width: '530px'
+            };
+            const defaultFormStyle = {
+                width: '545px',
+                height: '100%',
+                boxSizing: 'border-box',
+            };
+            const defaultFieldsetContainerStyle = {
+                width: `1800px`,
+                height: '100%',
+                overflow: 'hidden',
+                display: 'flex',
+                justifyContent: 'space-between',
+            };
+            const defaultFieldsetStyle = {
+                width: ' 25%',
+                transition: 'margin-left 0.4s ease-in-out',
+                backgroundColor: '#FFFFFF',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '30px',
+                border: 'none',
+                boxShadow: '0 0 5px rgba(255, 255, 255, 0.7137254902)',
+                borderRadius: '3px',
+            };
+            // Fusionnez les styles par défaut avec les styles personnalisés
+            const formStyle = Object.assign({}, defaultFormStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.form);
+            const fieldSetParentStyle = Object.assign({}, defaultFieldSetParentStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldsetParent);
+            const fieldsetContainerStyle = Object.assign({}, defaultFieldsetContainerStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldsetContainer);
+            const fieldsetStyle = Object.assign({}, defaultFieldsetStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldset);
+            Object.assign(params.form.style, formStyle);
+            Object.assign(fieldSetParent.style, fieldSetParentStyle);
+            Object.assign(fieldsetContainer.style, fieldsetContainerStyle);
+            fieldSets.forEach((fieldSet, index) => {
+                Object.assign(fieldSet.style, fieldsetStyle);
+                fieldSet.classList.add(`fieldset${index}`);
+            });
+            const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
+            const fieldsetMargingWidth = params.fieldsetMargingWidth || 60;
+            const fieldSetWidth = fieldSets[0].offsetWidth;
+            const fieldsetContainerWidth = this.fieldsetLength * fieldSetWidth + fieldsetMargingWidth;
+            fieldsetContainer.style.width = `${fieldsetContainerWidth}px`;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+    isValid(form) {
+        try {
+            if (!form) {
+                throw new Error('Le formulaire est invalide');
+            }
+            const next_buttons = form.querySelectorAll("[next__btn]");
+            const prev_buttons = form.querySelector("[prev__btn]");
+            const fieldSets = form.querySelectorAll('fieldset');
+            if (!fieldSets) {
+                throw new Error("Aucune section de formulaire trouvée.");
+            }
+            if (!next_buttons) {
+                throw new Error('Aucun bouton "suivant" trouvé !');
+            }
+            if (!prev_buttons) {
+                throw new Error("Aucun bouton 'précédent' trouvé !");
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
     }
 }
 exports["default"] = ProgressForm;

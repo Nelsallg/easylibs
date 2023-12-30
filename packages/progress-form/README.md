@@ -96,7 +96,7 @@ progressForm.run({ form, translateX },
   );
 ```
 
-![Un appercu du premier fieldset](./src/assets/form-image.png)
+![A preview of the first fieldset](./src/assets/form-image.png)
 
 * Note:  These elements do not contain all existing css properties, but only the one necessary for correct initialization of the form. You should therefore modify or add additional css properties from your css style sheet.
 

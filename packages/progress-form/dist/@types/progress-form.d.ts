@@ -1,6 +1,5 @@
 declare type ProgressFormType = {
     form: HTMLFormElement;
-    fieldsetContainer: HTMLElement;
     progress?: {
         progressElement?: HTMLElement;
     };
@@ -13,6 +12,11 @@ declare interface StyleOptions {
         width?: string;
         height?: string;
         boxSizing?: string;
+    };
+    fieldsetParent?: {
+        height: string;
+        overflow: string;
+        width: string;
     };
     fieldsetContainer?: {
         width?: string;
@@ -37,19 +41,19 @@ declare interface StyleOptions {
     };
 }
 export default class ProgressForm {
-    protected element: HTMLElement | null;
-    protected targetWidth: number;
+    private translateX;
     fieldsetLength: number;
     enableDefaultCssStyle: boolean;
     constructor(enableDefaultCssStyle?: boolean);
     run<T extends ProgressFormType>(params: T, styleOptions?: StyleOptions): void;
-    protected next(nextButton: HTMLElement, nextIndex: number, nextTranslateX: number, progressElement?: HTMLElement, nextProgress?: number): void;
-    protected prev(prevButton: HTMLElement, prevIndex: number, prevTranslateX: number, progressElement?: HTMLElement, prevProgress?: number): void;
+    private next;
+    private prev;
     get progress(): number;
-    private setFocusInFieldsest;
-    protected isValidFieldset(fieldSet: HTMLElement): boolean;
-    protected get fieldsetTargetArray(): string[];
-    protected fieldsetAnimation(targets: string[], translateX: number): void;
-    protected cssStyle<T extends ProgressFormType>(params: T, fieldSets: NodeListOf<HTMLFieldSetElement>, styleOptions?: StyleOptions): void;
+    private setFocusInFieldSet;
+    private isValidFieldset;
+    private get fieldsetTargetArray();
+    private fieldsetAnimation;
+    private cssStyle;
+    private isValid;
 }
 export {};
