@@ -24,23 +24,27 @@ To use the `ProgressForm` class, you need to create a form element and add the f
 
 ```html
 <form id="progress-form">
-  <fieldset>
-    <label for="name">Name:</label>
-    <input type="text" id="name">
-    <button type="button">next</button>
-  </fieldset>
-  <fieldset>
-    <label for="email">Email:</label>
-    <input type="email" id="email">
-    <button type="button">previous</button>
-    <button type="button">next</button>
-  </fieldset>
-  <fieldset>
-    <label for="password">Password:</label>
-    <input type="password" id="password">
-    <button type="button">previous</button>
-    <button type="button">submit</button>
-  </fieldset>
+  <div fieldset__parent>
+    <div fieldset__container>
+      <fieldset>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <button type="button" next__btn>next</button>
+      </fieldset>
+      <fieldset>
+        <label for="email">Email:</label>
+        <input type="email" id="email">
+        <button type="button" prev__btn>previous</button>
+        <button type="button" next__btn>next</button>
+      </fieldset>
+      <fieldset>
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+        <button type="button" prev__btn>previous</button>
+        <button type="button">submit</button>
+      </fieldset>
+    </div>
+  </div>
 </form>
 ```
 
@@ -48,13 +52,14 @@ Next, you need to create a `ProgressForm` object and pass the form element to th
 
 ```javascript
 import ProgressForm from "@easylibs/progress-form";
-const progressForm = new ProgressForm(document.getElementById('progress-form'));
+const progressForm = new ProgressForm();
 ```
 
 Finally, you need to call the `run()` method on the `ProgressForm` object. This will initialize the form and add the event listeners for the "Next" and "Previous" buttons.
 
 ```javascript
-progressForm.run();
+const form = document.getElementById('progress-form');
+progressForm.run({ form });
 ```
 
 ## Styling
@@ -64,18 +69,36 @@ The `ProgressForm` class includes a default CSS style that you can use to style 
 The `styleOptions` object can contain the following properties:
 
 * `form`: The CSS style for the form element.
+* `fieldsetParent`: The CSS style for the fieldset parent element.
 * `fieldsetContainer`: The CSS style for the fieldset container element.
 * `fieldset`: The CSS style for the fieldset elements.
 
-For example, the following code would change the background color of the form to blue:
+For example, the following code would change the form, fieldsetContainer, and fieldset css style:
 
 ```javascript
-progressForm.run({
-  form: {
-    backgroundColor: 'blue',
-  },
-});
+const translateX = -560;
+progressForm.run({ form, translateX },
+    {
+      form: {
+        width: "100vw",
+        height: "null",
+      },
+      fieldsetContainer: {
+        width: "1600px",
+        height: "null",
+        alignItems: "center",
+      },
+      fieldset: {
+        width: "500px",
+        alignItems: "null",
+      },
+    }
+  );
 ```
+
+![Un appercu du premier fieldset](./src/assets/form-image.png)
+
+* Note:  These elements do not contain all existing css properties, but only the one necessary for correct initialization of the form. You should therefore modify or add additional css properties from your css style sheet.
 
 ## Conclusion
 

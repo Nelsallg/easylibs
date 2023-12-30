@@ -1,14 +1,8 @@
 import { focusInBlock, getFocusableElements } from "./scripts/focus-in-block";
 
 let fieldSetElement:HTMLElement|null = null;
-// window.addEventListener('keydown', (e) => {
-//     if (e.key === 'Tab' && fieldSetElement !== null) {
-//         return focusInBlock(e, fieldSetElement);
-//     }
-// })
 declare type ProgressFormType = {
     form:HTMLFormElement,
-    fieldsetContainer:HTMLElement,
     progress?:{
         progressElement?:HTMLElement,
     }
@@ -21,7 +15,12 @@ declare interface StyleOptions {
         width?:string ,
         height?:string ,
         boxSizing?:string ,
-    };
+    },
+    fieldsetParent?:{
+        height: string,
+        overflow: string,
+        width: string,
+    },
     fieldsetContainer?: {
         width?:string ,
         height?:string ,
@@ -29,7 +28,7 @@ declare interface StyleOptions {
         display?:string ,
         justifyContent?:string ,
         alignItems?:string,
-    };
+    },
     fieldset?: {
         width?:string ,
         transition?:string ,
@@ -42,17 +41,17 @@ declare interface StyleOptions {
         border?:string ,
         boxShadow?:string ,
         borderRadius?:string ,
-    };
+    },
 }
 
 export default class ProgressForm
 {
-    protected element:HTMLElement|null = null;
-    protected targetWidth:number = -625;
+    private translateX = -530;
     public fieldsetLength:number = 0;
     enableDefaultCssStyle: boolean;
     constructor(enableDefaultCssStyle:boolean = true){
-        this.enableDefaultCssStyle  = enableDefaultCssStyle
+        this.enableDefaultCssStyle  = enableDefaultCssStyle;
+        this.translateX = this.translateX;
     }
     public run<T extends ProgressFormType>(params:T,styleOptions?: StyleOptions)
     {
@@ -63,11 +62,12 @@ export default class ProgressForm
         let prevTranslateX = 0;
         this.fieldsetLength = fieldSets.length;
         const {progress} = this;
+        this.isValid(params.form);
         if(fieldSets && fieldSets.length > 1){
             fieldSets.forEach((fieldSet,i) => {
-                const nextButton = fieldSet.querySelector(".next-btn") as HTMLElement;
-                const prevButton = fieldSet.querySelector('.prev-btn') as HTMLElement;
-                let translateX = params.translateX as number;
+                const nextButton = fieldSet.querySelector("[next__btn]") as HTMLElement;
+                const prevButton = fieldSet.querySelector("[prev__btn]") as HTMLElement;
+                let translateX = params.translateX as number ?? this.translateX;
                 const targetMarginWidth = params.targetMarginWidth ?? 0;
                 let nextTranslateX = (translateX * nextIndex) - targetMarginWidth;
                 prevTranslateX  = (translateX * nextIndex) + Math.abs(translateX * 2);
@@ -76,9 +76,9 @@ export default class ProgressForm
                 fieldSetElement = fieldSet;
                 fieldSet.classList.add(`fieldset${i}`);
                 if(i === 0){
-                    const fields = fieldSet.querySelectorAll('input, select, textarea') as NodeListOf<HTMLInputElement>;
+                    const fields = fieldSet.querySelectorAll("input:not([type='hidden'],[readonly]), textarea") as NodeListOf<HTMLInputElement>;
                     fields[i].focus();
-                    this.setFocusInFieldsest(fieldSetElement);
+                    this.setFocusInFieldSet(fieldSetElement);
                 }
                 this.next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress);
                 nextIndex++;
@@ -93,7 +93,7 @@ export default class ProgressForm
         {this.cssStyle(params,fieldSets,styleOptions)}
 
     }
-    protected next(nextButton: HTMLElement, nextIndex: number, nextTranslateX:number, progressElement?:HTMLElement,nextProgress?:number)
+    private next(nextButton: HTMLElement, nextIndex: number, nextTranslateX:number, progressElement?:HTMLElement,nextProgress?:number)
     {
         
         const targets = this.fieldsetTargetArray;
@@ -106,7 +106,7 @@ export default class ProgressForm
                     fieldSetElement = document.querySelector(`.fieldset${nextIndex}`) as HTMLElement;
                     if(fieldSetElement)
                     {
-                        this.setFocusInFieldsest(fieldSetElement);
+                        this.setFocusInFieldSet(fieldSetElement);
                         getFocusableElements(fieldSetElement);
                     }
                     // anime({
@@ -122,7 +122,7 @@ export default class ProgressForm
         }
     }
     
-    protected prev(prevButton:HTMLElement, prevIndex:number, prevTranslateX:number ,progressElement?:HTMLElement, prevProgress?:number)
+    private prev(prevButton:HTMLElement, prevIndex:number, prevTranslateX:number ,progressElement?:HTMLElement, prevProgress?:number)
     {
         const targets = this.fieldsetTargetArray;
         if(prevButton){
@@ -131,7 +131,7 @@ export default class ProgressForm
                 fieldSetElement = document.querySelector(`.fieldset${prevIndex}`);
                 if(fieldSetElement)
                 {
-                    this.setFocusInFieldsest(fieldSetElement);
+                    this.setFocusInFieldSet(fieldSetElement);
                     getFocusableElements(fieldSetElement);
                 }
                 // anime({
@@ -148,15 +148,15 @@ export default class ProgressForm
     {
         return 100 / this.fieldsetLength;
     }
-    private setFocusInFieldsest(fieldSet:HTMLElement)
+    private setFocusInFieldSet(fieldSet:HTMLElement)
     {
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Tab' && fieldSet !== null){
                 focusInBlock(e, fieldSet);
             }
-        },{once : true})
+        })
     }
-    protected isValidFieldset(fieldSet: HTMLElement): boolean
+    private isValidFieldset(fieldSet: HTMLElement): boolean
     {
         if(fieldSet){
             const fields =  Array.from(fieldSet.querySelectorAll('input, select, textarea'));
@@ -171,7 +171,7 @@ export default class ProgressForm
         }
         return true;
     }
-    protected get fieldsetTargetArray(): string[]
+    private get fieldsetTargetArray(): string[]
     {
         let fieldsetTargetArray = []
         if(this.fieldsetLength > 0){
@@ -181,65 +181,101 @@ export default class ProgressForm
         }
         return fieldsetTargetArray;
     }
-    protected fieldsetAnimation(targets: string[], translateX:number)
+    private fieldsetAnimation(targets: string[], translateX:number)
     {
         for (let i = 0; i < targets.length; i++) {
             const fieldset = document.querySelector(`${targets[i]}`) as HTMLFieldSetElement;
             fieldset.style.transform = `translateX(${translateX})`;
         }
     }
-    protected cssStyle<T extends ProgressFormType>(
+    private cssStyle<T extends ProgressFormType>(
         params:T,
         fieldSets:NodeListOf<HTMLFieldSetElement>,
         styleOptions?:StyleOptions)
     {
-        const defaultFormStyle = {
-            width: '545px',
-            height: '100%',
-            boxSizing: 'border-box',
-        };
+        const fieldSetParent = params.form.querySelector("[fieldset__parent]") as HTMLElement;
+        try {
+            if(!fieldSetParent){
+                throw new Error("The element with the attribute [fieldset__parent] not found in your form");
+            }
+            const fieldsetContainer = fieldSetParent.querySelector("[fieldset__container]") as HTMLElement;
+            if(!fieldsetContainer){
+                throw new Error("The element with the attribute [fieldset__container] not found in your fieldset__parent");
+            }
+            const defaultFieldSetParentStyle = {
+                height: '100%',
+                overflow: 'hidden',
+                width: '530px'
+            }
+            const defaultFormStyle = {
+                width: '545px',
+                height: '100%',
+                boxSizing: 'border-box',
+            };
+            
+            const defaultFieldsetContainerStyle = {
+                width: `1800px`,
+                height: '100%',
+                overflow: 'hidden',
+                display: 'flex',
+                justifyContent: 'space-between',
+            };
+    
+            const defaultFieldsetStyle = {
+                width: ' 25%',
+                transition: 'margin-left 0.4s ease-in-out',
+                backgroundColor: '#FFFFFF',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '30px',
+                border: 'none',
+                boxShadow: '0 0 5px rgba(255, 255, 255, 0.7137254902)',
+                borderRadius: '3px',
+            };
         
-        const defaultFieldsetContainerStyle = {
-            width: `1800px`,
-            height: '100%',
-            overflow: 'hidden',
-            display: 'flex',
-            justifyContent: 'space-between',
-        };
-
-        const defaultFieldsetStyle = {
-            width: ' 25%',
-            transition: 'margin-left 0.4s ease-in-out',
-            backgroundColor: '#FFFFFF',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            padding: '30px',
-            border: 'none',
-            boxShadow: '0 0 5px rgba(255, 255, 255, 0.7137254902)',
-            borderRadius: '3px',
-        };
-    
-        // Fusionnez les styles par défaut avec les styles personnalisés
-        const formStyle = Object.assign({}, defaultFormStyle, styleOptions?.form);
-        const fieldsetContainerStyle = Object.assign(
-            {},
-            defaultFieldsetContainerStyle,
-            styleOptions?.fieldsetContainer
-        );
-        const fieldsetStyle = Object.assign({}, defaultFieldsetStyle, styleOptions?.fieldset);
-    
-        Object.assign(params.form.style, formStyle);
-        Object.assign(params.fieldsetContainer.style, fieldsetContainerStyle);
-        fieldSets.forEach((fieldSet, index) => {
-            Object.assign(fieldSet.style, fieldsetStyle);
-            fieldSet.classList.add(`fieldset${index}`);
-        });
-        const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
-        const fieldsetMargingWidth = params.fieldsetMargingWidth || 60;
-        const fieldSetWidth = fieldSets[0].offsetWidth;
-        const fieldsetContainerWidth = this.fieldsetLength * fieldSetWidth + fieldsetMargingWidth;
-        params.fieldsetContainer.style.width = `${fieldsetContainerWidth}px`;
+            // Fusionnez les styles par défaut avec les styles personnalisés
+            const formStyle = Object.assign({}, defaultFormStyle, styleOptions?.form);
+            const fieldSetParentStyle = Object.assign({},defaultFieldSetParentStyle, styleOptions?.fieldsetParent)
+            const fieldsetContainerStyle = Object.assign({},defaultFieldsetContainerStyle,styleOptions?.fieldsetContainer);
+            const fieldsetStyle = Object.assign({}, defaultFieldsetStyle, styleOptions?.fieldset);
+        
+            Object.assign(params.form.style, formStyle);
+            Object.assign(fieldSetParent.style, fieldSetParentStyle);
+            Object.assign(fieldsetContainer.style, fieldsetContainerStyle);
+            fieldSets.forEach((fieldSet, index) => {
+                Object.assign(fieldSet.style, fieldsetStyle);
+                fieldSet.classList.add(`fieldset${index}`);
+            });
+            const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
+            const fieldsetMargingWidth = params.fieldsetMargingWidth || 60;
+            const fieldSetWidth = fieldSets[0].offsetWidth;
+            const fieldsetContainerWidth = this.fieldsetLength * fieldSetWidth + fieldsetMargingWidth;
+            fieldsetContainer.style.width = `${fieldsetContainerWidth}px`;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    private isValid(form:HTMLFormElement){
+        try {
+            if(!form){
+                throw new Error('Le formulaire est invalide');
+            }
+            const next_buttons = form.querySelectorAll("[next__btn]");
+            const prev_buttons = form.querySelector("[prev__btn]");
+            const fieldSets = form.querySelectorAll('fieldset');
+            if(!fieldSets){
+                throw new Error("Aucune section de formulaire trouvée.");
+            }
+            if(!next_buttons){
+                throw new Error('Aucun bouton "suivant" trouvé !');
+            }
+            if(!prev_buttons){
+                throw new Error("Aucun bouton 'précédent' trouvé !");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
