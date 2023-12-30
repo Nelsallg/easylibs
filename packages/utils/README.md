@@ -27,7 +27,9 @@ To install the `Utils` library as a module using npm, run the following command 
 
 ```bash
 npm install @easylibs/utils
+# Or
 yarn add @easylibs/utils
+# Or
 pnpm add @easylibs/utils
 ```
 
