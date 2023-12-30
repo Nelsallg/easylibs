@@ -14,11 +14,11 @@ To include the `Utils` library directly in your HTML document, simply add the fo
 
 ```html
 <--MINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@0.0.2/dist/utils.min.js"></script>
-<script src="https://unpkg.com/@easylibs/utils@0.0.2/dist/utils.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@1.0.9/dist/utils.min.js"></script>
+<script src="https://unpkg.com/@easylibs/utils@1.0.9/dist/utils.min.js"></script>
 <-- OR UNMINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@0.0.2/dist/utils.js"></script>
-<script src="https://unpkg.com/@easylibs/utils@0.0.2/dist/utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/utils@1.0.9/dist/utils.js"></script>
+<script src="https://unpkg.com/@easylibs/utils@1.0.9/dist/utils.js"></script>
 ```
 
 ### npm, yarn or pnpm Installation
