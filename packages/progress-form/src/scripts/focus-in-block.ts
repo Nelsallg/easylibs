@@ -9,7 +9,6 @@ export function focusInBlock(key:KeyboardEvent, block:HTMLElement):void
     const focusables = getFocusableElements(block);
     let index = focusables.findIndex(f => f === block.querySelector(':focus'));
     (key.shiftKey === true) ? index-- : index++;
-    console.log({focusables,block})
     if (index >= focusables.length) { index = 0; }
     if (index < 0) { index = focusables.length - 1; }
     const FIELD = focusables[index] as HTMLElement;

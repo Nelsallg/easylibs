@@ -31,7 +31,6 @@ function focusInBlock(key, block) {
     const focusables = getFocusableElements(block);
     let index = focusables.findIndex(f => f === block.querySelector(':focus'));
     (key.shiftKey === true) ? index-- : index++;
-    console.log({ focusables, block });
     if (index >= focusables.length) {
         index = 0;
     }
