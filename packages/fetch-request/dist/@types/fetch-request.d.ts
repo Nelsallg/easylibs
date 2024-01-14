@@ -1,19 +1,20 @@
 declare type FetchRequestType = {
     uri: string;
-    data?: Object | FormData | null;
+    data?: Record<string, string> | FormData | null;
     submiter?: HTMLElement | null;
     options?: {
         method?: 'GET' | 'POST';
-        headers?: Object;
+        headers?: any;
         body?: any;
-        credentials?: "omit" | "same-origin";
+        credentials?: "omit" | "same-origin" | "include";
         mode?: "cors" | "no-cors" | "same-origin";
-        cache?: "default" | "reload" | "no-cache" | "force-cache" | "only-if-cached";
+        cache?: "default" | "force-cache" | "no-cache" | "no-store" | "only-if-cached" | "reload";
         timeOut?: number;
         fetchOptions?: RequestInit;
         isBinaryFileDownload?: boolean;
         contentType?: string;
         acceptDataFormat?: "form-data" | "classic-object" | "array";
+        integrity?: string;
     };
     onPostFetch?: (response?: any) => any;
     onPreFetch?: (that?: any) => any;
@@ -21,10 +22,10 @@ declare type FetchRequestType = {
     onError?: (error: unknown, status: number) => any;
 };
 /**
- * Cette classe est une classe utilitaire conçue pour faciliter l'envoi de requêtes Fetch dans une application web.
- * Elle offre une interface simple pour effectuer des requêtes HTTP
- * et gérer les actions avant et après l'envoi de la requête.
- */
+  * This class is a utility class designed to make it easier to send Fetch requests in a web application.
+  * It offers a simple interface for making HTTP requests
+  * and manage actions before and after sending the request.
+  */
 export default class FetchRequest {
     private options;
     private _response;

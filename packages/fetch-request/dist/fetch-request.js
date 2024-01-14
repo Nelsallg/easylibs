@@ -30,10 +30,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 /**
- * Cette classe est une classe utilitaire conçue pour faciliter l'envoi de requêtes Fetch dans une application web.
- * Elle offre une interface simple pour effectuer des requêtes HTTP
- * et gérer les actions avant et après l'envoi de la requête.
- */
+  * This class is a utility class designed to make it easier to send Fetch requests in a web application.
+  * It offers a simple interface for making HTTP requests
+  * and manage actions before and after sending the request.
+  */
 class FetchRequest {
     constructor(options) {
         this.fetchData = () => __awaiter(this, void 0, void 0, function* () {
@@ -47,7 +47,15 @@ class FetchRequest {
                 if (!this.options.options || !this.options.options.method) {
                     throw new Error("The calling method is required");
                 }
-                const response = yield fetch(this.options.uri, {
+                let url = null;
+                if (this.options.data && this.options.options.method === "GET") {
+                    url = new URL(this.options.uri);
+                    if (this.options.data instanceof FormData) {
+                        throw new Error("The data format must be an object:key->value");
+                    }
+                    url.search = new URLSearchParams(this.options.data).toString();
+                }
+                const response = yield fetch(url !== null && url !== void 0 ? url : this.options.uri, {
                     method: this.options.options.method,
                     body: this._formData,
                     headers: {
