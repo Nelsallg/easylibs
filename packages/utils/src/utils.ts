@@ -25,7 +25,7 @@ export default class Utils{
     /**
      * retourne un élément du dom
      */
-    public static $$(element:Element|HTMLCollection|string){
+    public static $$(element:HTMLElement|HTMLCollection|string){
         if (element instanceof HTMLElement || element instanceof HTMLCollection) {
             return element;
         }else if(typeof element === 'string') {
@@ -66,25 +66,31 @@ export default class Utils{
     public static getRegexp(type: RegexType): RegExp {
         switch (type) {
             case 'email':
-            return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
+              return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
             case 'phone-number':
-            return new RegExp(/^(0|\\+[1-9]{1,3})[0-9 ]+$/);
+              return new RegExp(/^(0|\\+[1-9]{1,3})[0-9 ]+$/);
             case 'number':
-            return new RegExp(/^[0-9]+$/);
+              return new RegExp(/^[0-9]+$/);
             case 'strong-password':
-            return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
+              return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
             case 'url':
-            return new RegExp(/^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/);
+              // return new RegExp(/^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/);
+              return new RegExp('^(https?:\\/\\/)?'+ // protocole
+                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domaine
+                        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port et chemin
+                        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
             case 'default-text':
-            return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
+              return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
             case 'fr-text':
-            return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
+              return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
             case 'en-text':
-            return  new RegExp(/^[a-zA-Z '-]{1,40}$/);
+              return  new RegExp(/^[a-zA-Z '-]{1,40}$/);
             case 'tr-text':
-            return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
+              return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
             default:
-            throw new Error('Type d\'expression régulière non pris en charge.');
+              throw new Error('Type d\'expression régulière non pris en charge.');
         }
     }
     /**

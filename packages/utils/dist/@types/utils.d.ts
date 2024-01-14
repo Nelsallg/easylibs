@@ -11,7 +11,7 @@ export default class Utils {
     /**
      * retourne un élément du dom
      */
-    static $$(element: Element | HTMLCollection | string): Element | HTMLCollection | NodeListOf<Element>;
+    static $$(element: HTMLElement | HTMLCollection | string): Element | HTMLCollection | NodeListOf<Element>;
     /**
      * Cette fonction permet de convertir un objet NodeList en un tableau d'éléments HTML (HTMLElement)
      * et d'exécuter une fonction de rappel sur chaque élément du tableau.
