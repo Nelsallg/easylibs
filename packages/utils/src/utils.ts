@@ -25,7 +25,7 @@ export default class Utils{
     /**
      * retourne un élément du dom
      */
-    public static $$(element:HTMLElement|HTMLCollection|string){
+    public static $$(element:any){
         if (element instanceof HTMLElement || element instanceof HTMLCollection) {
             return element;
         }else if(typeof element === 'string') {
