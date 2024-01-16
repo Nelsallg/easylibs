@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/progress-form",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -53,12 +53,6 @@
     "webpack": "^5.0.0",
     "webpack-cli": "^4.10.0"
     
-  },
-  "peerDependencies": {
-    "@easylibs/fetch-request": "0.0.9",
-    "@easylibs/utils": "0.0.2",
-    "@easylibs/transformer": "0.0.1",
-    "@easylibs/tempdata": "0.0.1"
   },
   "sideEffect": false,
   "publishConfig": {

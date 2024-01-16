@@ -55,8 +55,8 @@
     
   },
   "peerDependencies": {
-    "@easylibs/fetch-request": "0.0.9",
-    "@easylibs/utils": "0.0.2",
+    "@easylibs/fetch-request": "1.1.10",
+    "@easylibs/utils": "1.1.10",
     "@easylibs/transformer": "0.0.1",
     "@easylibs/tempdata": "0.0.1"
   },

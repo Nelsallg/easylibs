@@ -26,7 +26,7 @@ export default class Utils{
      * retourne un élément du dom
      */
     public static $$(element:any){
-        if (element instanceof HTMLElement || element instanceof HTMLCollection) {
+        if (element instanceof Element) {
             return element;
         }else if(typeof element === 'string') {
             const collection = document.querySelectorAll(`${element}`);

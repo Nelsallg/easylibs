@@ -1,7 +1,8 @@
-declare type HttpMethod = 'GET' | 'POST';
-declare type Headers = Record<string, string>;
+type HttpMethod = 'GET' | 'POST';
 
-declare interface FetchRequestOptions {
+type Headers = Record<string, string>;
+
+interface FetchRequestOptions {
     method: HttpMethod,
     headers?: Headers,
     credentials?: "omit" | "same-origin" | "include",
@@ -14,45 +15,53 @@ declare interface FetchRequestOptions {
     responseType: 'json' | 'text',
 }
 
-declare interface FetchRequestCallbacks {
-    onPostFetch?: (response?: any) => void,
-    onPreFetch?: (that?: any) => Promise<any>,
+interface FetchRequestCallbacks {
+    onPostFetch?: (response: any) => void,
+    onPreFetch?: (that: any) => Promise<any>,
     onSuccess?: (response: any) => void,
     onError?: (error: Error, status: number) => void
 }
 
-declare type FetchRequestType = {
+interface FetchRequestType {
     uri: string,
     data?: Record<string, string> | FormData | null,
     submitter?: HTMLElement | null,
     options?: FetchRequestOptions,
     callbacks?: FetchRequestCallbacks
 }
+
 /**
   * This class is a utility class designed to make it easier to send Fetch requests in a web application.
   * It offers a simple interface for making HTTP requests
   * and manage actions before and after sending the request.
   */
-export default class FetchRequest{
+export default class FetchRequest {
     private options: FetchRequestType;
     private response: any;
+
     constructor(options: FetchRequestType) {
         this.options = options;
         this.attachSubmitterEvent();
     }
     private attachSubmitterEvent() {
-        this.options.submitter ? this.options.submitter.addEventListener('click', this.submitForm) : this.submitForm();  
-    }
-    private async submitForm(){
-        try{
-            if(this.options.callbacks.onPreFetch){await this.preFetch();}
-            await this.run();
-            if(this.options.callbacks.onPostFetch){await this.postFetch();}
-        }catch(error){
-            this.handleError(error, undefined,'Error executing query : ');
+        if (this.options.submitter) {
+            this.options.submitter.addEventListener('click', this.submitForm);
         }
     }
-    private async run(){
+    private async submitForm() {
+        try {
+            if (this.options.callbacks?.onPreFetch) {
+                await this.preFetch();
+            }
+            await this.fetchData();
+            if (this.options.callbacks?.onPostFetch) {
+                await this.postFetch();
+            }
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+    private async fetchData() {
         let response:Response|null = null;
         try {
             const { uri, data, options } = this.options;
@@ -80,12 +89,12 @@ export default class FetchRequest{
             if (this.options.callbacks?.onSuccess && response.ok) {
                 this.options.callbacks.onSuccess(this.response);
             }
-            
         } catch (error) {
             this.handleError(error, response ? response.status : 0);
         }
     }
-    private async preFetch (){
+
+    private preFetch = async () => {
         if(typeof this.options.callbacks.onPreFetch === 'function') {
             let data = await this.options.callbacks.onPreFetch(this.options.data);
             if(data){
@@ -93,10 +102,10 @@ export default class FetchRequest{
             }
         }
     }
-    private async postFetch (){
+    private postFetch = async () => {
         if(this.options.submitter instanceof HTMLButtonElement)
         {this.options.submitter.removeAttribute('disabled');}
-        return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch() : undefined;
+        return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch(this.response) : undefined;
     }
     private buildGetRequestUrl(uri: string, data: Record<string, string> | FormData): string {
         const url = new URL(uri, window.location.origin);
@@ -116,6 +125,8 @@ export default class FetchRequest{
         url.search = params.toString();
         return url.toString();
     }
+    
+
     private prepareRequestBody(data: Record<string, string> | FormData): FormData | Record<string, string> | string {
         if (this.options.options?.acceptDataFormat === "form-data" && !(data instanceof FormData)) {
             return this.convertObjectToFormData(data);
@@ -129,12 +140,13 @@ export default class FetchRequest{
         Object.entries(data).forEach(([key, value]) => formData.append(key, value));
         return formData;
     }
-    private handleError(error: any, status?: number, message:string='Fetch Request Error: ') {
-        console.error(message, error);
+    private handleError(error: any, status?: number) {
+        console.error('Fetch Request Error:', error);
         if (this.options.callbacks?.onError) {
             this.options.callbacks.onError(error, status || 0);
         }
     }
+
 }
 
 

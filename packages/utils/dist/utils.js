@@ -49,7 +49,7 @@ class Utils {
      * retourne un élément du dom
      */
     static $$(element) {
-        if (element instanceof HTMLElement || element instanceof HTMLCollection) {
+        if (element instanceof Element) {
             return element;
         }
         else if (typeof element === 'string') {

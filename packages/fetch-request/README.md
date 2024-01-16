@@ -14,25 +14,24 @@ yarn add @easylibs/fetch-request
 pnpm add @easylibs/fetch-request
 ```
 
-Or use direct inclusion with cdn
+Or use direct inclusion with CDN:
 
 ```html
-<--MINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@1.0.9/dist/fetch-request.min.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@1.0.9/dist/fetch-request.min.js"></script>
-<-- OR UNMINIFIED-->
-<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@1.0.9/dist/fetch-request.js"></script>
-<script src="https://unpkg.com/@easylibs/fetch-request@1.0.9/dist/fetch-request.js"></script>
+<!--MINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@latest/dist/fetch-request.min.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@latest/dist/fetch-request.min.js"></script>
+<!-- OR UNMINIFIED-->
+<script src="https://cdn.jsdelivr.net/npm/@easylibs/fetch-request@latest/dist/fetch-request.js"></script>
+<script src="https://unpkg.com/@easylibs/fetch-request@latest/dist/fetch-request.js"></script>
 ```
 
 ## Usage
 
-To use the `FetchRequest` class, you first need to create an instance of the class. You can do this by passing an options object to the constructor.
-
-The following code shows how to create an instance of the `FetchRequest` class:
+To use the `FetchRequest` class, create an instance by passing
+an options object to the constructor. Here's an example:
 
 ```typescript
-import FetchRequest from '@easylibs/fetch-request'; // if you use the cdn, this line is not necessary
+import FetchRequest from '@easylibs/fetch-request'; // If using the CDN, this line is not necessary.
 
 const request = new FetchRequest({
   uri: 'https://example.com/api/endpoint',
@@ -40,34 +39,43 @@ const request = new FetchRequest({
     name: 'John Doe',
     email: 'john.doe@example.com',
   },
-  submiter: document.getElementById('submit-button'),
+  submitter: document.getElementById('submit-button'),
   options: {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    acceptDataFormat:"form-data"
+    acceptDataFormat: "form-data"
+  },
+  callbacks: {
+    onPreFetch: (data) => {
+      // modify data before sending
+      return { ...data, additionalField: 'value' };
+    },
+    onSuccess: (response) => {
+      console.log('Response:', response);
+    },
+    onError: (error, status) => {
+      console.error('Error:', error, 'Status:', status);
+    }
   }
-})
+});
+
 ```
 
 ## Properties
 
-* `uri`: The URI of the request.
-
-* `data`: The data to be sent with the request.
-
-* `submiter`: The HTML element that triggers the request.
-
-* `options`: An object containing the request options.
+* `uri:` The URI of the request.
+* `data:` The data to be sent with the request.
+* `submitter:` The HTML element that triggers the request.
+* `options:` An object containing the request options.
+* `callbacks:` An object containing callback functions for various stages of the request.
 
 |  Options                |                                     type                                  |
 |-------------------------|---------------------------------------------------------------------------|
 |  method                 |  `'GET' \| 'POST'`                                                        |
 |                         |                                                                           |
 |  headers                |  `Object`                                                                 |
-|                         |                                                                           |
-|  body                   |  `any`                                                                    |
 |                         |                                                                           |
 |  credentials            |  `"omit" \| "same-origin"`                                                |
 |                         |                                                                           |
@@ -77,55 +85,51 @@ const request = new FetchRequest({
 |                         |                                                                           |
 |  timeOut                |  `number`                                                                 |
 |                         |                                                                           |
-|  fetchOptions           |  `RequestInit`                                                            |
-|                         |                                                                           |
-|  isBinaryFileDownload   |  `boolean`                                                                |
-|                         |                                                                           |
 |  contentType            |  `string`                                                                 |
 |                         |                                                                           |
 |  acceptDataFormat       |   `"form-data" \| "classic-object" \| "array"`                            |
 |                         |                                                                           |
 
-* `onPreFetch`: A function to be called before the request is sent.
+* `onPreFetch`:  Function called before the request is sent. It can modify the data or perform other tasks.
+* Example:
 
 ```javascript
-onPreFetch(that){}
+onPreFetch: (data) => {
+  // Modify data before sending
+  return { ...data, additionalField: 'value' };
+},
 ```
 
-* Note: By default, the value of the `that` parameter is set from the value of the `data` key.
-* If a value is returned in the `onPreFetch` method, it will replace the 'data' key's value.
-
-* Example
+* `onPostFetch`: Function called after receiving the response. It receives the response data as a parameter.
+* Exemple:
 
 ```javascript
-const request = new FetchRequest({
-  uri: 'https://example.com/api/endpoint',
-  onPreFetch: () => {
-    return {
-      name: 'kelly Ondo',
-      email: 'kellyondo@gmail.com'
-    };
-  },
-  data: , // That will be {name: 'kelly Ondo', email: 'kellyondo@gmail.com'}
-});
+onPostFetch: (response) => {
+  console.log('Post Fetch Response:', response);
+},
+
 ```
 
-In this way, the `onPreFetch()` method can be used either to define the data to be sent to the server —in this case, the `data` key is no longer necessary— or it can be used to perform other tasks before sending the data, or both.
-
-* `onPostFetch`: This method returns the response from the server
+* `onSuccess`: Function called if the request is successful (status 200). It receives the response data as a parameter.
+* Example:
 
 ```javascript
-onPostFetch(response){}
+onSuccess: (response) => {
+  console.log('Success Response:', response);
+},
+
 ```
 
-* `onSuccess`: A function which returns the response from the server in case of success of the request with a status 200.
+* `onError`: Function called if the request fails (status other than 200). It receives the error and status code as parameters.
+* Example:
 
 ```javascript
-onSuccess(response){}
+onError: (error, status) => {
+  console.error('Error:', error, 'Status:', status);
+},
+
 ```
 
-* `onError`: A function that returns a error and the status of error in the event of a request failure with a status other than 200.
+## Advanced Usage
 
-```javascript
-onError(error, status){}
-```
+You can further customize the FetchRequest class to handle different data formats, manage headers, and control other aspects of the HTTP request. The class's modular design allows for flexible integration into various web application architectures.
