@@ -56,9 +56,6 @@
     "webpack": "^5.0.0",
     "webpack-cli": "^4.10.0"
   },
-  "peerDependencies": {
-    "@easylibs/utils": "1.1.10"
-  },
   "sideEffect": false,
   "publishConfig": {
     "access": "public"

@@ -1,4 +1,19 @@
-declare type RegexType = 'email' | 'phone-number' | 'number' | 'strong-password' | 'url' | 'default-text' | 'fr-text' | 'en-text' | 'tr-text';
+declare type RegexType = 
+    'email' | 
+    'phone-number' | 
+    'number' | 
+    'strong-password' | 
+    'default-text' | 
+    'fr-text' | 
+    'en-text' | 
+    'tr-text' |
+    'url-protocol' | 
+    'url-domain' | 
+    'url-ip' | 
+    'url-port' | 
+    'url-path' | 
+    'url-query' | 
+    'url-fragment';
 export default class Utils{
     /**
      * Crée un élément audio avec la source audio spécifiée par le chemin audioPath.
@@ -10,11 +25,22 @@ export default class Utils{
         const audio = document.createElement('audio');
         if(classname != null){audio.classList.add(classname);}
         const source = document.createElement('source');
-        source.src = this.resolvePath(audioPath);
+        source.src = audioPath;
         source.type = "audio/mpeg";
         audio.appendChild(source);
         return audio;
     }
+    /**
+   * Converts an HTML string into an HTML element or a collection of HTML elements.
+   *
+   * @param textHtml - The HTML string to convert.
+   * @param targetName - The tag name of the target HTML element to create.
+   * @param children - A boolean indicating whether to return all children of the target element.
+   * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
+   *
+   * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
+   * If the HTML content generates no children, the method returns `null`.
+   */
     public static textToHTMLElement(textHtml:string, targetName="div", children:boolean = false):Element|HTMLCollection|null
     {
         const target = document.createElement(`${targetName}`);
@@ -26,7 +52,7 @@ export default class Utils{
      * retourne un élément du dom
      */
     public static $$(element:any){
-        if (element instanceof Element) {
+        if (typeof element !== 'string') {
             return element;
         }else if(typeof element === 'string') {
             const collection = document.querySelectorAll(`${element}`);
@@ -37,7 +63,7 @@ export default class Utils{
             if(el !== null){
                 return el; 
             }
-        }else {throw new Error("Type of element is not supported");}
+        }
     }
     /**
      * Cette fonction permet de convertir un objet NodeList en un tableau d'éléments HTML (HTMLElement)
@@ -56,8 +82,6 @@ export default class Utils{
         if(null !== nodeList && undefined !== nodeList)
         {return callback(nodeList);}
     }
-    
-
     /**
      * Méthode qui renvoie une expression régulière en fonction du type demandé.
      * @param type Le type d'expression régulière demandé.
@@ -68,19 +92,25 @@ export default class Utils{
             case 'email':
               return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
             case 'phone-number':
-              return new RegExp(/^(0|\\+[1-9]{1,3})[0-9 ]+$/);
+              return new RegExp(/^(0|\+[1-9][0-9]{0,2}) ?[0-9]+$/);
             case 'number':
-              return new RegExp(/^[0-9]+$/);
+              return new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
             case 'strong-password':
               return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
-            case 'url':
-              // return new RegExp(/^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/);
-              return new RegExp('^(https?:\\/\\/)?'+ // protocole
-                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domaine
-                        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port et chemin
-                        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-                        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+            case 'url-protocol':
+              return new RegExp(/^(https?:\/\/)$/, 'i');
+            case 'url-domain':
+                return new RegExp(/^((([a-zA-Z0-9]{1,})[.-]?)+[a-zA-Z]{2,})$/, 'i');
+            case 'url-ip':
+                return new RegExp(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, 'i');
+            case 'url-port':
+                return new RegExp(/^:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})$/, 'i');
+            case 'url-path':
+                return new RegExp(/^(\.\/)?[-a-zA-Z\d%_.~+\/]*$/, 'i');
+            case 'url-query':
+                return new RegExp(/^(\?[;&a-zA-Z\d%_.~+=-]*)$/, 'i');
+            case 'url-fragment':
+                return new RegExp(/^#[-a-zA-Z\d%_.~+/=?&;:!*'()]*$/, 'i');
             case 'default-text':
               return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
             case 'fr-text':
@@ -91,26 +121,6 @@ export default class Utils{
               return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
             default:
               throw new Error('Type d\'expression régulière non pris en charge.');
-        }
-    }
-    /**
-     * Résout le chemin d'une ressource en fonction de l'environnement d'exécution.
-     * @param path Le chemin de la ressource.
-     * @returns Le chemin résolu de la ressource.
-     */
-    public static resolvePath(path:string){
-        const PROJECT_NAME = window.location.pathname.split("/")[1];
-        const ORIGIN = window.location.origin;
-        const PORT = window.location.port;
-        const HOST = window.location.host;
-        let _stylesheetsoutdir_;
-
-        if (HOST == "localhost") {
-            return _stylesheetsoutdir_ = ORIGIN + `/${PROJECT_NAME}/${path}`;
-        } else if (HOST !== "localhost" && PORT !== "") {
-            return _stylesheetsoutdir_ = ORIGIN + `/${path}`;
-        } else {
-            return _stylesheetsoutdir_ = ORIGIN + `/${path}`;
         }
     }
     /**
@@ -139,7 +149,7 @@ export default class Utils{
      * @param maxLength La longueur maximale de la chaîne résultante (par défaut : 14).
      * @returns La chaîne de texte réduite.
      */
-    public static reduceText(text: string, maxLength: number = 14): string {
+    public static truncateChars(text: string, maxLength: number = 14): string {
         text = typeof text === "string" ? text.trim() : "";
         if (text.length > maxLength) {
           return `${text.substring(0, maxLength)}...`;
@@ -224,17 +234,21 @@ export default class Utils{
      * to iterate through the matched labels and append the asterisk.
      */
     public static setAsteriskToRequiredField() {
-        const asterisk = `<svg class="required-svg">
-        <use xlink:href="../asset/icon.svg#asterisk"></use>
-        </svg>`;
+      import("../asset/asterisk.svg").then((SVG)=>{
+        const encodedSvg = SVG.default;
+        const svgString = decodeURIComponent(encodedSvg.split(',')[1]);
+        const asterisk = this.textToHTMLElement(svgString) as HTMLElement;
         const labels = document.querySelectorAll("label[required-field]");
+        asterisk.style.color = "#f89a9b";
+        asterisk.style.width = "10px";
+        asterisk.style.height = "10px";
         if (labels) {
             this.processNodes(labels, (node: HTMLLabelElement) => {
-                const rang = document.createRange();
-                const fragment = rang.createContextualFragment(asterisk);
-                node.appendChild(fragment);
+                node.appendChild(asterisk);
             });
         }
+      });
+        
     }
     /**
      * This method checks if the object contains a key with the given substring.

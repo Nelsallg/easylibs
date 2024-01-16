@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background-color: #F2F3F5;
+        }
+        fieldset{
+            background-color: #fff;
+        }
+    </style>
 </head>
 <body>
-    <script type="module" src="./index.js"></script>
+    <form id="progress-form">
+        <div fieldset__parent>
+          <div fieldset__container>
+            <fieldset>
+              <label for="number">Number:</label>
+              <input type="number" id="bumber">
+              <button type="button" next__btn>next</button>
+            </fieldset>
+            <fieldset>
+              <label for="email">Email:</label>
+              <input type="email" id="email">
+              <button type="button" prev__btn>previous</button>
+              <button type="button" next__btn>next</button>
+            </fieldset>
+            <fieldset>
+                <label for="surname">Prenom:</label>
+                <input type="text" id="surname">
+                <button type="button" prev__btn>previous</button>
+                <button type="button" next__btn>next</button>
+              </fieldset>
+              <fieldset>
+                <label for="name">Nom:</label>
+                <input type="text" id="name">
+                <button type="button" prev__btn>previous</button>
+                <button type="button" next__btn>next</button>
+              </fieldset>
+              <fieldset>
+                <label for="nicknamel">Pseudo:</label>
+                <input type="text" id="nicknamel">
+                <button type="button" prev__btn>previous</button>
+                <button type="button" next__btn>next</button>
+              </fieldset>
+            <fieldset>
+              <label for="password">Password:</label>
+              <input type="password" id="password">
+              <button type="button" prev__btn>previous</button>
+              <button type="button">submit</button>
+            </fieldset>
+          </div>
+        </div>
+      </form>
+    <script type="module" src="./build/bundle.js"></script>
 </body>
 </html>

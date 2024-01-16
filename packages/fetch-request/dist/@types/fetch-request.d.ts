@@ -1,7 +1,7 @@
-declare type HttpMethod = 'GET' | 'POST';
+declare type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS';
 declare type Headers = Record<string, string>;
 declare interface FetchRequestOptions {
-    method: HttpMethod;
+    method?: HttpMethod;
     headers?: Headers;
     credentials?: "omit" | "same-origin" | "include";
     mode?: "cors" | "no-cors" | "same-origin";
@@ -10,7 +10,7 @@ declare interface FetchRequestOptions {
     timeOut?: number;
     contentType?: string;
     acceptDataFormat?: "form-data" | "classic-object" | "array";
-    responseType: 'json' | 'text';
+    responseType?: 'json' | 'text';
 }
 declare interface FetchRequestCallbacks {
     onPostFetch?: (response?: any) => void;

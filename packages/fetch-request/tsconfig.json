@@ -7,7 +7,8 @@
     "sourceMap": true,
     "declarationDir": "dist/@types",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["src/**/*.ts", "src/fetch-request.ts"],
   "exclude": ["node_modules", "dist"]

@@ -14,7 +14,8 @@
   "type": "commonjs",
   "module": "dist/progress-form.js",
   "keywords": [
-    "form","progress",
+    "form",
+    "progress",
     "easy"
   ],
   "scripts": {
@@ -23,7 +24,8 @@
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "node ./__tests__/fetch-request.test.js",
     "tsc": "tsc",
-    "prepublishOnly": "npm run build"
+    "generate-declarations": "tsc --emitDeclarationOnly",
+    "prepublishOnly": "npm run build && npm run generate-declarations"
   },
   "directories": {
     "test": "__tests__",
@@ -48,14 +50,16 @@
     "babel-plugin-jsx-pragmatic": "^1.0.2",
     "cypress": "^13.6.1",
     "terser-webpack-plugin": "^5.0.0",
-    "ts-loader":"^9.5.1",
+    "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.0.0",
     "webpack-cli": "^4.10.0"
-    
   },
   "sideEffect": false,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "animejs": "^3.2.2"
   }
 }

@@ -65,6 +65,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /**
@@ -73,9 +74,168 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   * and manage actions before and after sending the request.
   */
 var FetchRequest = /*#__PURE__*/function () {
-  function FetchRequest(options) {
+  function FetchRequest(_options) {
+    var _this = this;
     _classCallCheck(this, FetchRequest);
-    this.options = options;
+    _defineProperty(this, "submitForm", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            if (!_this.options.callbacks.onPreFetch) {
+              _context.next = 4;
+              break;
+            }
+            _context.next = 4;
+            return _this.preFetch();
+          case 4:
+            _context.next = 6;
+            return _this.run();
+          case 6:
+            if (!_this.options.callbacks.onPostFetch) {
+              _context.next = 9;
+              break;
+            }
+            _context.next = 9;
+            return _this.postFetch();
+          case 9:
+            _context.next = 14;
+            break;
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](0);
+            _this.handleError(_context.t0, undefined, 'Error executing query : ');
+          case 14:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 11]]);
+    })));
+    _defineProperty(this, "run", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var response, _this$options$callbac, _this$options, uri, data, options, finalUri, body, method, fetchOptions, responseType;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            response = null;
+            _context2.prev = 1;
+            _this$options = _this.options, uri = _this$options.uri, data = _this$options.data, options = _this$options.options;
+            if (uri) {
+              _context2.next = 5;
+              break;
+            }
+            throw new Error("URI is required");
+          case 5:
+            finalUri = uri;
+            body = null;
+            method = (options === null || options === void 0 ? void 0 : options.method) || 'GET';
+            if (method === "GET" && data) {
+              finalUri = _this.buildGetRequestUrl(uri, data);
+            } else if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && data) {
+              body = _this.prepareRequestBody(data);
+            }
+            fetchOptions = {
+              method: method,
+              headers: options === null || options === void 0 ? void 0 : options.headers,
+              body: body,
+              credentials: options === null || options === void 0 ? void 0 : options.credentials,
+              mode: options === null || options === void 0 ? void 0 : options.mode,
+              cache: options === null || options === void 0 ? void 0 : options.cache,
+              integrity: options === null || options === void 0 ? void 0 : options.integrity
+            };
+            if (method === "GET" || method === "HEAD" || method === "OPTIONS") {
+              delete fetchOptions.body;
+            }
+            _context2.next = 13;
+            return fetch(finalUri, fetchOptions);
+          case 13:
+            response = _context2.sent;
+            if (!options) {
+              _context2.next = 29;
+              break;
+            }
+            responseType = options.responseType;
+            if (!responseType) {
+              _context2.next = 27;
+              break;
+            }
+            if (!(responseType === "text")) {
+              _context2.next = 23;
+              break;
+            }
+            _context2.next = 20;
+            return response.text();
+          case 20:
+            _context2.t0 = _context2.sent;
+            _context2.next = 26;
+            break;
+          case 23:
+            _context2.next = 25;
+            return response.json();
+          case 25:
+            _context2.t0 = _context2.sent;
+          case 26:
+            _this.response = _context2.t0;
+          case 27:
+            _context2.next = 32;
+            break;
+          case 29:
+            _context2.next = 31;
+            return response.json();
+          case 31:
+            _this.response = _context2.sent;
+          case 32:
+            if ((_this$options$callbac = _this.options.callbacks) !== null && _this$options$callbac !== void 0 && _this$options$callbac.onSuccess && response.ok) {
+              _this.options.callbacks.onSuccess(_this.response);
+            }
+            _context2.next = 38;
+            break;
+          case 35:
+            _context2.prev = 35;
+            _context2.t1 = _context2["catch"](1);
+            _this.handleError(_context2.t1, response ? response.status : 0);
+          case 38:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[1, 35]]);
+    })));
+    _defineProperty(this, "preFetch", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var data;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            if (!(typeof _this.options.callbacks.onPreFetch === 'function')) {
+              _context3.next = 5;
+              break;
+            }
+            _context3.next = 3;
+            return _this.options.callbacks.onPreFetch(_this.options.data);
+          case 3:
+            data = _context3.sent;
+            if (data) {
+              _this.options.data = data.data;
+            }
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3);
+    })));
+    _defineProperty(this, "postFetch", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            if (_this.options.submitter instanceof HTMLButtonElement) {
+              _this.options.submitter.removeAttribute('disabled');
+            }
+            return _context4.abrupt("return", _this.options.callbacks.onPostFetch ? _this.options.callbacks.onPostFetch() : undefined);
+          case 2:
+          case "end":
+            return _context4.stop();
+        }
+      }, _callee4);
+    })));
+    this.options = _options;
     this.attachSubmitterEvent();
   }
   _createClass(FetchRequest, [{
@@ -83,174 +243,6 @@ var FetchRequest = /*#__PURE__*/function () {
     value: function attachSubmitterEvent() {
       this.options.submitter ? this.options.submitter.addEventListener('click', this.submitForm) : this.submitForm();
     }
-  }, {
-    key: "submitForm",
-    value: function () {
-      var _submitForm = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              if (!this.options.callbacks.onPreFetch) {
-                _context.next = 4;
-                break;
-              }
-              _context.next = 4;
-              return this.preFetch();
-            case 4:
-              _context.next = 6;
-              return this.run();
-            case 6:
-              if (!this.options.callbacks.onPostFetch) {
-                _context.next = 9;
-                break;
-              }
-              _context.next = 9;
-              return this.postFetch();
-            case 9:
-              _context.next = 14;
-              break;
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](0);
-              this.handleError(_context.t0, undefined, 'Error executing query : ');
-            case 14:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, this, [[0, 11]]);
-      }));
-      function submitForm() {
-        return _submitForm.apply(this, arguments);
-      }
-      return submitForm;
-    }()
-  }, {
-    key: "run",
-    value: function () {
-      var _run = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response, _this$options$callbac, _this$options, uri, data, options, finalUri, body, fetchOptions;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              response = null;
-              _context2.prev = 1;
-              _this$options = this.options, uri = _this$options.uri, data = _this$options.data, options = _this$options.options;
-              if (uri) {
-                _context2.next = 5;
-                break;
-              }
-              throw new Error("URI is required");
-            case 5:
-              finalUri = uri;
-              body = null;
-              if (options && options.method === "GET" && data) {
-                finalUri = this.buildGetRequestUrl(uri, data);
-              } else if (data) {
-                body = this.prepareRequestBody(data);
-              }
-              fetchOptions = {
-                method: (options === null || options === void 0 ? void 0 : options.method) || 'GET',
-                headers: options === null || options === void 0 ? void 0 : options.headers,
-                body: body,
-                credentials: options === null || options === void 0 ? void 0 : options.credentials,
-                mode: options === null || options === void 0 ? void 0 : options.mode,
-                cache: options === null || options === void 0 ? void 0 : options.cache,
-                integrity: options === null || options === void 0 ? void 0 : options.integrity
-              };
-              _context2.next = 11;
-              return fetch(finalUri, fetchOptions);
-            case 11:
-              response = _context2.sent;
-              if (!(this.options.options.responseType && this.options.options.responseType === "text")) {
-                _context2.next = 18;
-                break;
-              }
-              _context2.next = 15;
-              return response.text();
-            case 15:
-              _context2.t0 = _context2.sent;
-              _context2.next = 21;
-              break;
-            case 18:
-              _context2.next = 20;
-              return response.json();
-            case 20:
-              _context2.t0 = _context2.sent;
-            case 21:
-              this.response = _context2.t0;
-              if ((_this$options$callbac = this.options.callbacks) !== null && _this$options$callbac !== void 0 && _this$options$callbac.onSuccess && response.ok) {
-                this.options.callbacks.onSuccess(this.response);
-              }
-              _context2.next = 28;
-              break;
-            case 25:
-              _context2.prev = 25;
-              _context2.t1 = _context2["catch"](1);
-              this.handleError(_context2.t1, response ? response.status : 0);
-            case 28:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2, this, [[1, 25]]);
-      }));
-      function run() {
-        return _run.apply(this, arguments);
-      }
-      return run;
-    }()
-  }, {
-    key: "preFetch",
-    value: function () {
-      var _preFetch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var data;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
-            case 0:
-              if (!(typeof this.options.callbacks.onPreFetch === 'function')) {
-                _context3.next = 5;
-                break;
-              }
-              _context3.next = 3;
-              return this.options.callbacks.onPreFetch(this.options.data);
-            case 3:
-              data = _context3.sent;
-              if (data) {
-                this.options.data = data.data;
-              }
-            case 5:
-            case "end":
-              return _context3.stop();
-          }
-        }, _callee3, this);
-      }));
-      function preFetch() {
-        return _preFetch.apply(this, arguments);
-      }
-      return preFetch;
-    }()
-  }, {
-    key: "postFetch",
-    value: function () {
-      var _postFetch = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-          while (1) switch (_context4.prev = _context4.next) {
-            case 0:
-              if (this.options.submitter instanceof HTMLButtonElement) {
-                this.options.submitter.removeAttribute('disabled');
-              }
-              return _context4.abrupt("return", this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch() : undefined);
-            case 2:
-            case "end":
-              return _context4.stop();
-          }
-        }, _callee4, this);
-      }));
-      function postFetch() {
-        return _postFetch.apply(this, arguments);
-      }
-      return postFetch;
-    }()
   }, {
     key: "buildGetRequestUrl",
     value: function buildGetRequestUrl(uri, data) {
@@ -267,7 +259,6 @@ var FetchRequest = /*#__PURE__*/function () {
             if (typeof value === 'string') {
               params.append(key, value);
             }
-            // If needed, handle File type values differently
           }
         } catch (err) {
           _iterator.e(err);
@@ -300,10 +291,10 @@ var FetchRequest = /*#__PURE__*/function () {
     key: "convertObjectToFormData",
     value: function convertObjectToFormData(data) {
       var formData = new FormData();
-      Object.entries(data).forEach(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
-          value = _ref2[1];
+      Object.entries(data).forEach(function (_ref5) {
+        var _ref6 = _slicedToArray(_ref5, 2),
+          key = _ref6[0],
+          value = _ref6[1];
         return formData.append(key, value);
       });
       return formData;

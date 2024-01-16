@@ -36,9 +36,13 @@ module.exports = {
         test: /\.ts$/,
         exclude: /node_modules/,
         use: {
-          loader: 'ts-loader',
+          loader: 'babel-loader',
         },
       },
+      {
+        test: /\.svg$/,
+        use: 'svg-url-loader'
+      }
     ],
   },
 };

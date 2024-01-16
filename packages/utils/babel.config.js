@@ -3,7 +3,12 @@ module.exports = {
       '@babel/preset-env',
       '@babel/preset-react',
       '@babel/preset-typescript',
-    ],
-    // Vous pouvez ajouter ici d'autres plugins si nécessaire
+    ]
   };
+
+  // ,
+  //   plugins: ["@babel/plugin-transform-modules-commonjs"],
+  //   assumptions: {
+  //     "enumerableModuleMeta": true
+  //   }
   

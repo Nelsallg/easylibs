@@ -1,4 +1,5 @@
 import { focusInBlock, getFocusableElements } from "./scripts/focus-in-block";
+import anime from 'animejs/lib/anime.es.js';
 
 let fieldSetElement:HTMLElement|null = null;
 declare type ProgressFormType = {
@@ -109,12 +110,11 @@ export default class ProgressForm
                         this.setFocusInFieldSet(fieldSetElement);
                         getFocusableElements(fieldSetElement);
                     }
-                    // anime({
-                    //     targets: targets,
-                    //     translateX: nextTranslateX,
-                    //     easing: 'easeInOutExpo'
-                    // });
-                    
+                    anime({
+                        targets: targets,
+                        translateX: nextTranslateX,
+                        easing: 'easeInOutExpo'
+                    });
                     if(progressElement)
                     {progressElement.style.width = `${nextProgress??0}%`;}
                 }
@@ -134,11 +134,11 @@ export default class ProgressForm
                     this.setFocusInFieldSet(fieldSetElement);
                     getFocusableElements(fieldSetElement);
                 }
-                // anime({
-                //     targets: targets,
-                //     translateX: prevTranslateX,
-                //     easing: 'easeInOutExpo'
-                // });
+                anime({
+                    targets: targets,
+                    translateX: prevTranslateX,
+                    easing: 'easeInOutExpo'
+                });
                 if(progressElement)
                 {progressElement.style.width = `${prevProgress??0}%`;}
              });
@@ -181,13 +181,6 @@ export default class ProgressForm
         }
         return fieldsetTargetArray;
     }
-    private fieldsetAnimation(targets: string[], translateX:number)
-    {
-        for (let i = 0; i < targets.length; i++) {
-            const fieldset = document.querySelector(`${targets[i]}`) as HTMLFieldSetElement;
-            fieldset.style.transform = `translateX(${translateX})`;
-        }
-    }
     private cssStyle<T extends ProgressFormType>(
         params:T,
         fieldSets:NodeListOf<HTMLFieldSetElement>,
@@ -202,6 +195,7 @@ export default class ProgressForm
             if(!fieldsetContainer){
                 throw new Error("The element with the attribute [fieldset__container] not found in your fieldset__parent");
             }
+            const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
             const defaultFieldSetParentStyle = {
                 height: '100%',
                 overflow: 'hidden',
@@ -248,7 +242,6 @@ export default class ProgressForm
                 Object.assign(fieldSet.style, fieldsetStyle);
                 fieldSet.classList.add(`fieldset${index}`);
             });
-            const tempSelectWidth = fieldSets[0].getBoundingClientRect().width;
             const fieldsetMargingWidth = params.fieldsetMargingWidth || 60;
             const fieldSetWidth = fieldSets[0].offsetWidth;
             const fieldsetContainerWidth = this.fieldsetLength * fieldSetWidth + fieldsetMargingWidth;

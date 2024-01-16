@@ -55,10 +55,6 @@
     "webpack-cli": "^4.10.0"
     
   },
-  "peerDependencies": {
-    "@easylibs/utils": "^1.1.10",
-    "@easylibs/transformer": "^0.0.1"
-  },
   "sideEffect": false,
   "publishConfig": {
     "access": "public"

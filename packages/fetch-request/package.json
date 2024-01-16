@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/fetch-request",
-  "version": "1.2.10",
+  "version": "1.3.11",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -24,7 +24,8 @@
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "node ./__tests__/fetch-request.test.js",
     "tsc": "tsc",
-    "prepublishOnly": "npm run build"
+    "generate-declarations": "tsc --emitDeclarationOnly",
+    "prepublishOnly": "npm run build && npm run generate-declarations"
   },
   "directories": {
     "test": "__tests__",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.23.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",

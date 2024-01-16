@@ -1,4 +1,4 @@
-import FetchRequest from "@easylibs/fetch-request";
+import FetchRequest from "packages/fetch-request/@types/fetch-request";
 import Utils from "@easylibs/utils";
 import ScrollBehavior from "@easylibs/scroll-behavior";
 

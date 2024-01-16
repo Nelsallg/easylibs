@@ -1,4 +1,4 @@
-declare type RegexType = 'email' | 'phone-number' | 'number' | 'strong-password' | 'url' | 'default-text' | 'fr-text' | 'en-text' | 'tr-text';
+declare type RegexType = 'email' | 'phone-number' | 'number' | 'strong-password' | 'default-text' | 'fr-text' | 'en-text' | 'tr-text' | 'url-protocol' | 'url-domain' | 'url-ip' | 'url-port' | 'url-path' | 'url-query' | 'url-fragment';
 export default class Utils {
     /**
      * Crée un élément audio avec la source audio spécifiée par le chemin audioPath.
@@ -7,11 +7,22 @@ export default class Utils {
      * @returns L'élément audio créé.
      */
     static setAudio(audioPath: string, classname?: any): HTMLAudioElement;
+    /**
+   * Converts an HTML string into an HTML element or a collection of HTML elements.
+   *
+   * @param textHtml - The HTML string to convert.
+   * @param targetName - The tag name of the target HTML element to create.
+   * @param children - A boolean indicating whether to return all children of the target element.
+   * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
+   *
+   * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
+   * If the HTML content generates no children, the method returns `null`.
+   */
     static textToHTMLElement(textHtml: string, targetName?: string, children?: boolean): Element | HTMLCollection | null;
     /**
      * retourne un élément du dom
      */
-    static $$(element: any): Element | NodeListOf<Element>;
+    static $$(element: any): any;
     /**
      * Cette fonction permet de convertir un objet NodeList en un tableau d'éléments HTML (HTMLElement)
      * et d'exécuter une fonction de rappel sur chaque élément du tableau.
@@ -28,12 +39,6 @@ export default class Utils {
      */
     static getRegexp(type: RegexType): RegExp;
     /**
-     * Résout le chemin d'une ressource en fonction de l'environnement d'exécution.
-     * @param path Le chemin de la ressource.
-     * @returns Le chemin résolu de la ressource.
-     */
-    static resolvePath(path: string): string;
-    /**
      * Crée une couche superfielle au dessus d'un élément html afin d'empecher tout évènement.
      * @param tag Le nom de la balise HTML à utiliser comme couche (par défaut : 'td', idéal pour les tableau html).
      * @param backgroundColor La couleur d'arrière-plan de la zone interdite (par défaut : '#FFFFFF').
@@ -46,7 +51,7 @@ export default class Utils {
      * @param maxLength La longueur maximale de la chaîne résultante (par défaut : 14).
      * @returns La chaîne de texte réduite.
      */
-    static reduceText(text: string, maxLength?: number): string;
+    static truncateChars(text: string, maxLength?: number): string;
     /**
      * Changes the input text type to a number type and performs additional processing
      * based on the specified parameters.

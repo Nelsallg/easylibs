@@ -1,4 +1,4 @@
-import FetchRequest from "@easylibs/fetch-request";
+import FetchRequest from "packages/fetch-request/@types/fetch-request";
 import TempData from "@easylibs/tempdata";
 import {Transformer} from "@easylibs/transformer";
 import Utils from "@easylibs/utils";

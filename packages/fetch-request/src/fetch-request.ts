@@ -1,4 +1,4 @@
-declare type HttpMethod = 'GET' | 'POST';
+declare type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS';
 declare type Headers = Record<string, string>;
 
 declare interface FetchRequestOptions {
@@ -59,13 +59,15 @@ export default class FetchRequest{
             if (!uri) throw new Error("URI is required");
             let finalUri = uri;
             let body = null;
-            if (options && options.method === "GET" && data) {
+            const method = options?.method || 'GET';
+            if (method === "GET" && data) {
                 finalUri = this.buildGetRequestUrl(uri, data);
-            } else if (data) {
+            } 
+            else if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && data) {
                 body = this.prepareRequestBody(data);
             }
             const fetchOptions: RequestInit = {
-                method: options?.method || 'GET',
+                method: method,
                 headers: options?.headers,
                 body: body,
                 credentials: options?.credentials,
@@ -73,6 +75,9 @@ export default class FetchRequest{
                 cache: options?.cache,
                 integrity: options?.integrity,
             };
+            if (method === "GET" || method === "HEAD" || method === "OPTIONS") {
+                delete fetchOptions.body;
+            }
             response = await fetch(finalUri, fetchOptions);
             if(options){
                 const responseType = options.responseType;
