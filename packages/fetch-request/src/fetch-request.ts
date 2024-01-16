@@ -2,7 +2,7 @@ declare type HttpMethod = 'GET' | 'POST';
 declare type Headers = Record<string, string>;
 
 declare interface FetchRequestOptions {
-    method: HttpMethod,
+    method?: HttpMethod,
     headers?: Headers,
     credentials?: "omit" | "same-origin" | "include",
     mode?: "cors" | "no-cors" | "same-origin",
@@ -11,7 +11,7 @@ declare interface FetchRequestOptions {
     timeOut?: number,
     contentType?: string,
     acceptDataFormat?: "form-data" | "classic-object" | "array",
-    responseType: 'json' | 'text',
+    responseType?: 'json' | 'text',
 }
 
 declare interface FetchRequestCallbacks {
@@ -43,7 +43,7 @@ export default class FetchRequest{
     private attachSubmitterEvent() {
         this.options.submitter ? this.options.submitter.addEventListener('click', this.submitForm) : this.submitForm();  
     }
-    private async submitForm(){
+    private submitForm = async () => {
         try{
             if(this.options.callbacks.onPreFetch){await this.preFetch();}
             await this.run();
@@ -52,7 +52,7 @@ export default class FetchRequest{
             this.handleError(error, undefined,'Error executing query : ');
         }
     }
-    private async run(){
+    private run = async () =>{
         let response:Response|null = null;
         try {
             const { uri, data, options } = this.options;
@@ -73,9 +73,13 @@ export default class FetchRequest{
                 cache: options?.cache,
                 integrity: options?.integrity,
             };
-
             response = await fetch(finalUri, fetchOptions);
-            this.response = this.options.options.responseType && this.options.options.responseType === "text" ? await response.text() : await response.json();
+            if(options){
+                const responseType = options.responseType;
+                if(responseType){
+                    this.response = responseType === "text" ? await response.text() : await response.json();
+                }
+            }else{this.response = await response.json()}
 
             if (this.options.callbacks?.onSuccess && response.ok) {
                 this.options.callbacks.onSuccess(this.response);
@@ -85,7 +89,7 @@ export default class FetchRequest{
             this.handleError(error, response ? response.status : 0);
         }
     }
-    private async preFetch (){
+    private preFetch = async () =>{
         if(typeof this.options.callbacks.onPreFetch === 'function') {
             let data = await this.options.callbacks.onPreFetch(this.options.data);
             if(data){
@@ -93,7 +97,7 @@ export default class FetchRequest{
             }
         }
     }
-    private async postFetch (){
+    private postFetch = async () =>{
         if(this.options.submitter instanceof HTMLButtonElement)
         {this.options.submitter.removeAttribute('disabled');}
         return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch() : undefined;
@@ -106,7 +110,6 @@ export default class FetchRequest{
                 if (typeof value === 'string') {
                     params.append(key, value);
                 }
-                // If needed, handle File type values differently
             }
         } else {
             for (let [key, value] of Object.entries(data)) {
