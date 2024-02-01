@@ -1,0 +1,10 @@
+{
+  "packages": ["packages/**/*"],
+  "version": "1.0.0",
+  "npmClient": "npm",
+  "command": {
+    "build": {
+      "ignore": ["cypress"]
+    }
+  }
+}

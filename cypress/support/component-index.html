@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Test</title>
+    <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          margin: 20px;
+          padding: 0;
+          box-sizing: border-box;
+          background-color: #f5f5f5;
+      }
+
+      form {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 8px;
+      }
+
+      input[type="text"],
+      textarea,
+      input[type="file"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 16px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          font-size: 14px;
+      }
+
+      textarea {
+          resize: vertical;
+      }
+
+      input[type="file"] {
+          cursor: pointer;
+      }
+
+      input[type="submit"] {
+          background-color: #4caf50;
+          color: #fff;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+      }
+
+      input[type="submit"]:hover {
+          background-color: #45a049;
+      }
+  </style>
+  </head>
+  <body>
+    <div data-cy-root>
+      <form method="post" accept-charset="UTF-8">
+        <input type="hidden" name="action" value="users/save-user">
+        <input type="hidden" name="userId" value="">
+    
+        <label for="avatar">Photo</label>
+        <input type="file" id="avatar" name="fields[avatar]" value="">
+
+        <label for="location">Location</label>
+        <input type="text" id="location" name="fields[location]" value="">
+    
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="fields[bio]"></textarea>
+    
+        <input type="submit" value="Save Profile">
+    </form>
+    </div>
+  </body>
+</html>

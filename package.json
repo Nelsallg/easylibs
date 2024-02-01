@@ -1,0 +1,63 @@
+{
+  "name": "easylibs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "babel": "babel index.js --out-file public/script/app.js",
+    "dev": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode=production",
+    "test": "cypress",
+    "tsc": "tsc",
+    "vite-dev": "vite",
+    "vite-prod": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nelsallg/Evangzat.libs.git"
+  },
+  "author": "Lévy Stéphane NGUEMA EKOMOE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nelsallg/Evangzat.libs/issues"
+  },
+  "homepage": "https://github.com/Nelsallg/Evangzat.libs#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/fs-extra": "^11.0.1",
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.10.5",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.9.0",
+    "cypress": "^13.6.2",
+    "lerna": "^7.4.2",
+    "mini-css-extract-plugin": "^2.7.6",
+    "raw-loader": "^4.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.3",
+    "style-loader": "^3.3.4",
+    "svg-inline-loader": "^0.8.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-dts": "^3.7.2",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "@easylibs/utils": "^1.2.14",
+    "nx": "^17.2.7"
+  }
+}
