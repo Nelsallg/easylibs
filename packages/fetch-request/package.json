@@ -5,9 +5,9 @@
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
     "email": "nelsallg@contact.com",
-    "url": "http://nelsallg.com/"
+    "url": "http://easylibs.com/"
   },
-  "homepage": "https://github.com/Nelsallg/easylibs.libs/tree/main/packages/fetch-request#readme",
+  "homepage": "https://github.com/Nelsallg/easylibs/tree/1.0.0/packages/fetch-request",
   "license": "ISC",
   "main": "dist/fetch-request.js",
   "types": "dist/@types/fetch-request.d.ts",

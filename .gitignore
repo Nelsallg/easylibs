@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 
 
-assets
 build
 doc.doc
 packages/animation
