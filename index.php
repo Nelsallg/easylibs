@@ -20,7 +20,7 @@
   <div class="flash-box">
     
   </div>
-  <form id="progress-form" method="post">
+  <!--<form id="progress-form" method="post">
         <div fieldset__parent>
           <div fieldset__container>
             <fieldset>
