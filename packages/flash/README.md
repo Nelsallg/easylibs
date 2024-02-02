@@ -2,7 +2,8 @@
 
 ![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
-![npm version](https://img.shields.io/npm/flash@latest/@easylibs/flash.svg?style=flat)
+![npm version](https://img.shields.io/npm/v/@easylibs/flash.svg?style=flat)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/flash)
 
 ## Introduction
@@ -82,7 +83,7 @@ Flash.add({
 This will create a Flash message with the text "Hello, world!" and display it in a green box with a close button.
 You can also create your own custom templates. To do
 
-`**Custom templates**`
+**`Custom templates`**
 
 ```javascript
 import Flash from '@easylibs/flash';
