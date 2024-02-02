@@ -1,5 +1,11 @@
 # Progress Form
 
+![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
+![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
+![npm version](https://img.shields.io/npm/v/@easylibs/progress-form.svg?style=flat)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/progress-form)
+
 The `ProgressForm` class provides a way to create a multi-step form with a progress bar. The form is divided into multiple fieldsets, and the user can navigate between the fieldsets using the "Next" and "Previous" buttons. The progress bar indicates the user's progress through the form.
 
 ## Installation
