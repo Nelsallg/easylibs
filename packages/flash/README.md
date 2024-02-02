@@ -1,8 +1,13 @@
 # Flash: A JavaScript Library for Creating Flash Messages
 
+![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
+![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
+![npm version](https://img.shields.io/npm/flash@latest/@easylibs/flash.svg?style=flat)
+![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/flash)
+
 ## Introduction
 
-Flash is a JavaScript library that allows you to easily create and display flash messages on your web pages. Flash messages are temporary notifications that can be used to display important information to your users, such as error messages, success messages, or announcements.
+Flash is a lightweight, easy-to-use library for displaying Flash messages in your web application. It provides a simple API for creating and displaying Flash messages, and it comes with a variety of built-in templates that you can use to customize the look and feel of your messages.
 
 ## Installation
 
@@ -29,55 +34,70 @@ yarn add @easylibs/flash
 
 ## Usage
 
-To use Flash, simply create a new instance of the `Flash` class and call the `add()` method. The `add()` method takes an object of options as its argument. The following options are available:
-
-* `message`: The message to display in the flash message.
-* `type`: The type of flash message. This can be one of the following values: `success`, `danger`, `warning`, or `info`.
-* `duration`: The duration of the flash message in milliseconds.
-* `title`: The title of the flash message.
-* `icon`: A boolean value indicating whether or not to display icon in the flash message.
-* `closeButton`: A boolean value indicating whether or not to display a close button on the flash message.
-
-For example, the following code creates a success flash message with a duration of 5 seconds:
+To use Flash, simply call the `Flash.add()` method and pass in the options for your Flash message. The following code shows how to create a simple Flash message:
 
 ```javascript
+import Flash from '@easylibs/flash';
+
 Flash.add({
-  message: 'Your message here',
-  type: 'success',
-  duration: 5000
+  message: 'Hello, world!',
+  type: 'success'
 });
 ```
+
+This will create a Flash message with the text "Hello, world!" and display it in a green box.
+
+You can also pass in additional options to the `Flash.add()` method to customize the look and feel of your Flash message. The following table lists all of the available options:
+
+| Option | Description |
+|---|---|
+| message | The text of the Flash message. |
+| type | The type of Flash message. Can be one of the following: `success`, `danger`, `warning`, or `info`. |
+| duration | The duration of the Flash message in milliseconds. |
+| title | The title of the Flash message. |
+| closeButton | Whether or not to show a close button on the Flash message. |
+| container | The container in which to display the Flash message. |
+| icon | Whether or not to show an icon on the Flash message. |
+| tone | Whether or not to use a tone on the Flash message. |
 
 ## Customizing Flash Messages
 
 You can customize the appearance of flash messages by overriding the default CSS styles. The default CSS styles are located in the `flash.css` file.
 
-## Creating Custom Flash Messages
+## Templates
 
-In addition to using the `add()` method to create flash messages, you can also create your own custom flash messages by extending the `Flash` class. To do this, simply create a new class that extends the `Flash` class and override the `flashHTMLModel()` method. The `flashHTMLModel()` method returns the HTML code for the flash message.
-
-For example, the following code creates a custom flash message that displays a close button:
+Flash comes with a variety of built-in templates that you can use to customize the look and feel of your Flash messages. To use a template, simply set the template number to the `TEMPLATE` variable of the `Flash` class. The following code shows how to use the `default` template:
 
 ```javascript
-// Assuming you have imported the Flash class from '@easylibs/flash'
 import Flash from '@easylibs/flash';
 
-function template() {
-    // Customize the HTML structure based on your requirements
-    return `
-      <div class="flash">
+Flash.TEMPLATE = 1;
+Flash.add({
+  message: 'Hello, world!',
+  type: 'success',
+  duration: 5000
+});
+```
+
+This will create a Flash message with the text "Hello, world!" and display it in a green box with a close button.
+You can also create your own custom templates. To do
+
+`**Custom templates**`
+
+```javascript
+import Flash from '@easylibs/flash';
+
+Flash.TEMPLATE = `<div class="flash">
         <span>{{title}}</span>
         <div>{{message}}</div>
         <div _close_>Close</div>
-      </div>`;
-}
-Flash.TEMPLATE = template();
-// Creating a custom flash message with a close button
+</div>`;
+
 Flash.add({
-  message: 'Your custom message here',
+  message: 'Hi, i am your flash message',
   type: 'info',
   duration: 5000,
-  title: 'Custom Title',
+  title: 'Alert !',
   icon: true,
   closeButton: true
 });

@@ -27,13 +27,11 @@
   },
   "directories": {
     "test": "__tests__",
-    "dist": "dist",
-    "icons": "src/assets/icons"
+    "dist": "dist"
   },
   "files": [
     "./dist",
-    "./__tests__",
-    "./assets"
+    "./__tests__"
   ],
   "repository": {
     "type": "git",

@@ -1,4 +1,5 @@
 import { FlashOptions } from "./scripts/types";
+import "./assets/scss/flash.scss";
 export default class Flash {
     private static OPTIONS;
     static TEMPLATE: string | number;
@@ -7,14 +8,14 @@ export default class Flash {
     * @param options
     * @returns - The instance of the Flash class.
     */
-    static add(options: FlashOptions): Flash;
+    static add(options?: FlashOptions, container?: HTMLElement): Flash;
     /**
      * Displays a Flash message with the specified options.
-     * @param options - The Flash message options or the existing Flash element's selector.
+     * @param options - The Flash message options.
      * @param container - The container in which to display the Flash message (optional).
      * @returns - The instance of the Flash class.
      */
-    private static show;
+    private static run;
     /**
      * Returns the HTML template for the Flash message.
      * @param properties - Flash message properties.

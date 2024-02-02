@@ -7,4 +7,5 @@ export declare type FlashOptions = {
     title?: string;
     icon?: boolean;
     closeButton?: boolean;
+    tone?: boolean;
 };
