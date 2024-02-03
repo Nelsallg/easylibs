@@ -10,34 +10,8 @@
 })(self, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
@@ -52,89 +26,9 @@ return /******/ (() => { // webpackBootstrap
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/ensure chunk */
-/******/ 	(() => {
-/******/ 		__webpack_require__.f = {};
-/******/ 		// This file contains only the entry chunk.
-/******/ 		// The chunk loading function for additional chunks
-/******/ 		__webpack_require__.e = (chunkId) => {
-/******/ 			return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
-/******/ 				__webpack_require__.f[key](chunkId, promises);
-/******/ 				return promises;
-/******/ 			}, []));
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/get javascript chunk filename */
-/******/ 	(() => {
-/******/ 		// This function allow to reference async chunks
-/******/ 		__webpack_require__.u = (chunkId) => {
-/******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + ".js";
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/load script */
-/******/ 	(() => {
-/******/ 		var inProgress = {};
-/******/ 		var dataWebpackPrefix = "@easylibs/utils:";
-/******/ 		// loadScript function to load a script via script tag
-/******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
-/******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
-/******/ 			var script, needAttach;
-/******/ 			if(key !== undefined) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				for(var i = 0; i < scripts.length; i++) {
-/******/ 					var s = scripts[i];
-/******/ 					if(s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) { script = s; break; }
-/******/ 				}
-/******/ 			}
-/******/ 			if(!script) {
-/******/ 				needAttach = true;
-/******/ 				script = document.createElement('script');
-/******/ 		
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.setAttribute("data-webpack", dataWebpackPrefix + key);
-/******/ 		
-/******/ 				script.src = url;
-/******/ 			}
-/******/ 			inProgress[url] = [done];
-/******/ 			var onScriptComplete = (prev, event) => {
-/******/ 				// avoid mem leaks in IE.
-/******/ 				script.onerror = script.onload = null;
-/******/ 				clearTimeout(timeout);
-/******/ 				var doneFns = inProgress[url];
-/******/ 				delete inProgress[url];
-/******/ 				script.parentNode && script.parentNode.removeChild(script);
-/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
-/******/ 				if(prev) return prev(event);
-/******/ 			}
-/******/ 			var timeout = setTimeout(onScriptComplete.bind(null, undefined, { type: 'timeout', target: script }), 120000);
-/******/ 			script.onerror = onScriptComplete.bind(null, script.onerror);
-/******/ 			script.onload = onScriptComplete.bind(null, script.onload);
-/******/ 			needAttach && document.head.appendChild(script);
-/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
@@ -146,119 +40,6 @@ return /******/ (() => { // webpackBootstrap
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/publicPath */
-/******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript)
-/******/ 				scriptUrl = document.currentScript.src;
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) {
-/******/ 					var i = scripts.length - 1;
-/******/ 					while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"utils": 0
-/******/ 		};
-/******/ 		
-/******/ 		__webpack_require__.f.j = (chunkId, promises) => {
-/******/ 				// JSONP chunk loading for javascript
-/******/ 				var installedChunkData = __webpack_require__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
-/******/ 				if(installedChunkData !== 0) { // 0 means "already installed".
-/******/ 		
-/******/ 					// a Promise means "currently loading".
-/******/ 					if(installedChunkData) {
-/******/ 						promises.push(installedChunkData[2]);
-/******/ 					} else {
-/******/ 						if(true) { // all chunks have JS
-/******/ 							// setup Promise in chunk cache
-/******/ 							var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
-/******/ 							promises.push(installedChunkData[2] = promise);
-/******/ 		
-/******/ 							// start chunk loading
-/******/ 							var url = __webpack_require__.p + __webpack_require__.u(chunkId);
-/******/ 							// create error before stack unwound to get useful stacktrace later
-/******/ 							var error = new Error();
-/******/ 							var loadingEnded = (event) => {
-/******/ 								if(__webpack_require__.o(installedChunks, chunkId)) {
-/******/ 									installedChunkData = installedChunks[chunkId];
-/******/ 									if(installedChunkData !== 0) installedChunks[chunkId] = undefined;
-/******/ 									if(installedChunkData) {
-/******/ 										var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 										var realSrc = event && event.target && event.target.src;
-/******/ 										error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 										error.name = 'ChunkLoadError';
-/******/ 										error.type = errorType;
-/******/ 										error.request = realSrc;
-/******/ 										installedChunkData[1](error);
-/******/ 									}
-/******/ 								}
-/******/ 							};
-/******/ 							__webpack_require__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
-/******/ 						}
-/******/ 					}
-/******/ 				}
-/******/ 		};
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		// no on chunks loaded
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-/******/ 			var [chunkIds, moreModules, runtime] = data;
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
-/******/ 				for(moduleId in moreModules) {
-/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 					}
-/******/ 				}
-/******/ 				if(runtime) var result = runtime(__webpack_require__);
-/******/ 			}
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkId] = 0;
-/******/ 			}
-/******/ 		
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunk_easylibs_utils"] = self["webpackChunk_easylibs_utils"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
 /******/ 	
 /************************************************************************/
@@ -297,27 +78,27 @@ var Utils = /*#__PURE__*/function () {
      */
     function setAudio(audioPath) {
       var classname = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      var audio = document.createElement('audio');
+      var audio = document.createElement("audio");
       if (classname != null) {
         audio.classList.add(classname);
       }
-      var source = document.createElement('source');
+      var source = document.createElement("source");
       source.src = audioPath;
       source.type = "audio/mpeg";
       audio.appendChild(source);
       return audio;
     }
     /**
-    * Converts an HTML string into an HTML element or a collection of HTML elements.
-    *
-    * @param textHtml - The HTML string to convert.
-    * @param targetName - The tag name of the target HTML element to create.
-    * @param children - A boolean indicating whether to return all children of the target element.
-    * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
-    *
-    * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
-    * If the HTML content generates no children, the method returns `null`.
-    */
+     * Converts an HTML string into an HTML element or a collection of HTML elements.
+     *
+     * @param textHtml - The HTML string to convert.
+     * @param targetName - The tag name of the target HTML element to create.
+     * @param children - A boolean indicating whether to return all children of the target element.
+     * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
+     *
+     * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
+     * If the HTML content generates no children, the method returns `null`.
+     */
   }, {
     key: "textToHTMLElement",
     value: function textToHTMLElement(textHtml) {
@@ -336,9 +117,9 @@ var Utils = /*#__PURE__*/function () {
   }, {
     key: "$$",
     value: function $$(element) {
-      if (typeof element !== 'string') {
+      if (typeof element !== "string") {
         return element;
-      } else if (typeof element === 'string') {
+      } else if (typeof element === "string") {
         var collection = document.querySelectorAll("".concat(element));
         var el = document.querySelector("".concat(element));
         if (collection !== null && collection.length > 1) {
@@ -352,10 +133,10 @@ var Utils = /*#__PURE__*/function () {
     /**
      * Cette fonction permet de convertir un objet NodeList en un tableau d'éléments HTML (HTMLElement)
      * et d'exécuter une fonction de rappel sur chaque élément du tableau.
-     * @param nodeList Un objet NodeList ou un élément HTML. 
+     * @param nodeList Un objet NodeList ou un élément HTML.
      * Si c'est un NodeList, il sera converti en tableau d'éléments HTML.
      * @param callback Une fonction de rappel à exécuter sur chaque élément du tableau.
-     * @returns 
+     * @returns
      */
   }, {
     key: "processNodes",
@@ -379,42 +160,42 @@ var Utils = /*#__PURE__*/function () {
     key: "getRegexp",
     value: function getRegexp(type) {
       switch (type) {
-        case 'email':
+        case "email":
           return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-        case 'phone-number':
+        case "phone-number":
           return new RegExp(/^(0|\+[1-9][0-9]{0,2}) ?[0-9]+$/);
-        case 'number':
+        case "number":
           return new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
-        case 'strong-password':
+        case "strong-password":
           return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
-        case 'url-protocol':
-          return new RegExp(/^(https?:\/\/)$/, 'i');
-        case 'url-domain':
-          return new RegExp(/^((([a-zA-Z0-9]{1,})[.-]?)+[a-zA-Z]{2,})$/, 'i');
-        case 'url-ip':
-          return new RegExp(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, 'i');
-        case 'url-port':
-          return new RegExp(/^:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})$/, 'i');
-        case 'url-path':
-          return new RegExp(/^(\.\/)?[-a-zA-Z\d%_.~+\/]*$/, 'i');
-        case 'url-query':
-          return new RegExp(/^(\?[;&a-zA-Z\d%_.~+=-]*)$/, 'i');
-        case 'url-fragment':
-          return new RegExp(/^#[-a-zA-Z\d%_.~+/=?&;:!*'()]*$/, 'i');
-        case 'default-text':
+        case "url-protocol":
+          return new RegExp(/^(https?:\/\/)$/, "i");
+        case "url-domain":
+          return new RegExp(/^((([a-zA-Z0-9]{1,})[.-]?)+[a-zA-Z]{2,})$/, "i");
+        case "url-ip":
+          return new RegExp(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, "i");
+        case "url-port":
+          return new RegExp(/^:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})$/, "i");
+        case "url-path":
+          return new RegExp(/^(\.\/)?[-a-zA-Z\d%_.~+\/]*$/, "i");
+        case "url-query":
+          return new RegExp(/^(\?[;&a-zA-Z\d%_.~+=-]*)$/, "i");
+        case "url-fragment":
+          return new RegExp(/^#[-a-zA-Z\d%_.~+/=?&;:!*'()]*$/, "i");
+        case "default-text":
           return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
-        case 'fr-text':
+        case "fr-text":
           return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
-        case 'en-text':
+        case "en-text":
           return new RegExp(/^[a-zA-Z '-]{1,40}$/);
-        case 'tr-text':
+        case "tr-text":
           return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
         default:
-          throw new Error('Type d\'expression régulière non pris en charge.');
+          throw new Error("Type d'expression régulière non pris en charge.");
       }
     }
     /**
-     * Crée une couche superfielle au dessus d'un élément html afin d'empecher tout évènement. 
+     * Crée une couche superfielle au dessus d'un élément html afin d'empecher tout évènement.
      * @param tag Le nom de la balise HTML à utiliser comme couche (par défaut : 'td', idéal pour les tableau html).
      * @param backgroundColor La couleur d'arrière-plan de la zone interdite (par défaut : '#FFFFFF').
      * @returns Un élément HTML représentant une zone interdite.
@@ -422,17 +203,17 @@ var Utils = /*#__PURE__*/function () {
   }, {
     key: "forbiddener",
     value: function forbiddener() {
-      var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'td';
+      var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "td";
       var backgroundColor = arguments.length > 1 ? arguments[1] : undefined;
       var forbiddenTag = document.createElement(tag);
-      forbiddenTag.setAttribute('class', 'forbidden');
+      forbiddenTag.setAttribute("class", "forbidden");
       var style = {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        opacity: '.7',
-        zIndex: '10',
-        backgroundColor: backgroundColor ? backgroundColor : '#FFFFFF'
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        opacity: ".7",
+        zIndex: "10",
+        backgroundColor: backgroundColor ? backgroundColor : "#FFFFFF"
       };
       Object.assign(forbiddenTag.style, style);
       return forbiddenTag;
@@ -456,7 +237,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * Changes the input text type to a number type and performs additional processing
      * based on the specified parameters.
-     * 
+     *
      * @param attr - The CSS selector for the input elements to be processed.
      * @param limit - (Optional) The maximum allowed value. If provided, input values exceeding this limit will be set to the limit.
      * @param priceType - (Optional) A boolean flag indicating whether the input represents a price. If true, the input is expected to be a number with an optional decimal part.
@@ -489,7 +270,7 @@ var Utils = /*#__PURE__*/function () {
      * The function is used to disable specific elements (by default td tags) inside a table when a certain button is clicked.
      * It accepts several parameters: the tag to be disabled, the target element to be disabled, the trigger element (button),
      * and the background color for the forbidden tag.
-     * 
+     *
      * @param tag - The tag of the element to be disabled (default: "td").
      * @param target - The target element to be disabled (default: undefined).
      * @param trigger - The trigger element (button) to activate the function (default: undefined).
@@ -538,9 +319,10 @@ var Utils = /*#__PURE__*/function () {
     key: "setAsteriskToRequiredField",
     value: function setAsteriskToRequiredField() {
       var _this2 = this;
-      __webpack_require__.e(/*! import() */ "node_modules_raw-loader_dist_cjs_js_src_assets_asterisk_svg").then(__webpack_require__.bind(__webpack_require__, /*! raw-loader!./assets/asterisk.svg */ "../../node_modules/raw-loader/dist/cjs.js!./src/assets/asterisk.svg")).then(function (SVG) {
-        var encodedSvg = SVG["default"];
-        var svgString = decodeURIComponent(encodedSvg.split(',')[1]);
+      var svgUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/utils/dist/assets/asterisk.svg";
+      fetch(svgUrl).then(function (response) {
+        return response.text();
+      }).then(function (svgString) {
         var asterisk = _this2.textToHTMLElement(svgString);
         var labels = document.querySelectorAll("label[required-field]");
         asterisk.style.color = "#f89a9b";
@@ -552,8 +334,11 @@ var Utils = /*#__PURE__*/function () {
             label.appendChild(clonedAsterisk);
           });
         }
+      })["catch"](function (error) {
+        console.error("Erreur lors du chargement du fichier SVG:", error);
       });
     }
+
     /**
      * This method checks if the object contains a key with the given substring.
      * @param object The object to be searched.
@@ -636,7 +421,7 @@ var Utils = /*#__PURE__*/function () {
     }
     /**
      * A function to escape special characters in a string using the DOM API.
-     * 
+     *
      * @param str - The input string to be escaped.
      * @returns - The escaped string with special characters replaced with their HTML entity equivalents.
      */

@@ -1,4 +1,4 @@
-declare type RegexType = 'email' | 'phone-number' | 'number' | 'strong-password' | 'default-text' | 'fr-text' | 'en-text' | 'tr-text' | 'url-protocol' | 'url-domain' | 'url-ip' | 'url-port' | 'url-path' | 'url-query' | 'url-fragment';
+declare type RegexType = "email" | "phone-number" | "number" | "strong-password" | "default-text" | "fr-text" | "en-text" | "tr-text" | "url-protocol" | "url-domain" | "url-ip" | "url-port" | "url-path" | "url-query" | "url-fragment";
 export default class Utils {
     /**
      * Crée un élément audio avec la source audio spécifiée par le chemin audioPath.
@@ -8,16 +8,16 @@ export default class Utils {
      */
     static setAudio(audioPath: string, classname?: any): HTMLAudioElement;
     /**
-   * Converts an HTML string into an HTML element or a collection of HTML elements.
-   *
-   * @param textHtml - The HTML string to convert.
-   * @param targetName - The tag name of the target HTML element to create.
-   * @param children - A boolean indicating whether to return all children of the target element.
-   * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
-   *
-   * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
-   * If the HTML content generates no children, the method returns `null`.
-   */
+     * Converts an HTML string into an HTML element or a collection of HTML elements.
+     *
+     * @param textHtml - The HTML string to convert.
+     * @param targetName - The tag name of the target HTML element to create.
+     * @param children - A boolean indicating whether to return all children of the target element.
+     * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
+     *
+     * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
+     * If the HTML content generates no children, the method returns `null`.
+     */
     static textToHTMLElement(textHtml: string, targetName?: string, children?: boolean): Element | HTMLCollection | null;
     /**
      * retourne un élément du dom
