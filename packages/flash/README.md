@@ -41,14 +41,17 @@ To use Flash, simply call the `Flash.add()` method and pass in the options for y
 import Flash from '@easylibs/flash';
 
 Flash.add({
-  message: 'Hi, i am your warning message',
-  type: 'warning'
+  message: 'Hi, i am your success message',
+  title: "Successful",
+  type: 'success',
+  icon:true,
+  closeButton:true
 });
 ```
 
-This will create a Flash message with the text "Hi, i am your flash message" and display it in a green box.
+This will create a Flash message with the text "Hi, i am your flash message" and display it in a orangered box.
 
-![Hello world init flash message](./dist/assets/image1.jpg)
+![Hello world init flash message](./doc/image1.PNG)
 
 You can also pass in additional options to the `Flash.add()` method to customize the look and feel of your Flash message. The following table lists all of the available options:
 
@@ -80,14 +83,14 @@ import Flash from '@easylibs/flash';
 
 Flash.TEMPLATE = 2;
 Flash.add({
-  message: 'Hi, i am your success message',
-  type: 'success',
-  title: "Success !",
-  closeButton:true
+  message: 'Hi, i am your danger message',
+  type: 'danger',
+  title: "failed !",
+  icon:true
 });
 ```
 
-![flash message appearance](./dist/assets/image2.jpg)
+![flash message appearance](./doc/image2.PNG)
 
 **`Overriding the Default Template`**
 
@@ -100,21 +103,45 @@ body{
   padding:0;
   margin: 0;
 }
-.custom-flash, .custom-body{
+.flash-box{
+  width:200px;
+  background-color: #FFFFFF;
+  padding: 15px;
+  margin:15px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);
+  border-radius: 3px;
+}
+.custom-flash-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.custom-flash-header span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+svg{
+  width:20px;
+  height:20px;
+}
+.flash-box, .custom-body{
   display:flex;
   flex-direction:column;
   justify-content:center;
 }
 .custom-body h3, .custom-body p{
-  color:#FFFFFF;
-  font-size:15px;
+  text-align:center;
+  color:#333;
+  font-size:20px;
   font-weight:600;
 }
 button{
   width:100%;
   height:35px;
   color:#FFFFFF;
-  background-color:#FEFEFF;
+  background-color:#720026;
   border:none;
   border-radius:3px;
   outline:none;
@@ -125,13 +152,15 @@ button{
 ```javascript
 import Flash from '@easylibs/flash';
 
-Flash.TEMPLATE = `<div class="custom-flash">
-        <div class="custom-body">
-          <h3>{{title}}</h3>
-          <p>{{message}}</p>
-        </div>
-        <button type="button" _close_>Close</button>
-</div>`;
+Flash.TEMPLATE = `
+<div class="custom-body">
+    <div class="custom-flash-header">
+        <h3>{{title}}</h3>
+        <span>{{icon}}</span>
+    </div>
+    <p>{{message}}</p>
+</div>
+<button type="button" _close_>Close</button>`;
 
 Flash.add({
   message: 'Hi, I am your info message',
@@ -144,7 +173,7 @@ Flash.add({
 
 This will create a Flash message and display it in your custom templates.
 
-![flash message appearance](./dist/assets/image3.jpg)
+![flash message appearance](./doc/image3.PNG)
 
 ## Attention
 
@@ -163,7 +192,13 @@ or add this code directly to your html, with the desired attributes. You will ju
     <title>Flash</title>
 </head>
 <body>
-  <flash message="Hi, I am your danger message" type="danger" duration="50000" icon="true" closeButton="true"></flash>
+  <flash 
+    message="Hi, I am your warning message" 
+    type="warning" 
+    title="Ooops !" 
+    duration="5000" 
+    icon="true">
+  </flash>
   </body>
 </html>
 ```
@@ -175,4 +210,4 @@ import Flash from "@easylibs/flash";
 Flash.add()
 ```
 
-![flash message appearance](./dist/assets/image4.jpg)
+![flash message appearance](./doc/image4.PNG)

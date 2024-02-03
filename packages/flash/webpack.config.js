@@ -1,6 +1,7 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const isGlobal = process.argv.includes('--global');
@@ -69,7 +70,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isProduction ? './assets/styles/[name].min.css' : './assets/styles/[name].css',
+      filename: './assets/styles/flash.css',
     }),
     new CopyPlugin({
       patterns: [
@@ -78,3 +79,19 @@ module.exports = {
     }),
   ],
 };
+
+if (isProduction) {
+  module.exports.plugins.push(
+    // Générer le fichier CSS minifié en plus
+    new MiniCssExtractPlugin({
+      filename: './assets/styles/flash.min.css',
+    })
+  );
+
+  module.exports.optimization.minimizer.push(
+    // Plugin pour minifier le CSS
+    new CssMinimizerPlugin({
+      test: /\.min\.css$/
+    })
+  );
+}
