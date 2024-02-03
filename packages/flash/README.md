@@ -41,12 +41,14 @@ To use Flash, simply call the `Flash.add()` method and pass in the options for y
 import Flash from '@easylibs/flash';
 
 Flash.add({
-  message: 'Hello, world!',
-  type: 'success'
+  message: 'Hi, i am your warning message',
+  type: 'warning'
 });
 ```
 
-This will create a Flash message with the text "Hello, world!" and display it in a green box.
+This will create a Flash message with the text "Hi, i am your flash message" and display it in a green box.
+
+![Hello world init flash message](./dist/assets/image1.jpg)
 
 You can also pass in additional options to the `Flash.add()` method to customize the look and feel of your Flash message. The following table lists all of the available options:
 
@@ -67,39 +69,110 @@ You can customize the appearance of flash messages by overriding the default CSS
 
 ## Templates
 
+The `Flash` message library offers two main approaches for displaying flash messages in your application. Below, you'll find an overview of each method along with a code snippet for implementation.
+
+**`Using the Default Templates`**
+
 Flash comes with a variety of built-in templates that you can use to customize the look and feel of your Flash messages. To use a template, simply set the template number to the `TEMPLATE` variable of the `Flash` class. The following code shows how to use the `default` template:
 
 ```javascript
 import Flash from '@easylibs/flash';
 
-Flash.TEMPLATE = 1;
+Flash.TEMPLATE = 2;
 Flash.add({
-  message: 'Hello, world!',
+  message: 'Hi, i am your success message',
   type: 'success',
-  duration: 5000
+  title: "Success !",
+  closeButton:true
 });
 ```
 
-This will create a Flash message with the text "Hello, world!" and display it in a green box with a close button.
-You can also create your own custom templates. To do
+![flash message appearance](./dist/assets/image2.jpg)
 
-**`Custom templates`**
+**`Overriding the Default Template`**
+
+You can customize the appearance of your flash messages by overriding the default template. This involves providing your own HTML structure and specifying locations for the `title` and `message`. Additionally, you can manage the close button functionality by adding the `_close_` attribute to the desired element. Note that this approach allows you to override the default CSS, provided you use the same class names as in the default template.
+
+```css
+body{
+  background-color: #F2F3F5;
+  box-sizing: border-box;
+  padding:0;
+  margin: 0;
+}
+.custom-flash, .custom-body{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.custom-body h3, .custom-body p{
+  color:#FFFFFF;
+  font-size:15px;
+  font-weight:600;
+}
+button{
+  width:100%;
+  height:35px;
+  color:#FFFFFF;
+  background-color:#FEFEFF;
+  border:none;
+  border-radius:3px;
+  outline:none;
+  cursor:pointer;
+}
+```
 
 ```javascript
 import Flash from '@easylibs/flash';
 
-Flash.TEMPLATE = `<div class="flash">
-        <span>{{title}}</span>
-        <div>{{message}}</div>
-        <div _close_>Close</div>
+Flash.TEMPLATE = `<div class="custom-flash">
+        <div class="custom-body">
+          <h3>{{title}}</h3>
+          <p>{{message}}</p>
+        </div>
+        <button type="button" _close_>Close</button>
 </div>`;
 
 Flash.add({
-  message: 'Hi, i am your flash message',
+  message: 'Hi, I am your info message',
   type: 'info',
   duration: 5000,
   title: 'Alert !',
   icon: true,
-  closeButton: true
 });
 ```
+
+This will create a Flash message and display it in your custom templates.
+
+![flash message appearance](./dist/assets/image3.jpg)
+
+## Attention
+
+the order of execution is important in this case. If you want to override or change the default template, make sure that you set `Flash.TEMPLATE` before. In addition, two types of default templates are available and the `title` property is not supported by template `2` but only by template `1` and the custom template.
+
+or add this code directly to your html, with the desired attributes. You will just need to execute the `Flash.add()` method without passing any parameters
+
+*`HTML`*
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash</title>
+</head>
+<body>
+  <flash message="Hi, I am your danger message" type="danger" duration="50000" icon="true" closeButton="true"></flash>
+  </body>
+</html>
+```
+
+*`Javascript`*
+
+```javascript
+import Flash from "@easylibs/flash";
+Flash.add()
+```
+
+![flash message appearance](./dist/assets/image4.jpg)
