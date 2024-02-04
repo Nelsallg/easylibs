@@ -68,10 +68,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.flash-box.slide-out-top {
   background-color: #FFFFFF;
   z-index: 1000;
   border-radius: 5px;
+  margin: 0;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  position: sticky;
+  position: fixed;
   width: 300px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
@@ -228,9 +229,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.flash-box.slide-out-top {
 .flash-box[template="2"] {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  z-index: 10;
+  position: fixed;
+  z-index: 1000;
   top: 0;
+  left: 0;
+  margin: 0;
   width: 100vw;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
@@ -255,7 +258,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.flash-box.slide-out-top {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 30px;
 }
 .flash-box[template="2"] .flash-content svg {
   width: 20px;
@@ -330,7 +332,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.flash-box.slide-out-top {
 .flash-box[template="2"] [_close_]::after,
 .flash-box[template="1"] [_close_]::after {
   transform: rotate(315deg);
-}`, "",{"version":3,"sources":["webpack://./src/assets/scss/animations.scss","webpack://./src/assets/scss/flash.scss"],"names":[],"mappings":"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","sourcesContent":["@mixin spinner(){\r\n    #spinner {\r\n        width: 11.2px;\r\n        height: 11.2px;\r\n        animation: spinner-o824ag 1s infinite linear;\r\n     }\r\n     \r\n     #spinner div {\r\n        position: absolute;\r\n        width: 100%;\r\n        height: 100%;\r\n        background: #474bff;\r\n        border-radius: 50%;\r\n        animation: spinner-vse6n7 1.25s infinite ease;\r\n     }\r\n     \r\n     #spinner div:nth-child(1) {\r\n        --rotation: 90;\r\n     }\r\n     \r\n     #spinner div:nth-child(2) {\r\n        --rotation: 180;\r\n     }\r\n     \r\n     #spinner div:nth-child(3) {\r\n        --rotation: 270;\r\n     }\r\n     \r\n     #spinner div:nth-child(4) {\r\n        --rotation: 360;\r\n     }\r\n     \r\n     @keyframes spinner-vse6n7 {\r\n        0%, 100% {\r\n           transform: rotate(calc(var(--rotation) * 1deg)) translateY(0);\r\n        }\r\n     \r\n        50% {\r\n           transform: rotate(calc(var(--rotation) * 1deg)) translateY(300%);\r\n        }\r\n     }\r\n     \r\n     @keyframes spinner-o824ag {\r\n        to {\r\n           transform: rotate(360deg);\r\n        }\r\n     }\r\n}\r\n\r\n@mixin rotate-pinner-filled(){\r\n   .spinner {\r\n      position: relative;\r\n      width: 26px;\r\n      height: 26px;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n      outline: none;\r\n   }\r\n   \r\n   .spinner::before,\r\n   .spinner::after {\r\n      border: 5.7px solid #F2F3F5;\r\n      border-radius: 50%;\r\n      position: absolute;\r\n      content: '';\r\n      display: block;\r\n   }\r\n   \r\n   .spinner::before {\r\n      width: 3.6px;\r\n      height: 3.6px;\r\n      border-bottom-color: transparent;\r\n      border-left-color: transparent;\r\n      animation: spinner-1o3y8q 0.75s infinite linear reverse;\r\n   }\r\n   \r\n   .spinner::after {\r\n      animation: spinner-1o3y8q 0.5s infinite linear;\r\n      height: 26px;\r\n      width: 26px;\r\n      border-right-color: transparent;\r\n      border-top-color: transparent;\r\n   }\r\n   \r\n   @keyframes spinner-1o3y8q {\r\n      to {\r\n         transform: rotate(360deg);\r\n      }\r\n   }\r\n}\r\n\r\n@mixin google_animation_type(){\r\n   .loader {\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n      height: 50px;\r\n      position: relative;\r\n    }\r\n    \r\n    .loader__band {\r\n      height: 100%;\r\n      width: 20px;\r\n      margin: 0 10px;\r\n      background-color: #4285f4;\r\n      animation: loader__band 1.5s infinite cubic-bezier(0.4, 0.0, 0.2, 1);\r\n    }\r\n    \r\n    .loader__band:nth-child(2) {\r\n      animation-delay: 0.2s;\r\n    }\r\n    \r\n    .loader__band:nth-child(3) {\r\n      animation-delay: 0.4s;\r\n    }\r\n    \r\n    @keyframes loader__band {\r\n      0% {\r\n        transform: scaleY(1);\r\n      }\r\n      50% {\r\n        transform: scaleY(0.3);\r\n      }\r\n      100% {\r\n        transform: scaleY(1);\r\n      }\r\n    }\r\n   //  <div class=\"loader\">\r\n   //                  <div class=\"loader__band\"></div>\r\n   //                  <div class=\"loader__band\"></div>\r\n   //                  <div class=\"loader__band\"></div>\r\n   //              </div>\r\n}\r\n\r\n@mixin progress_bar(){\r\n   .progress-bar {\r\n      width: 300px;\r\n      height: 20px;\r\n      border: 1px solid #ccc;\r\n      border-radius: 10px;\r\n    }\r\n    \r\n    .progress {\r\n      height: 100%;\r\n      background-color: #3498db;\r\n      border-radius: 10px;\r\n      animation: progress-bar 5s linear;\r\n    }\r\n    \r\n    @keyframes progress-bar {\r\n      0% {\r\n        width: 0%;\r\n      }\r\n      100% {\r\n        width: 100%;\r\n      }\r\n    }\r\n    \r\n}\r\n\r\n@mixin loading_bar($attr_class, $top){\r\n   .#{$attr_class} {\r\n      top:$top;\r\n      position: absolute;\r\n      overflow: hidden;\r\n      width: 100%;\r\n      height: 4px;\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: default;\r\n      background-color: white;\r\n    }\r\n    \r\n    .#{$attr_class}::before {\r\n      width: 50%;\r\n      height: 4px;\r\n      content: \"\";\r\n      background-image: conic-gradient(#53538b, #5757b1);\r\n      box-shadow: 16px 14px 20px #000000Bc;\r\n      border-radius: 20px;\r\n      animation: loading-animation 2s linear infinite;\r\n    }\r\n    \r\n    @keyframes loading-animation {\r\n      0%{\r\n         transform: translateX(-200%);\r\n     }\r\n     100%{\r\n         transform: translateX(200%);\r\n     }\r\n    }  \r\n}\r\n$position:absolute;\r\n$left:10%;\r\n$top:7%;\r\n$height:130px;\r\n@mixin modale_type($modale_attr, $position, $left, $top, $width, $height){\r\n   .#{$modale_attr}{\r\n      @include mixin.positions($position, $left, $top, auto, auto);\r\n      @include mixin.text-select-remove();\r\n      @include mixin.proportions(400px, $height);\r\n      background-color: #FFFFFF;\r\n      border-left: 10px solid rgba(0, 128, 0, 0.400);\r\n      border-right: 10px solid rgba(0, 128, 0, 0.400);\r\n      text-align: center;\r\n      z-index: 10;\r\n      display: none;\r\n      justify-content: center;\r\n      align-items: center;\r\n      flex-direction: column;\r\n      animation: modale .4s;\r\n      box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n      transition: opacity 0.2s ease-in-out;\r\n      opacity: 1;\r\n    }\r\n    .#{$modale_attr}.pop_is_showed{\r\n      opacity: 1;\r\n    }\r\n    .#{$modale_attr}.pop_is_hidden{\r\n      animation-direction: reverse;\r\n      animation-iteration-count: infinite;\r\n    }\r\n    .#{$modale_attr} .alertTitle{\r\n      width: 100%;\r\n      top:0;\r\n      left:0;\r\n      height: 30px;\r\n      display: flex;\r\n      flex-direction: row;\r\n      justify-content: space-between;\r\n    }\r\n    .#{$modale_attr} .alertTitle h6{\r\n      font-size: 25px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      margin-left: 10px;\r\n    }\r\n    .#{$modale_attr} .alertTitle iconify-icon{\r\n      font-size: 25px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n      cursor: pointer;\r\n    }\r\n    \r\n    .#{$modale_attr} .alertContent{\r\n      display: flex;\r\n      height: 100%;\r\n      justify-content: center;\r\n      align-items: center;\r\n      flex-direction: column-reverse;\r\n      margin-bottom: 10px;\r\n    }\r\n  \r\n    .#{$modale_attr} .text{\r\n      color: #555;\r\n      justify-content: center;\r\n      align-items: center;\r\n      display: flex;\r\n      font-size: 13px;\r\n      font-weight: 600;\r\n      width: 320px;\r\n    }\r\n\r\n  .#{$modale_attr} h6 iconify-icon{\r\n      font-size: 35px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n    }\r\n    @keyframes modale {\r\n      0% {\r\n          transform: translateY(-100%);\r\n      }\r\n      100% {\r\n          transform: translateY(0%);\r\n      }\r\n    }\r\n}\r\n\r\n\r\n\r\n@mixin scale-up-ver-center(){\r\n  .scale-up-ver-center {\r\n    -webkit-animation: scale-up-ver-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: scale-up-ver-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n\r\n\r\n@-webkit-keyframes scale-up-ver-center {\r\n  0% {\r\n    -webkit-transform: scaleY(0.4);\r\n            transform: scaleY(0.4);\r\n  }\r\n  100% {\r\n    -webkit-transform: scaleY(1);\r\n            transform: scaleY(1);\r\n  }\r\n}\r\n@keyframes scale-up-ver-center {\r\n  0% {\r\n    -webkit-transform: scaleY(0.4);\r\n            transform: scaleY(0.4);\r\n  }\r\n  100% {\r\n    -webkit-transform: scaleY(1);\r\n            transform: scaleY(1);\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin scal-up-bottom(){\r\n  .scale-up-bottom {\r\n    -webkit-animation: scale-up-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: scale-up-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n@-webkit-keyframes scale-up-bottom {\r\n  0% {\r\n    -webkit-transform: scale(0.5);\r\n            transform: scale(0.5);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n}\r\n@keyframes scale-up-bottom {\r\n  0% {\r\n    -webkit-transform: scale(0.5);\r\n            transform: scale(0.5);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin slide-fwd-top(){\r\n  .slide-fwd-top {\r\n    -webkit-animation: slide-fwd-top 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n            animation: slide-fwd-top 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n  }\r\n@-webkit-keyframes slide-fwd-top {\r\n  0% {\r\n    -webkit-transform: translateZ(0) translateY(0);\r\n            transform: translateZ(0) translateY(0);\r\n  }\r\n  100% {\r\n    -webkit-transform: translateZ(160px) translateY(-100px);\r\n            transform: translateZ(160px) translateY(-100px);\r\n  }\r\n}\r\n@keyframes slide-fwd-top {\r\n  0% {\r\n    -webkit-transform: translateZ(0) translateY(0);\r\n            transform: translateZ(0) translateY(0);\r\n  }\r\n  100% {\r\n    -webkit-transform: translateZ(160px) translateY(-100px);\r\n            transform: translateZ(160px) translateY(-100px);\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin fade-in(){\r\n  .fade-in {\r\n    -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n@-webkit-keyframes fade-in {\r\n  0% {\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n@keyframes fade-in {\r\n  0% {\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin slide-in-top($element,$time:0.5s,$top:-100%){\r\n  #{$element}.slide-in-top {\r\n    animation: slide-in-top $time cubic-bezier(0.550, 0.085, 0.680, 0.530) both;\r\n  }\r\n\r\n  @keyframes slide-in-top {\r\n    0% {\r\n      transform: translateY($top);\r\n      opacity: 0;\r\n    }\r\n    100% {\r\n      transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n  }\r\n}\r\n\r\n@mixin slide-out-top($element,$time:0.5s,$top:-100%){\r\n  #{$element}.slide-out-top {\r\n    animation: slide-out-top $time cubic-bezier(0.550, 0.085, 0.680, 0.530) both;\r\n  }\r\n\r\n  @keyframes slide-out-top {\r\n    0% {\r\n      transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n    100% {\r\n      transform: translateY($top);\r\n      opacity: 0;\r\n    }\r\n  }\r\n}\r\n\r\n@mixin fade-in-top($element, $time, $top){\r\n  .#{$element}.fade-in-top {\r\n      animation: fade-in-top $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;\r\n  }\r\n\r\n@keyframes fade-in-top {\r\n  0% {\r\n    -webkit-transform: translateY($top);\r\n            transform: translateY($top);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin fade-out-top($element, $time, $bottom){\r\n  .#{$element}.fade-out-top {\r\n      animation: fade-out-top $time cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n  }\r\n@keyframes fade-out-top {\r\n  0% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY($bottom);\r\n            transform: translateY($bottom);\r\n    opacity: 0;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin pulsate-ping(){\r\n  .ping {\r\n    -webkit-animation: ping 0.8s ease-in-out infinite both;\r\n            animation: ping 0.8s ease-in-out infinite both;\r\n  }\r\n@-webkit-keyframes ping {\r\n  0% {\r\n    -webkit-transform: scale(0.2);\r\n            transform: scale(0.2);\r\n    opacity: 0.8;\r\n  }\r\n  80% {\r\n    -webkit-transform: scale(1.2);\r\n            transform: scale(1.2);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(2.2);\r\n            transform: scale(2.2);\r\n    opacity: 0;\r\n  }\r\n}\r\n@keyframes ping {\r\n  0% {\r\n    -webkit-transform: scale(0.2);\r\n            transform: scale(0.2);\r\n    opacity: 0.8;\r\n  }\r\n  80% {\r\n    -webkit-transform: scale(1.2);\r\n            transform: scale(1.2);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(2.2);\r\n            transform: scale(2.2);\r\n    opacity: 0;\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin bzckground-scale(){\r\n  .bg-pan-bl {\r\n    -webkit-animation: bg-pan-bl 8s both;\r\n            animation: bg-pan-bl 8s both;\r\n  }\r\n@-webkit-keyframes bg-pan-bl {\r\n  0% {\r\n    background-position: 100% 0%;\r\n  }\r\n  100% {\r\n    background-position: 0% 100%;\r\n  }\r\n}\r\n@keyframes bg-pan-bl {\r\n  0% {\r\n    background-position: 100% 0%;\r\n  }\r\n  100% {\r\n    background-position: 0% 100%;\r\n  }\r\n}\r\n\r\n}","@use './animations';\r\n@include animations.slide-out-top('.flash-box', .4s, -200%);\r\n@include animations.slide-in-top('.flash-box', .4s, -200%);\r\n\r\n.flash-box[template=\"1\"]{\r\n    -webkit-user-select: none;\r\n    -webkit-touch-callout: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    background-color: #FFFFFF;\r\n    z-index: 1000;\r\n    border-radius: 5px;\r\n    padding:15px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    position: sticky;\r\n    width: 300px;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n    p{\r\n      font-size:20px;\r\n      margin: 0;\r\n      font-weight:600;\r\n    } \r\n    .flash-header{\r\n       right:0;\r\n       top:0;\r\n       margin: 5px 0;\r\n       height: 30px;\r\n       width: 100%;\r\n       position: absolute;\r\n       display: flex;\r\n       justify-content: space-between;\r\n       .flash-title{\r\n        height: 100%;\r\n        padding-left: 15px;\r\n       }\r\n    }\r\n\r\n    .flash-content{\r\n        position: relative;\r\n        width: 100%;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        flex-direction: column;\r\n        text-align: center;\r\n        margin-top: 20px;\r\n        svg{\r\n            width: 45px;\r\n            height: 45px;\r\n            display: flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            margin: 15px 0;\r\n        }\r\n        .flash-icon{\r\n          margin:0;\r\n        }\r\n        .flash-message{\r\n            color: #444;\r\n            display: flex;\r\n             justify-content: center;\r\n             height: 100%;\r\n             flex-direction: column;\r\n             font-size:15px;\r\n             margin: 0;\r\n         }\r\n         .flash-message ul{\r\n            list-style: none;\r\n            margin: 0;\r\n         }\r\n    }\r\n}\r\n.flash-box[template=\"1\"].flashtype-success{\r\n    border-left: 10px solid #28a745;\r\n    border-right: 10px solid #28a745;\r\n    p,svg{color: #28a745;}\r\n}\r\n.flash-box[template=\"1\"].flashtype-info{\r\n    border-left: 10px solid #284B63;\r\n    border-right: 10px solid #284B63;\r\n    p,svg{color: #284B63;}\r\n}\r\n.flash-box[template=\"1\"].flashtype-warning{\r\n    border-left: 10px solid #FF4000;\r\n    border-right: 10px solid #FF4000;\r\n    p,svg{color: #FF4000;}\r\n}\r\n\r\n.flash-box[template=\"1\"].flashtype-danger{\r\n    border-left: 10px solid #dc3545;\r\n    border-right: 10px solid #dc3545;\r\n    p,svg{color: #dc3545;}\r\n}\r\n\r\n\r\n.flash-box.slide-in-top {\r\n    animation: slide-in-top .5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both running;\r\n  }\r\n  @keyframes slide-in-top {\r\n    0% {\r\n      -webkit-transform: translateY(-100%);\r\n              transform: translateY(-100%);\r\n      opacity: 0;\r\n    }\r\n    100% {\r\n      -webkit-transform: translateY(0);\r\n              transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n  }\r\n  .flash-box.slide-out-top {\r\n    animation: slide-out-top .5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both running;\r\n  }\r\n  @keyframes slide-out-top {\r\n    0% {\r\n      -webkit-transform: translateY(0);\r\n              transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n    100% {\r\n      -webkit-transform: translateY(100%);\r\n              transform: translateY(100%);\r\n      opacity: 0;\r\n    }\r\n  }\r\n  .flash-box.fade-in-top {\r\n    animation: fade-in-top .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;\r\n}\r\n\r\n@keyframes fade-in-top {\r\n  0% {\r\n    -webkit-transform: translateY(-100%);\r\n            transform: translateY(-100%);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n.flash-box.fade-out-top {\r\n    animation: fade-out-top .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n}\r\n@keyframes fade-out-top {\r\n0% {\r\n  -webkit-transform: translateY(0);\r\n          transform: translateY(0);\r\n  opacity: 1;\r\n}\r\n100% {\r\n  -webkit-transform: translateY(-100%);\r\n          transform: translateY(-100%);\r\n  opacity: 0;\r\n}\r\n}\r\n\r\n\r\n\r\n\r\n\r\n.flash-box[template=\"2\"]{\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: absolute;\r\n  z-index: 10;\r\n  top: 0;\r\n  width: 100vw;\r\n  box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n  .flash-icon-parent{\r\n     right:0;\r\n     top:0;\r\n     margin: 5px 0 5px 0;\r\n     height: 20px;\r\n     width: 20px;\r\n     position: absolute;\r\n     cursor:pointer;\r\n  }\r\n  .flash-icon-parent{\r\n    margin-right: 5px;\r\n  }\r\n  .flash-icon{\r\n    margin: 0;\r\n  }\r\n  \r\n  .flash-content{\r\n      position: relative;\r\n      width: 100%;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n      padding: 10px 30px;\r\n      svg{\r\n          width: 20px;\r\n          height: 20px;\r\n          color: #FFF;\r\n          margin: 0 15px;\r\n      }\r\n  }\r\n  .flash-content .flash-message{\r\n     color: #FFF;\r\n     display: flex;\r\n      justify-content: center;\r\n      height: 100%;\r\n      flex-direction: column;\r\n      font-size:15px;\r\n      margin: 0;\r\n      font-weight:600;\r\n  }\r\n  .flash-content .flash-message ul{\r\n      list-style: none;\r\n      margin-bottom: 0;\r\n   }\r\n}\r\n.flash-box[template=\"2\"].flashtype-danger{\r\n  background-color: #dc3545;\r\n}\r\n.flash-box[template=\"2\"].flashtype-warning{\r\n  background-color: #FF4000;\r\n}\r\n.flash-box[template=\"2\"].flashtype-success{\r\n  background-color: #28a745; \r\n}\r\n.flash-box[template=\"2\"].flashtype-info{\r\n  background-color: #284B63; \r\n}\r\n\r\n.flash-box[template=\"1\"] [_close_]{\r\n  position:relative;\r\n}\r\n.flash-box[template=\"2\"] [_close_]{\r\n  position:absolute;\r\n  right: 0;\r\n}\r\n.flash-box[template=\"2\"] [_close_], \r\n.flash-box[template=\"1\"] [_close_]{\r\n  width: 15px;\r\n  height: 15px;\r\n  margin: 0 5px;\r\n  cursor:pointer;\r\n}\r\n.flash-box[template=\"2\"] [_close_]::before, .flash-box[template=\"1\"] [_close_]::before, \r\n.flash-box[template=\"2\"] [_close_]::after, .flash-box[template=\"1\"] [_close_]::after {\r\n      position: absolute;\r\n      content: '';\r\n      width: 3px;\r\n      height: 15px;\r\n      background: #333;\r\n      left: 7px;\r\n      border-radius: 5px;\r\n  }\r\n  .flash-box[template=\"2\"] [_close_]::before, \r\n  .flash-box[template=\"1\"] [_close_]::before{\r\n      transform: rotate(45deg);\r\n  }\r\n  .flash-box[template=\"2\"] [_close_]::after, \r\n  .flash-box[template=\"1\"] [_close_]::after {\r\n      transform: rotate(315deg);\r\n  }"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/assets/scss/animations.scss","webpack://./src/assets/scss/flash.scss"],"names":[],"mappings":"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","sourcesContent":["@mixin spinner(){\r\n    #spinner {\r\n        width: 11.2px;\r\n        height: 11.2px;\r\n        animation: spinner-o824ag 1s infinite linear;\r\n     }\r\n     \r\n     #spinner div {\r\n        position: absolute;\r\n        width: 100%;\r\n        height: 100%;\r\n        background: #474bff;\r\n        border-radius: 50%;\r\n        animation: spinner-vse6n7 1.25s infinite ease;\r\n     }\r\n     \r\n     #spinner div:nth-child(1) {\r\n        --rotation: 90;\r\n     }\r\n     \r\n     #spinner div:nth-child(2) {\r\n        --rotation: 180;\r\n     }\r\n     \r\n     #spinner div:nth-child(3) {\r\n        --rotation: 270;\r\n     }\r\n     \r\n     #spinner div:nth-child(4) {\r\n        --rotation: 360;\r\n     }\r\n     \r\n     @keyframes spinner-vse6n7 {\r\n        0%, 100% {\r\n           transform: rotate(calc(var(--rotation) * 1deg)) translateY(0);\r\n        }\r\n     \r\n        50% {\r\n           transform: rotate(calc(var(--rotation) * 1deg)) translateY(300%);\r\n        }\r\n     }\r\n     \r\n     @keyframes spinner-o824ag {\r\n        to {\r\n           transform: rotate(360deg);\r\n        }\r\n     }\r\n}\r\n\r\n@mixin rotate-pinner-filled(){\r\n   .spinner {\r\n      position: relative;\r\n      width: 26px;\r\n      height: 26px;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n      outline: none;\r\n   }\r\n   \r\n   .spinner::before,\r\n   .spinner::after {\r\n      border: 5.7px solid #F2F3F5;\r\n      border-radius: 50%;\r\n      position: absolute;\r\n      content: '';\r\n      display: block;\r\n   }\r\n   \r\n   .spinner::before {\r\n      width: 3.6px;\r\n      height: 3.6px;\r\n      border-bottom-color: transparent;\r\n      border-left-color: transparent;\r\n      animation: spinner-1o3y8q 0.75s infinite linear reverse;\r\n   }\r\n   \r\n   .spinner::after {\r\n      animation: spinner-1o3y8q 0.5s infinite linear;\r\n      height: 26px;\r\n      width: 26px;\r\n      border-right-color: transparent;\r\n      border-top-color: transparent;\r\n   }\r\n   \r\n   @keyframes spinner-1o3y8q {\r\n      to {\r\n         transform: rotate(360deg);\r\n      }\r\n   }\r\n}\r\n\r\n@mixin google_animation_type(){\r\n   .loader {\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n      height: 50px;\r\n      position: relative;\r\n    }\r\n    \r\n    .loader__band {\r\n      height: 100%;\r\n      width: 20px;\r\n      margin: 0 10px;\r\n      background-color: #4285f4;\r\n      animation: loader__band 1.5s infinite cubic-bezier(0.4, 0.0, 0.2, 1);\r\n    }\r\n    \r\n    .loader__band:nth-child(2) {\r\n      animation-delay: 0.2s;\r\n    }\r\n    \r\n    .loader__band:nth-child(3) {\r\n      animation-delay: 0.4s;\r\n    }\r\n    \r\n    @keyframes loader__band {\r\n      0% {\r\n        transform: scaleY(1);\r\n      }\r\n      50% {\r\n        transform: scaleY(0.3);\r\n      }\r\n      100% {\r\n        transform: scaleY(1);\r\n      }\r\n    }\r\n   //  <div class=\"loader\">\r\n   //                  <div class=\"loader__band\"></div>\r\n   //                  <div class=\"loader__band\"></div>\r\n   //                  <div class=\"loader__band\"></div>\r\n   //              </div>\r\n}\r\n\r\n@mixin progress_bar(){\r\n   .progress-bar {\r\n      width: 300px;\r\n      height: 20px;\r\n      border: 1px solid #ccc;\r\n      border-radius: 10px;\r\n    }\r\n    \r\n    .progress {\r\n      height: 100%;\r\n      background-color: #3498db;\r\n      border-radius: 10px;\r\n      animation: progress-bar 5s linear;\r\n    }\r\n    \r\n    @keyframes progress-bar {\r\n      0% {\r\n        width: 0%;\r\n      }\r\n      100% {\r\n        width: 100%;\r\n      }\r\n    }\r\n    \r\n}\r\n\r\n@mixin loading_bar($attr_class, $top){\r\n   .#{$attr_class} {\r\n      top:$top;\r\n      position: absolute;\r\n      overflow: hidden;\r\n      width: 100%;\r\n      height: 4px;\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: default;\r\n      background-color: white;\r\n    }\r\n    \r\n    .#{$attr_class}::before {\r\n      width: 50%;\r\n      height: 4px;\r\n      content: \"\";\r\n      background-image: conic-gradient(#53538b, #5757b1);\r\n      box-shadow: 16px 14px 20px #000000Bc;\r\n      border-radius: 20px;\r\n      animation: loading-animation 2s linear infinite;\r\n    }\r\n    \r\n    @keyframes loading-animation {\r\n      0%{\r\n         transform: translateX(-200%);\r\n     }\r\n     100%{\r\n         transform: translateX(200%);\r\n     }\r\n    }  \r\n}\r\n$position:absolute;\r\n$left:10%;\r\n$top:7%;\r\n$height:130px;\r\n@mixin modale_type($modale_attr, $position, $left, $top, $width, $height){\r\n   .#{$modale_attr}{\r\n      @include mixin.positions($position, $left, $top, auto, auto);\r\n      @include mixin.text-select-remove();\r\n      @include mixin.proportions(400px, $height);\r\n      background-color: #FFFFFF;\r\n      border-left: 10px solid rgba(0, 128, 0, 0.400);\r\n      border-right: 10px solid rgba(0, 128, 0, 0.400);\r\n      text-align: center;\r\n      z-index: 10;\r\n      display: none;\r\n      justify-content: center;\r\n      align-items: center;\r\n      flex-direction: column;\r\n      animation: modale .4s;\r\n      box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n      transition: opacity 0.2s ease-in-out;\r\n      opacity: 1;\r\n    }\r\n    .#{$modale_attr}.pop_is_showed{\r\n      opacity: 1;\r\n    }\r\n    .#{$modale_attr}.pop_is_hidden{\r\n      animation-direction: reverse;\r\n      animation-iteration-count: infinite;\r\n    }\r\n    .#{$modale_attr} .alertTitle{\r\n      width: 100%;\r\n      top:0;\r\n      left:0;\r\n      height: 30px;\r\n      display: flex;\r\n      flex-direction: row;\r\n      justify-content: space-between;\r\n    }\r\n    .#{$modale_attr} .alertTitle h6{\r\n      font-size: 25px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      margin-left: 10px;\r\n    }\r\n    .#{$modale_attr} .alertTitle iconify-icon{\r\n      font-size: 25px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n      cursor: pointer;\r\n    }\r\n    \r\n    .#{$modale_attr} .alertContent{\r\n      display: flex;\r\n      height: 100%;\r\n      justify-content: center;\r\n      align-items: center;\r\n      flex-direction: column-reverse;\r\n      margin-bottom: 10px;\r\n    }\r\n  \r\n    .#{$modale_attr} .text{\r\n      color: #555;\r\n      justify-content: center;\r\n      align-items: center;\r\n      display: flex;\r\n      font-size: 13px;\r\n      font-weight: 600;\r\n      width: 320px;\r\n    }\r\n\r\n  .#{$modale_attr} h6 iconify-icon{\r\n      font-size: 35px;\r\n      color:rgba(0, 128, 0, 0.400);\r\n      display: flex;\r\n      justify-content: center;\r\n      align-items: center;\r\n    }\r\n    @keyframes modale {\r\n      0% {\r\n          transform: translateY(-100%);\r\n      }\r\n      100% {\r\n          transform: translateY(0%);\r\n      }\r\n    }\r\n}\r\n\r\n\r\n\r\n@mixin scale-up-ver-center(){\r\n  .scale-up-ver-center {\r\n    -webkit-animation: scale-up-ver-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: scale-up-ver-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n\r\n\r\n@-webkit-keyframes scale-up-ver-center {\r\n  0% {\r\n    -webkit-transform: scaleY(0.4);\r\n            transform: scaleY(0.4);\r\n  }\r\n  100% {\r\n    -webkit-transform: scaleY(1);\r\n            transform: scaleY(1);\r\n  }\r\n}\r\n@keyframes scale-up-ver-center {\r\n  0% {\r\n    -webkit-transform: scaleY(0.4);\r\n            transform: scaleY(0.4);\r\n  }\r\n  100% {\r\n    -webkit-transform: scaleY(1);\r\n            transform: scaleY(1);\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin scal-up-bottom(){\r\n  .scale-up-bottom {\r\n    -webkit-animation: scale-up-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: scale-up-bottom 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n@-webkit-keyframes scale-up-bottom {\r\n  0% {\r\n    -webkit-transform: scale(0.5);\r\n            transform: scale(0.5);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n}\r\n@keyframes scale-up-bottom {\r\n  0% {\r\n    -webkit-transform: scale(0.5);\r\n            transform: scale(0.5);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\r\n    -webkit-transform-origin: 50% 100%;\r\n            transform-origin: 50% 100%;\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin slide-fwd-top(){\r\n  .slide-fwd-top {\r\n    -webkit-animation: slide-fwd-top 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n            animation: slide-fwd-top 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n  }\r\n@-webkit-keyframes slide-fwd-top {\r\n  0% {\r\n    -webkit-transform: translateZ(0) translateY(0);\r\n            transform: translateZ(0) translateY(0);\r\n  }\r\n  100% {\r\n    -webkit-transform: translateZ(160px) translateY(-100px);\r\n            transform: translateZ(160px) translateY(-100px);\r\n  }\r\n}\r\n@keyframes slide-fwd-top {\r\n  0% {\r\n    -webkit-transform: translateZ(0) translateY(0);\r\n            transform: translateZ(0) translateY(0);\r\n  }\r\n  100% {\r\n    -webkit-transform: translateZ(160px) translateY(-100px);\r\n            transform: translateZ(160px) translateY(-100px);\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin fade-in(){\r\n  .fade-in {\r\n    -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n            animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;\r\n  }\r\n@-webkit-keyframes fade-in {\r\n  0% {\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n@keyframes fade-in {\r\n  0% {\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin slide-in-top($element,$time:0.5s,$top:-100%){\r\n  #{$element}.slide-in-top {\r\n    animation: slide-in-top $time cubic-bezier(0.550, 0.085, 0.680, 0.530) both;\r\n  }\r\n\r\n  @keyframes slide-in-top {\r\n    0% {\r\n      transform: translateY($top);\r\n      opacity: 0;\r\n    }\r\n    100% {\r\n      transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n  }\r\n}\r\n\r\n@mixin slide-out-top($element,$time:0.5s,$top:-100%){\r\n  #{$element}.slide-out-top {\r\n    animation: slide-out-top $time cubic-bezier(0.550, 0.085, 0.680, 0.530) both;\r\n  }\r\n\r\n  @keyframes slide-out-top {\r\n    0% {\r\n      transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n    100% {\r\n      transform: translateY($top);\r\n      opacity: 0;\r\n    }\r\n  }\r\n}\r\n\r\n@mixin fade-in-top($element, $time, $top){\r\n  .#{$element}.fade-in-top {\r\n      animation: fade-in-top $time cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;\r\n  }\r\n\r\n@keyframes fade-in-top {\r\n  0% {\r\n    -webkit-transform: translateY($top);\r\n            transform: translateY($top);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin fade-out-top($element, $time, $bottom){\r\n  .#{$element}.fade-out-top {\r\n      animation: fade-out-top $time cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n  }\r\n@keyframes fade-out-top {\r\n  0% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY($bottom);\r\n            transform: translateY($bottom);\r\n    opacity: 0;\r\n  }\r\n}\r\n\r\n}\r\n\r\n\r\n@mixin pulsate-ping(){\r\n  .ping {\r\n    -webkit-animation: ping 0.8s ease-in-out infinite both;\r\n            animation: ping 0.8s ease-in-out infinite both;\r\n  }\r\n@-webkit-keyframes ping {\r\n  0% {\r\n    -webkit-transform: scale(0.2);\r\n            transform: scale(0.2);\r\n    opacity: 0.8;\r\n  }\r\n  80% {\r\n    -webkit-transform: scale(1.2);\r\n            transform: scale(1.2);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(2.2);\r\n            transform: scale(2.2);\r\n    opacity: 0;\r\n  }\r\n}\r\n@keyframes ping {\r\n  0% {\r\n    -webkit-transform: scale(0.2);\r\n            transform: scale(0.2);\r\n    opacity: 0.8;\r\n  }\r\n  80% {\r\n    -webkit-transform: scale(1.2);\r\n            transform: scale(1.2);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: scale(2.2);\r\n            transform: scale(2.2);\r\n    opacity: 0;\r\n  }\r\n}\r\n\r\n}\r\n\r\n@mixin bzckground-scale(){\r\n  .bg-pan-bl {\r\n    -webkit-animation: bg-pan-bl 8s both;\r\n            animation: bg-pan-bl 8s both;\r\n  }\r\n@-webkit-keyframes bg-pan-bl {\r\n  0% {\r\n    background-position: 100% 0%;\r\n  }\r\n  100% {\r\n    background-position: 0% 100%;\r\n  }\r\n}\r\n@keyframes bg-pan-bl {\r\n  0% {\r\n    background-position: 100% 0%;\r\n  }\r\n  100% {\r\n    background-position: 0% 100%;\r\n  }\r\n}\r\n\r\n}","@use './animations';\r\n@include animations.slide-out-top('.flash-box', .4s, -200%);\r\n@include animations.slide-in-top('.flash-box', .4s, -200%);\r\n\r\n.flash-box[template=\"1\"]{\r\n    -webkit-user-select: none;\r\n    -webkit-touch-callout: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    background-color: #FFFFFF;\r\n    z-index: 1000;\r\n    border-radius: 5px;\r\n    margin: 0;\r\n    padding:15px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    position: fixed;\r\n    width: 300px;\r\n    box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n    p{\r\n      font-size:20px;\r\n      margin: 0;\r\n      font-weight:600;\r\n    } \r\n    .flash-header{\r\n       right:0;\r\n       top:0;\r\n       margin: 5px 0;\r\n       height: 30px;\r\n       width: 100%;\r\n       position: absolute;\r\n       display: flex;\r\n       justify-content: space-between;\r\n       .flash-title{\r\n        height: 100%;\r\n        padding-left: 15px;\r\n       }\r\n    }\r\n\r\n    .flash-content{\r\n        position: relative;\r\n        width: 100%;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        flex-direction: column;\r\n        text-align: center;\r\n        margin-top: 20px;\r\n        svg{\r\n            width: 45px;\r\n            height: 45px;\r\n            display: flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            margin: 15px 0;\r\n        }\r\n        .flash-icon{\r\n          margin:0;\r\n        }\r\n        .flash-message{\r\n            color: #444;\r\n            display: flex;\r\n             justify-content: center;\r\n             height: 100%;\r\n             flex-direction: column;\r\n             font-size:15px;\r\n             margin: 0;\r\n         }\r\n         .flash-message ul{\r\n            list-style: none;\r\n            margin: 0;\r\n         }\r\n    }\r\n}\r\n.flash-box[template=\"1\"].flashtype-success{\r\n    border-left: 10px solid #28a745;\r\n    border-right: 10px solid #28a745;\r\n    p,svg{color: #28a745;}\r\n}\r\n.flash-box[template=\"1\"].flashtype-info{\r\n    border-left: 10px solid #284B63;\r\n    border-right: 10px solid #284B63;\r\n    p,svg{color: #284B63;}\r\n}\r\n.flash-box[template=\"1\"].flashtype-warning{\r\n    border-left: 10px solid #FF4000;\r\n    border-right: 10px solid #FF4000;\r\n    p,svg{color: #FF4000;}\r\n}\r\n\r\n.flash-box[template=\"1\"].flashtype-danger{\r\n    border-left: 10px solid #dc3545;\r\n    border-right: 10px solid #dc3545;\r\n    p,svg{color: #dc3545;}\r\n}\r\n\r\n\r\n.flash-box.slide-in-top {\r\n    animation: slide-in-top .5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both running;\r\n  }\r\n  @keyframes slide-in-top {\r\n    0% {\r\n      -webkit-transform: translateY(-100%);\r\n              transform: translateY(-100%);\r\n      opacity: 0;\r\n    }\r\n    100% {\r\n      -webkit-transform: translateY(0);\r\n              transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n  }\r\n  .flash-box.slide-out-top {\r\n    animation: slide-out-top .5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both running;\r\n  }\r\n  @keyframes slide-out-top {\r\n    0% {\r\n      -webkit-transform: translateY(0);\r\n              transform: translateY(0);\r\n      opacity: 1;\r\n    }\r\n    100% {\r\n      -webkit-transform: translateY(100%);\r\n              transform: translateY(100%);\r\n      opacity: 0;\r\n    }\r\n  }\r\n  .flash-box.fade-in-top {\r\n    animation: fade-in-top .5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both running;\r\n}\r\n\r\n@keyframes fade-in-top {\r\n  0% {\r\n    -webkit-transform: translateY(-100%);\r\n            transform: translateY(-100%);\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    -webkit-transform: translateY(0);\r\n            transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n.flash-box.fade-out-top {\r\n    animation: fade-out-top .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;\r\n}\r\n@keyframes fade-out-top {\r\n0% {\r\n  -webkit-transform: translateY(0);\r\n          transform: translateY(0);\r\n  opacity: 1;\r\n}\r\n100% {\r\n  -webkit-transform: translateY(-100%);\r\n          transform: translateY(-100%);\r\n  opacity: 0;\r\n}\r\n}\r\n\r\n\r\n\r\n\r\n\r\n.flash-box[template=\"2\"]{\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: fixed;\r\n  z-index: 1000;\r\n  top: 0;\r\n  left: 0;\r\n  margin: 0;\r\n  width: 100vw;\r\n  box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);\r\n  .flash-icon-parent{\r\n     right:0;\r\n     top:0;\r\n     margin: 5px 0 5px 0;\r\n     height: 20px;\r\n     width: 20px;\r\n     position: absolute;\r\n     cursor:pointer;\r\n  }\r\n  .flash-icon-parent{\r\n    margin-right: 5px;\r\n  }\r\n  .flash-icon{\r\n    margin: 0;\r\n  }\r\n  \r\n  .flash-content{\r\n      position: relative;\r\n      width: 100%;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n      svg{\r\n          width: 20px;\r\n          height: 20px;\r\n          color: #FFF;\r\n          margin: 0 15px;\r\n      }\r\n  }\r\n  .flash-content .flash-message{\r\n     color: #FFF;\r\n     display: flex;\r\n      justify-content: center;\r\n      height: 100%;\r\n      flex-direction: column;\r\n      font-size:15px;\r\n      margin: 0;\r\n      font-weight:600;\r\n  }\r\n  .flash-content .flash-message ul{\r\n      list-style: none;\r\n      margin-bottom: 0;\r\n   }\r\n}\r\n.flash-box[template=\"2\"].flashtype-danger{\r\n  background-color: #dc3545;\r\n}\r\n.flash-box[template=\"2\"].flashtype-warning{\r\n  background-color: #FF4000;\r\n}\r\n.flash-box[template=\"2\"].flashtype-success{\r\n  background-color: #28a745; \r\n}\r\n.flash-box[template=\"2\"].flashtype-info{\r\n  background-color: #284B63; \r\n}\r\n\r\n.flash-box[template=\"1\"] [_close_]{\r\n  position:relative;\r\n}\r\n.flash-box[template=\"2\"] [_close_]{\r\n  position:absolute;\r\n  right: 0;\r\n}\r\n.flash-box[template=\"2\"] [_close_], \r\n.flash-box[template=\"1\"] [_close_]{\r\n  width: 15px;\r\n  height: 15px;\r\n  margin: 0 5px;\r\n  cursor:pointer;\r\n}\r\n.flash-box[template=\"2\"] [_close_]::before, .flash-box[template=\"1\"] [_close_]::before, \r\n.flash-box[template=\"2\"] [_close_]::after, .flash-box[template=\"1\"] [_close_]::after {\r\n      position: absolute;\r\n      content: '';\r\n      width: 3px;\r\n      height: 15px;\r\n      background: #333;\r\n      left: 7px;\r\n      border-radius: 5px;\r\n  }\r\n  .flash-box[template=\"2\"] [_close_]::before, \r\n  .flash-box[template=\"1\"] [_close_]::before{\r\n      transform: rotate(45deg);\r\n  }\r\n  .flash-box[template=\"2\"] [_close_]::after, \r\n  .flash-box[template=\"1\"] [_close_]::after {\r\n      transform: rotate(315deg);\r\n  }"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -843,14 +845,24 @@ class Flash {
             case null:
             case undefined:
                 const flashBox = document.querySelector("flash");
-                const message = utils_1.default.escape(flashBox.getAttribute("message"));
-                const icon = Boolean(flashBox.getAttribute("icon"));
-                const duration = parseInt(flashBox.getAttribute("duration"));
-                const type = flashBox.getAttribute("type");
-                const title = flashBox.getAttribute("title");
-                const closeButton = Boolean(flashBox.getAttribute("closeButton"));
-                const tone = Boolean(flashBox.getAttribute("tone"));
-                datas = { message, icon, duration, type, title, closeButton, tone };
+                try {
+                    if (!flashBox) {
+                        throw new Error('No <flash></flash> element found in your HTML file');
+                    }
+                    const message = utils_1.default.escape(flashBox.getAttribute("message"));
+                    const icon = Boolean(flashBox.getAttribute("icon"));
+                    const duration = parseInt(flashBox.getAttribute("duration"));
+                    const type = flashBox.getAttribute("type");
+                    const title = flashBox.getAttribute("title");
+                    const closeButton = Boolean(flashBox.getAttribute("closeButton"));
+                    const tone = Boolean(flashBox.getAttribute("tone"));
+                    const template = flashBox.getAttribute("template");
+                    Flash.TEMPLATE = isNaN(parseInt(String(template))) ? undefined : parseInt(template);
+                    datas = { message, icon, duration, type, title, closeButton, tone };
+                }
+                catch (error) {
+                    console.error(error);
+                }
                 break;
             default:
                 datas = options;
@@ -963,7 +975,7 @@ class Flash {
      * @private
      */
     static create(duration, type) {
-        let lastFlashBox = utils_1.default.$$('.flash-box');
+        let lastFlashBox = document.querySelector('flash');
         let template = null;
         if (lastFlashBox) {
             lastFlashBox.remove();
@@ -997,12 +1009,17 @@ class Flash {
             let names = ["success", "danger", "warning", "info"];
             if (undefined !== name && names.includes(name)) {
                 try {
+                    const flashIcon = sessionStorage.getItem(name);
+                    if (flashIcon)
+                        return flashIcon;
                     const svgUrl = `https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/flash/dist/assets/icons/${name}.svg`;
                     const response = yield fetch(svgUrl);
+                    const data = yield response.text();
                     if (!response.ok) {
-                        console.error("Erreur lors du chargement du fichier SVG:", response.text());
+                        console.error("Erreur lors du chargement du fichier SVG:", data);
                     }
-                    return response.text();
+                    sessionStorage.setItem(name, data);
+                    return data;
                 }
                 catch (e) {
                     console.error("Erreur lors de l'importation de l'icon", e);
@@ -1070,7 +1087,7 @@ class Runner {
             }
         };
         this.modal = modal;
-        this.audio = modal.getAttribute('audio');
+        this.tone = Boolean(modal.getAttribute('tone'));
         this.volume = parseInt(modal.getAttribute('volume') || '1', 10);
         this.duration = parseInt(modal.getAttribute('duration') || "0", 10);
         modal.setAttribute('aria-hidden', 'true');
@@ -1085,10 +1102,11 @@ class Runner {
      */
     open() {
         var _a;
-        if (this.audio) {
-            const audio = utils_1.default.setAudio(this.audio);
-            audio.volume = this.volume;
-            audio.play();
+        if (this.tone) {
+            const toneUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/flash/dist/assets/tone.wav";
+            const tone = utils_1.default.setAudio(toneUrl);
+            tone.volume = this.volume;
+            tone.play();
         }
         const animation = new animation_1.default();
         const modal = this.modal;
@@ -1121,10 +1139,11 @@ class Runner {
             modal.removeAttribute('message');
             modal.removeAttribute('duration');
             modal.removeAttribute('icon');
-            modal.removeAttribute('audio');
+            modal.removeAttribute('tone');
             modal.removeAttribute('volume');
             modal.removeAttribute('container');
             modal.removeAttribute('closeButton');
+            modal.removeAttribute('template');
         });
     }
 }
@@ -1421,13 +1440,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 /***/ ((module, exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _slicedToArray2(arr, i) { return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i) || _unsupportedIterableToArray2(arr, i) || _nonIterableRest2(); }
-function _nonIterableRest2() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray2(o, minLen); }
-function _arrayLikeToArray2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit2(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles2(arr) { if (Array.isArray(arr)) return arr; }
-function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof2(o); }
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof2(o); }
 (function webpackUniversalModuleDefinition(root, factory) {
   if (( false ? 0 : _typeof2(exports)) === 'object' && ( false ? 0 : _typeof2(module)) === 'object') module.exports = factory();else if (true) !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -1439,54 +1452,18 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
     /******/
     "use strict";
 
+    /******/ // The require scope
     /******/
-    var __webpack_modules__ = {};
-    /************************************************************************/
-    /******/ // The module cache
-    /******/
-    var __webpack_module_cache__ = {};
-    /******/
-    /******/ // The require function
-    /******/
-    function __nested_webpack_require_2769__(moduleId) {
-      /******/ // Check if module is in cache
-      /******/var cachedModule = __webpack_module_cache__[moduleId];
-      /******/
-      if (cachedModule !== undefined) {
-        /******/return cachedModule.exports;
-        /******/
-      }
-      /******/ // Create a new module (and put it into the cache)
-      /******/
-      var module = __webpack_module_cache__[moduleId] = {
-        /******/ // no module.id needed
-        /******/ // no module.loaded needed
-        /******/exports: {}
-        /******/
-      };
-      /******/
-      /******/ // Execute the module function
-      /******/
-      __webpack_modules__[moduleId](module, module.exports, __nested_webpack_require_2769__);
-      /******/
-      /******/ // Return the exports of the module
-      /******/
-      return module.exports;
-      /******/
-    }
-    /******/
-    /******/ // expose the modules object (__webpack_modules__)
-    /******/
-    __nested_webpack_require_2769__.m = __webpack_modules__;
+    var __nested_webpack_require_975__ = {};
     /******/
     /************************************************************************/
     /******/ /* webpack/runtime/define property getters */
     /******/
     (function () {
       /******/ // define getter functions for harmony exports
-      /******/__nested_webpack_require_2769__.d = function (exports, definition) {
+      /******/__nested_webpack_require_975__.d = function (exports, definition) {
         /******/for (var key in definition) {
-          /******/if (__nested_webpack_require_2769__.o(definition, key) && !__nested_webpack_require_2769__.o(exports, key)) {
+          /******/if (__nested_webpack_require_975__.o(definition, key) && !__nested_webpack_require_975__.o(exports, key)) {
             /******/Object.defineProperty(exports, key, {
               enumerable: true,
               get: definition[key]
@@ -1500,150 +1477,11 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       /******/
     })();
     /******/
-    /******/ /* webpack/runtime/ensure chunk */
-    /******/
-    (function () {
-      /******/__nested_webpack_require_2769__.f = {};
-      /******/ // This file contains only the entry chunk.
-      /******/ // The chunk loading function for additional chunks
-      /******/
-      __nested_webpack_require_2769__.e = function (chunkId) {
-        /******/return Promise.all(Object.keys(__nested_webpack_require_2769__.f).reduce(function (promises, key) {
-          /******/__nested_webpack_require_2769__.f[key](chunkId, promises);
-          /******/
-          return promises;
-          /******/
-        }, []));
-        /******/
-      };
-      /******/
-    })();
-    /******/
-    /******/ /* webpack/runtime/get javascript chunk filename */
-    /******/
-    (function () {
-      /******/ // This function allow to reference async chunks
-      /******/__nested_webpack_require_2769__.u = function (chunkId) {
-        /******/ // return url for filenames based on template
-        /******/return "" + chunkId + ".js";
-        /******/
-      };
-      /******/
-    })();
-    /******/
-    /******/ /* webpack/runtime/global */
-    /******/
-    (function () {
-      /******/__nested_webpack_require_2769__.g = function () {
-        /******/if ((typeof globalThis === "undefined" ? "undefined" : _typeof2(globalThis)) === 'object') return globalThis;
-        /******/
-        try {
-          /******/return this || new Function('return this')();
-          /******/
-        } catch (e) {
-          /******/if ((typeof window === "undefined" ? "undefined" : _typeof2(window)) === 'object') return window;
-          /******/
-        }
-        /******/
-      }();
-      /******/
-    })();
-    /******/
     /******/ /* webpack/runtime/hasOwnProperty shorthand */
     /******/
     (function () {
-      /******/__nested_webpack_require_2769__.o = function (obj, prop) {
+      /******/__nested_webpack_require_975__.o = function (obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
-      };
-      /******/
-    })();
-    /******/
-    /******/ /* webpack/runtime/load script */
-    /******/
-    (function () {
-      /******/var inProgress = {};
-      /******/
-      var dataWebpackPrefix = "@easylibs/utils:";
-      /******/ // loadScript function to load a script via script tag
-      /******/
-      __nested_webpack_require_2769__.l = function (url, done, key, chunkId) {
-        /******/if (inProgress[url]) {
-          inProgress[url].push(done);
-          return;
-        }
-        /******/
-        var script, needAttach;
-        /******/
-        if (key !== undefined) {
-          /******/var scripts = document.getElementsByTagName("script");
-          /******/
-          for (var i = 0; i < scripts.length; i++) {
-            /******/var s = scripts[i];
-            /******/
-            if (s.getAttribute("src") == url || s.getAttribute("data-webpack") == dataWebpackPrefix + key) {
-              script = s;
-              break;
-            }
-            /******/
-          }
-          /******/
-        }
-        /******/
-        if (!script) {
-          /******/needAttach = true;
-          /******/
-          script = document.createElement('script');
-          /******/
-          /******/
-          script.charset = 'utf-8';
-          /******/
-          script.timeout = 120;
-          /******/
-          if (__nested_webpack_require_2769__.nc) {
-            /******/script.setAttribute("nonce", __nested_webpack_require_2769__.nc);
-            /******/
-          }
-          /******/
-          script.setAttribute("data-webpack", dataWebpackPrefix + key);
-          /******/
-          /******/
-          script.src = url;
-          /******/
-        }
-        /******/
-        inProgress[url] = [done];
-        /******/
-        var onScriptComplete = function onScriptComplete(prev, event) {
-          /******/ // avoid mem leaks in IE.
-          /******/script.onerror = script.onload = null;
-          /******/
-          clearTimeout(timeout);
-          /******/
-          var doneFns = inProgress[url];
-          /******/
-          delete inProgress[url];
-          /******/
-          script.parentNode && script.parentNode.removeChild(script);
-          /******/
-          doneFns && doneFns.forEach(function (fn) {
-            return fn(event);
-          });
-          /******/
-          if (prev) return prev(event);
-          /******/
-        };
-        /******/
-        var timeout = setTimeout(onScriptComplete.bind(null, undefined, {
-          type: 'timeout',
-          target: script
-        }), 120000);
-        /******/
-        script.onerror = onScriptComplete.bind(null, script.onerror);
-        /******/
-        script.onload = onScriptComplete.bind(null, script.onload);
-        /******/
-        needAttach && document.head.appendChild(script);
-        /******/
       };
       /******/
     })();
@@ -1652,7 +1490,7 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
     /******/
     (function () {
       /******/ // define __esModule on exports
-      /******/__nested_webpack_require_2769__.r = function (exports) {
+      /******/__nested_webpack_require_975__.r = function (exports) {
         /******/if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
           /******/Object.defineProperty(exports, Symbol.toStringTag, {
             value: 'Module'
@@ -1668,196 +1506,14 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       /******/
     })();
     /******/
-    /******/ /* webpack/runtime/publicPath */
-    /******/
-    (function () {
-      /******/var scriptUrl;
-      /******/
-      if (__nested_webpack_require_2769__.g.importScripts) scriptUrl = __nested_webpack_require_2769__.g.location + "";
-      /******/
-      var document = __nested_webpack_require_2769__.g.document;
-      /******/
-      if (!scriptUrl && document) {
-        /******/if (document.currentScript) /******/scriptUrl = document.currentScript.src;
-        /******/
-        if (!scriptUrl) {
-          /******/var scripts = document.getElementsByTagName("script");
-          /******/
-          if (scripts.length) {
-            /******/var i = scripts.length - 1;
-            /******/
-            while (i > -1 && !scriptUrl) scriptUrl = scripts[i--].src;
-            /******/
-          }
-          /******/
-        }
-        /******/
-      }
-      /******/ // When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-      /******/ // or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-      /******/
-      if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-      /******/
-      scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-      /******/
-      __nested_webpack_require_2769__.p = scriptUrl;
-      /******/
-    })();
-    /******/
-    /******/ /* webpack/runtime/jsonp chunk loading */
-    /******/
-    (function () {
-      /******/ // no baseURI
-      /******/
-      /******/ // object to store loaded and loading chunks
-      /******/ // undefined = chunk not loaded, null = chunk preloaded/prefetched
-      /******/ // [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-      /******/var installedChunks = {
-        /******/"utils": 0
-        /******/
-      };
-      /******/
-      /******/
-      __nested_webpack_require_2769__.f.j = function (chunkId, promises) {
-        /******/ // JSONP chunk loading for javascript
-        /******/var installedChunkData = __nested_webpack_require_2769__.o(installedChunks, chunkId) ? installedChunks[chunkId] : undefined;
-        /******/
-        if (installedChunkData !== 0) {
-          // 0 means "already installed".
-          /******/
-          /******/ // a Promise means "currently loading".
-          /******/
-          if (installedChunkData) {
-            /******/promises.push(installedChunkData[2]);
-            /******/
-          } else {
-            /******/if (true) {
-              // all chunks have JS
-              /******/ // setup Promise in chunk cache
-              /******/
-              var promise = new Promise(function (resolve, reject) {
-                return installedChunkData = installedChunks[chunkId] = [resolve, reject];
-              });
-              /******/
-              promises.push(installedChunkData[2] = promise);
-              /******/
-              /******/ // start chunk loading
-              /******/
-              var url = __nested_webpack_require_2769__.p + __nested_webpack_require_2769__.u(chunkId);
-              /******/ // create error before stack unwound to get useful stacktrace later
-              /******/
-              var error = new Error();
-              /******/
-              var loadingEnded = function loadingEnded(event) {
-                /******/if (__nested_webpack_require_2769__.o(installedChunks, chunkId)) {
-                  /******/installedChunkData = installedChunks[chunkId];
-                  /******/
-                  if (installedChunkData !== 0) installedChunks[chunkId] = undefined;
-                  /******/
-                  if (installedChunkData) {
-                    /******/var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-                    /******/
-                    var realSrc = event && event.target && event.target.src;
-                    /******/
-                    error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-                    /******/
-                    error.name = 'ChunkLoadError';
-                    /******/
-                    error.type = errorType;
-                    /******/
-                    error.request = realSrc;
-                    /******/
-                    installedChunkData[1](error);
-                    /******/
-                  }
-                  /******/
-                }
-                /******/
-              };
-              /******/
-              __nested_webpack_require_2769__.l(url, loadingEnded, "chunk-" + chunkId, chunkId);
-              /******/
-            }
-            /******/
-          }
-          /******/
-        }
-        /******/
-      };
-      /******/
-      /******/ // no prefetching
-      /******/
-      /******/ // no preloaded
-      /******/
-      /******/ // no HMR
-      /******/
-      /******/ // no HMR manifest
-      /******/
-      /******/ // no on chunks loaded
-      /******/
-      /******/ // install a JSONP callback for chunk loading
-      /******/
-      var webpackJsonpCallback = function webpackJsonpCallback(parentChunkLoadingFunction, data) {
-        /******/var _data = _slicedToArray2(data, 3),
-          chunkIds = _data[0],
-          moreModules = _data[1],
-          runtime = _data[2];
-        /******/ // add "moreModules" to the modules object,
-        /******/ // then flag all "chunkIds" as loaded and fire callback
-        /******/
-        var moduleId,
-          chunkId,
-          i = 0;
-        /******/
-        if (chunkIds.some(function (id) {
-          return installedChunks[id] !== 0;
-        })) {
-          /******/for (moduleId in moreModules) {
-            /******/if (__nested_webpack_require_2769__.o(moreModules, moduleId)) {
-              /******/__nested_webpack_require_2769__.m[moduleId] = moreModules[moduleId];
-              /******/
-            }
-            /******/
-          }
-          /******/
-          if (runtime) var result = runtime(__nested_webpack_require_2769__);
-          /******/
-        }
-        /******/
-        if (parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-        /******/
-        for (; i < chunkIds.length; i++) {
-          /******/chunkId = chunkIds[i];
-          /******/
-          if (__nested_webpack_require_2769__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-            /******/installedChunks[chunkId][0]();
-            /******/
-          }
-          /******/
-          installedChunks[chunkId] = 0;
-          /******/
-        }
-        /******/
-        /******/
-      };
-      /******/
-      /******/
-      var chunkLoadingGlobal = self["webpackChunk_easylibs_utils"] = self["webpackChunk_easylibs_utils"] || [];
-      /******/
-      chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-      /******/
-      chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-      /******/
-    })();
-    /******/
     /************************************************************************/
     var __nested_webpack_exports__ = {};
     /*!**********************!*\
       !*** ./src/utils.ts ***!
       \**********************/
-    __nested_webpack_require_2769__.r(__nested_webpack_exports__);
+    __nested_webpack_require_975__.r(__nested_webpack_exports__);
     /* harmony export */
-    __nested_webpack_require_2769__.d(__nested_webpack_exports__, {
+    __nested_webpack_require_975__.d(__nested_webpack_exports__, {
       /* harmony export */"default": function _default() {
         return /* binding */Utils;
       }
@@ -1972,27 +1628,27 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
          */
         function setAudio(audioPath) {
           var classname = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-          var audio = document.createElement('audio');
+          var audio = document.createElement("audio");
           if (classname != null) {
             audio.classList.add(classname);
           }
-          var source = document.createElement('source');
+          var source = document.createElement("source");
           source.src = audioPath;
           source.type = "audio/mpeg";
           audio.appendChild(source);
           return audio;
         }
         /**
-        * Converts an HTML string into an HTML element or a collection of HTML elements.
-        *
-        * @param textHtml - The HTML string to convert.
-        * @param targetName - The tag name of the target HTML element to create.
-        * @param children - A boolean indicating whether to return all children of the target element.
-        * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
-        *
-        * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
-        * If the HTML content generates no children, the method returns `null`.
-        */
+         * Converts an HTML string into an HTML element or a collection of HTML elements.
+         *
+         * @param textHtml - The HTML string to convert.
+         * @param targetName - The tag name of the target HTML element to create.
+         * @param children - A boolean indicating whether to return all children of the target element.
+         * @returns - Returns the first child of the target element if `children` is `false`, otherwise returns a collection of the element's children. Returns `null` if there are no children.
+         *
+         * This method creates a new HTML element of the type specified by `targetName`, sets its inner HTML to `textHtml`, and returns either the first child of this element or all its children as an HTMLCollection, depending on the value of `children`.
+         * If the HTML content generates no children, the method returns `null`.
+         */
       }, {
         key: "textToHTMLElement",
         value: function textToHTMLElement(textHtml) {
@@ -2011,9 +1667,9 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       }, {
         key: "$$",
         value: function $$(element) {
-          if (typeof element !== 'string') {
+          if (typeof element !== "string") {
             return element;
-          } else if (typeof element === 'string') {
+          } else if (typeof element === "string") {
             var collection = document.querySelectorAll("".concat(element));
             var el = document.querySelector("".concat(element));
             if (collection !== null && collection.length > 1) {
@@ -2027,10 +1683,10 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         /**
          * Cette fonction permet de convertir un objet NodeList en un tableau d'éléments HTML (HTMLElement)
          * et d'exécuter une fonction de rappel sur chaque élément du tableau.
-         * @param nodeList Un objet NodeList ou un élément HTML. 
+         * @param nodeList Un objet NodeList ou un élément HTML.
          * Si c'est un NodeList, il sera converti en tableau d'éléments HTML.
          * @param callback Une fonction de rappel à exécuter sur chaque élément du tableau.
-         * @returns 
+         * @returns
          */
       }, {
         key: "processNodes",
@@ -2054,42 +1710,42 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         key: "getRegexp",
         value: function getRegexp(type) {
           switch (type) {
-            case 'email':
+            case "email":
               return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i);
-            case 'phone-number':
+            case "phone-number":
               return new RegExp(/^(0|\+[1-9][0-9]{0,2}) ?[0-9]+$/);
-            case 'number':
+            case "number":
               return new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
-            case 'strong-password':
+            case "strong-password":
               return new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/);
-            case 'url-protocol':
-              return new RegExp(/^(https?:\/\/)$/, 'i');
-            case 'url-domain':
-              return new RegExp(/^((([a-zA-Z0-9]{1,})[.-]?)+[a-zA-Z]{2,})$/, 'i');
-            case 'url-ip':
-              return new RegExp(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, 'i');
-            case 'url-port':
-              return new RegExp(/^:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})$/, 'i');
-            case 'url-path':
-              return new RegExp(/^(\.\/)?[-a-zA-Z\d%_.~+\/]*$/, 'i');
-            case 'url-query':
-              return new RegExp(/^(\?[;&a-zA-Z\d%_.~+=-]*)$/, 'i');
-            case 'url-fragment':
-              return new RegExp(/^#[-a-zA-Z\d%_.~+/=?&;:!*'()]*$/, 'i');
-            case 'default-text':
+            case "url-protocol":
+              return new RegExp(/^(https?:\/\/)$/, "i");
+            case "url-domain":
+              return new RegExp(/^((([a-zA-Z0-9]{1,})[.-]?)+[a-zA-Z]{2,})$/, "i");
+            case "url-ip":
+              return new RegExp(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, "i");
+            case "url-port":
+              return new RegExp(/^:(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})$/, "i");
+            case "url-path":
+              return new RegExp(/^(\.\/)?[-a-zA-Z\d%_.~+\/]*$/, "i");
+            case "url-query":
+              return new RegExp(/^(\?[;&a-zA-Z\d%_.~+=-]*)$/, "i");
+            case "url-fragment":
+              return new RegExp(/^#[-a-zA-Z\d%_.~+/=?&;:!*'()]*$/, "i");
+            case "default-text":
               return new RegExp(/^[a-zA-Z -'áàâäãåçéèêëğíìîïıñóòôöõúùûüşýÿæœÁÀÂÄÃÅÇÉÈÊËĞÍÌÎÏIÑÓÒÔÖÕÚÙÛÜŞÝŸÆŒ]+$/);
-            case 'fr-text':
+            case "fr-text":
               return new RegExp(/^[A-Za-z' - àâçéèêëûæœÀÂÉÈÊËÆŒ]+$/);
-            case 'en-text':
+            case "en-text":
               return new RegExp(/^[a-zA-Z '-]{1,40}$/);
-            case 'tr-text':
+            case "tr-text":
               return new RegExp(/^[A-Za-z çğıöüşæœÇĞIÖÜŞ]+$/);
             default:
-              throw new Error('Type d\'expression régulière non pris en charge.');
+              throw new Error("Type d'expression régulière non pris en charge.");
           }
         }
         /**
-         * Crée une couche superfielle au dessus d'un élément html afin d'empecher tout évènement. 
+         * Crée une couche superfielle au dessus d'un élément html afin d'empecher tout évènement.
          * @param tag Le nom de la balise HTML à utiliser comme couche (par défaut : 'td', idéal pour les tableau html).
          * @param backgroundColor La couleur d'arrière-plan de la zone interdite (par défaut : '#FFFFFF').
          * @returns Un élément HTML représentant une zone interdite.
@@ -2097,17 +1753,17 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
       }, {
         key: "forbiddener",
         value: function forbiddener() {
-          var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'td';
+          var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "td";
           var backgroundColor = arguments.length > 1 ? arguments[1] : undefined;
           var forbiddenTag = document.createElement(tag);
-          forbiddenTag.setAttribute('class', 'forbidden');
+          forbiddenTag.setAttribute("class", "forbidden");
           var style = {
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            opacity: '.7',
-            zIndex: '10',
-            backgroundColor: backgroundColor ? backgroundColor : '#FFFFFF'
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            opacity: ".7",
+            zIndex: "10",
+            backgroundColor: backgroundColor ? backgroundColor : "#FFFFFF"
           };
           Object.assign(forbiddenTag.style, style);
           return forbiddenTag;
@@ -2131,7 +1787,7 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         /**
          * Changes the input text type to a number type and performs additional processing
          * based on the specified parameters.
-         * 
+         *
          * @param attr - The CSS selector for the input elements to be processed.
          * @param limit - (Optional) The maximum allowed value. If provided, input values exceeding this limit will be set to the limit.
          * @param priceType - (Optional) A boolean flag indicating whether the input represents a price. If true, the input is expected to be a number with an optional decimal part.
@@ -2164,7 +1820,7 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
          * The function is used to disable specific elements (by default td tags) inside a table when a certain button is clicked.
          * It accepts several parameters: the tag to be disabled, the target element to be disabled, the trigger element (button),
          * and the background color for the forbidden tag.
-         * 
+         *
          * @param tag - The tag of the element to be disabled (default: "td").
          * @param target - The target element to be disabled (default: undefined).
          * @param trigger - The trigger element (button) to activate the function (default: undefined).
@@ -2213,9 +1869,10 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         key: "setAsteriskToRequiredField",
         value: function setAsteriskToRequiredField() {
           var _this2 = this;
-          __nested_webpack_require_2769__.e( /*! import() */"node_modules_raw-loader_dist_cjs_js_src_assets_asterisk_svg").then(__nested_webpack_require_2769__.bind(__nested_webpack_require_2769__, /*! raw-loader!./assets/asterisk.svg */"../../node_modules/raw-loader/dist/cjs.js!./src/assets/asterisk.svg")).then(function (SVG) {
-            var encodedSvg = SVG["default"];
-            var svgString = decodeURIComponent(encodedSvg.split(',')[1]);
+          var svgUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/utils/dist/assets/asterisk.svg";
+          fetch(svgUrl).then(function (response) {
+            return response.text();
+          }).then(function (svgString) {
             var asterisk = _this2.textToHTMLElement(svgString);
             var labels = document.querySelectorAll("label[required-field]");
             asterisk.style.color = "#f89a9b";
@@ -2227,8 +1884,11 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
                 label.appendChild(clonedAsterisk);
               });
             }
+          })["catch"](function (error) {
+            console.error("Erreur lors du chargement du fichier SVG:", error);
           });
         }
+
         /**
          * This method checks if the object contains a key with the given substring.
          * @param object The object to be searched.
@@ -2311,7 +1971,7 @@ function _typeof2(o) { "@babel/helpers - typeof"; return _typeof2 = "function" =
         }
         /**
          * A function to escape special characters in a string using the DOM API.
-         * 
+         *
          * @param str - The input string to be escaped.
          * @returns - The escaped string with special characters replaced with their HTML entity equivalents.
          */

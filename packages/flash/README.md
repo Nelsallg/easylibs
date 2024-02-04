@@ -49,7 +49,7 @@ Flash.add({
 });
 ```
 
-This will create a Flash message with the text "Hi, i am your flash message" and display it in a orangered box.
+This will create a Flash message with the text "Hi, i am your success message" and display it in a green box.
 
 ![Hello world init flash message](./doc/image1.PNG)
 

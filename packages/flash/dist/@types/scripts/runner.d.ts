@@ -1,6 +1,6 @@
 export default class Runner {
     private modal;
-    private audio;
+    private tone;
     private volume;
     private duration;
     private titre?;

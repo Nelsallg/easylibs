@@ -75,6 +75,8 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: path.resolve(__dirname, 'src/assets/icons'), to: path.resolve(__dirname, 'dist/assets/icons') },
+        // Ajouter un nouveau pattern pour les fichiers audio
+        { from: path.resolve(__dirname, 'src/assets'), to: path.resolve(__dirname, 'dist/assets'), globOptions: { ignore: ["**/*.js", "**/*.css", "**/*.scss", "**/*.svg"] } },
       ],
     }),
   ],
