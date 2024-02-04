@@ -1,3 +1,12 @@
+declare type RunnerOptions = {
+    modal?: HTMLElement;
+    container?: HTMLElement;
+    animation?: {
+        type: string;
+        position: string;
+    };
+    tone?: boolean;
+};
 export default class Runner {
     private modal;
     private tone;
@@ -16,10 +25,7 @@ export default class Runner {
      * @param container Le conteneur dans lequel insérer la modal (optionnel).
      * @param animation Les options d'animation de la modal (optionnel).
      */
-    constructor(modal: Element, container?: HTMLElement, animation?: {
-        type: string;
-        position: string;
-    });
+    constructor(options: RunnerOptions);
     /**
      * Méthode pour fermer la modal.
      */
@@ -38,3 +44,4 @@ export default class Runner {
      */
     private clearProperties;
 }
+export {};

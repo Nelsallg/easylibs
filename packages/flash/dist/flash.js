@@ -885,10 +885,10 @@ class Flash {
     static run() {
         return __awaiter(this, void 0, void 0, function* () {
             if (Flash.OPTIONS) {
-                const { container, flashBox } = Flash.OPTIONS;
+                const { container, flashBox, tone } = Flash.OPTIONS;
                 const _template = yield Flash.template();
                 flashBox.append(...Array.from(_template));
-                let runner = new runner_1.default(flashBox, container);
+                let runner = new runner_1.default({ modal: flashBox, container, tone });
                 runner.open();
             }
             return new this;
@@ -1060,7 +1060,7 @@ class Runner {
      * @param container Le conteneur dans lequel insérer la modal (optionnel).
      * @param animation Les options d'animation de la modal (optionnel).
      */
-    constructor(modal, container, animation = { type: 'fade', position: 'top' }) {
+    constructor(options) {
         /**
          * Méthode pour fermer la modal.
          */
@@ -1086,13 +1086,13 @@ class Runner {
                 }, this.duration);
             }
         };
-        this.modal = modal;
-        this.tone = Boolean(modal.getAttribute('tone'));
-        this.volume = parseInt(modal.getAttribute('volume') || '1', 10);
-        this.duration = parseInt(modal.getAttribute('duration') || "0", 10);
-        modal.setAttribute('aria-hidden', 'true');
-        this.container = container;
-        this.animation = animation;
+        this.modal = options.modal;
+        this.tone = options.tone ? null : null;
+        this.volume = parseInt(this.modal.getAttribute('volume') || '1', 10);
+        this.duration = parseInt(this.modal.getAttribute('duration') || "0", 10);
+        this.modal.setAttribute('aria-hidden', 'true');
+        this.container = options.container;
+        this.animation = options.animation ? options.animation : { type: 'fade', position: 'top' };
         this.closeButton;
         this.openButton;
         this.autoClose();
@@ -1103,7 +1103,7 @@ class Runner {
     open() {
         var _a;
         if (this.tone) {
-            const toneUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/flash/dist/assets/tone.wav";
+            const toneUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/flash/dist/assets/tone.ogg";
             const tone = utils_1.default.setAudio(toneUrl);
             tone.volume = this.volume;
             tone.play();
@@ -1143,7 +1143,6 @@ class Runner {
             modal.removeAttribute('volume');
             modal.removeAttribute('container');
             modal.removeAttribute('closeButton');
-            modal.removeAttribute('template');
         });
     }
 }
