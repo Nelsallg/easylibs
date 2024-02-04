@@ -319,10 +319,7 @@ var Utils = /*#__PURE__*/function () {
     key: "setAsteriskToRequiredField",
     value: function setAsteriskToRequiredField() {
       var _this2 = this;
-      var svgUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/utils/dist/assets/asterisk.svg";
-      fetch(svgUrl).then(function (response) {
-        return response.text();
-      }).then(function (svgString) {
+      var setIcon = function setIcon(svgString) {
         var asterisk = _this2.textToHTMLElement(svgString);
         var labels = document.querySelectorAll("label[required-field]");
         asterisk.style.color = "#f89a9b";
@@ -334,6 +331,15 @@ var Utils = /*#__PURE__*/function () {
             label.appendChild(clonedAsterisk);
           });
         }
+      };
+      var cacheIcon = sessionStorage.getItem("asterisk");
+      if (cacheIcon) return setIcon(cacheIcon);
+      var svgUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/utils/dist/assets/asterisk.svg";
+      fetch(svgUrl).then(function (response) {
+        return response.text();
+      }).then(function (svgString) {
+        setIcon(svgString);
+        sessionStorage.setItem("asterisk", svgString);
       })["catch"](function (error) {
         console.error("Erreur lors du chargement du fichier SVG:", error);
       });
