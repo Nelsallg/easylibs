@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@easylibs/utils": "^1.2.14",
+    "css-minimizer-webpack-plugin": "^6.0.0",
     "nx": "^17.2.7"
   }
 }

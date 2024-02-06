@@ -30,6 +30,7 @@ dist-ssr
 doc.doc
 packages/animation
 packages/data-transformer
+packages/dom
 packages/dragdrop
 packages/dragndrop
 packages/fetch
