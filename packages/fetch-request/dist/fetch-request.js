@@ -97,7 +97,7 @@ var FetchRequest = /*#__PURE__*/function () {
               break;
             }
             _context.next = 9;
-            return _this.postFetch();
+            return _this.postFetch(_this.response, _this.status);
           case 9:
             _context.next = 14;
             break;
@@ -149,47 +149,48 @@ var FetchRequest = /*#__PURE__*/function () {
             return fetch(finalUri, fetchOptions);
           case 13:
             response = _context2.sent;
+            _this.status = response.status;
             if (!options) {
-              _context2.next = 27;
+              _context2.next = 28;
               break;
             }
             responseType = options.responseType;
             if (!responseType) {
-              _context2.next = 27;
+              _context2.next = 28;
               break;
             }
             if (!(responseType === "text")) {
-              _context2.next = 23;
+              _context2.next = 24;
               break;
             }
-            _context2.next = 20;
+            _context2.next = 21;
             return response.text();
-          case 20:
+          case 21:
             _context2.t0 = _context2.sent;
-            _context2.next = 26;
+            _context2.next = 27;
             break;
-          case 23:
-            _context2.next = 25;
+          case 24:
+            _context2.next = 26;
             return response.json();
-          case 25:
-            _context2.t0 = _context2.sent;
           case 26:
-            _this.response = _context2.t0;
+            _context2.t0 = _context2.sent;
           case 27:
+            _this.response = _context2.t0;
+          case 28:
             if ((_this$options$callbac = _this.options.callbacks) !== null && _this$options$callbac !== void 0 && _this$options$callbac.onSuccess && response.ok) {
               _this.options.callbacks.onSuccess(_this.response);
             }
-            _context2.next = 33;
+            _context2.next = 34;
             break;
-          case 30:
-            _context2.prev = 30;
+          case 31:
+            _context2.prev = 31;
             _context2.t1 = _context2["catch"](1);
             _this.handleError(_context2.t1, response ? response.status : 0);
-          case 33:
+          case 34:
           case "end":
             return _context2.stop();
         }
-      }, _callee2, null, [[1, 30]]);
+      }, _callee2, null, [[1, 31]]);
     })));
     _defineProperty(this, "preFetch", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
       var _data2;
@@ -213,20 +214,25 @@ var FetchRequest = /*#__PURE__*/function () {
         }
       }, _callee3);
     })));
-    _defineProperty(this, "postFetch", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-      return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-        while (1) switch (_context4.prev = _context4.next) {
-          case 0:
-            if (_this.options.submitter instanceof HTMLButtonElement) {
-              _this.options.submitter.removeAttribute('disabled');
-            }
-            return _context4.abrupt("return", _this.options.callbacks.onPostFetch ? _this.options.callbacks.onPostFetch() : undefined);
-          case 2:
-          case "end":
-            return _context4.stop();
-        }
-      }, _callee4);
-    })));
+    _defineProperty(this, "postFetch", /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(response, status) {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              if (_this.options.submitter instanceof HTMLButtonElement) {
+                _this.options.submitter.removeAttribute('disabled');
+              }
+              return _context4.abrupt("return", _this.options.callbacks.onPostFetch ? _this.options.callbacks.onPostFetch(response, status) : undefined);
+            case 2:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4);
+      }));
+      return function (_x, _x2) {
+        return _ref4.apply(this, arguments);
+      };
+    }());
     this.options = _options;
     this.attachSubmitterEvent();
   }

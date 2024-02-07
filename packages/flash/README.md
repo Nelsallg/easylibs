@@ -1,14 +1,12 @@
 # Flash: A JavaScript Library for Creating Flash Messages
 
+Flash is a lightweight, easy-to-use library for displaying Flash messages in your web application. It provides a simple API for creating and displaying Flash messages, and it comes with a variety of built-in templates that you can use to customize the look and feel of your messages.
+
 ![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
 ![npm version](https://img.shields.io/npm/v/@easylibs/flash.svg?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/flash)
-
-## Introduction
-
-Flash is a lightweight, easy-to-use library for displaying Flash messages in your web application. It provides a simple API for creating and displaying Flash messages, and it comes with a variety of built-in templates that you can use to customize the look and feel of your messages.
 
 ## Installation
 

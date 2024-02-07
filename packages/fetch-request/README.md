@@ -1,12 +1,12 @@
 # FetchRequest
 
+The `FetchRequest` class is a utility class designed to simplify sending `Fetch` requests in a web application. It provides a simple interface for making HTTP requests and handling actions before and after the request is sent.
+
 ![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
 ![npm version](https://img.shields.io/npm/v/@easylibs/fetch-request.svg?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/fetch-request)
-
-The `FetchRequest` class is a utility class designed to simplify sending `Fetch` requests in a web application. It provides a simple interface for making HTTP requests and handling actions before and after the request is sent.
 
 ## Installation
 

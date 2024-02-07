@@ -388,6 +388,14 @@ var Utils = /*#__PURE__*/function () {
       });
       return false;
     }
+    /**
+    * Finds the first occurrence of a character in the given string up to the specified limit.
+    * 
+    * @param string - The string to search.
+    * @param limit - The limit up to which to search for the character.
+    * @param returnBool - Optional. If true, returns a boolean indicating whether the character was found. If false or not provided, returns the character found or null if not found.
+    * @returns  Returns the character found, a boolean indicating whether the character was found (if `returnBool` is true), or null if the character was not found.
+    */
   }, {
     key: "findChar",
     value: function findChar(string, limit) {

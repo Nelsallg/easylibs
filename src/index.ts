@@ -1,40 +1,16 @@
-import Flash from "../packages/flash/src/flash";
-import Utils from "../packages/utils/src/utils";
-// Flash.add({
-//     message: 'Hi, i am your success message',
-//     title: "Successful",
-//     type: 'success',
-//     icon:true,
-//     closeButton:true
-// });
-Utils.setAsteriskToRequiredField()
+import TempData from "../packages/tempdata/src/tempdata";
+import Backend from "../packages/tempdata/src/script/backend";
 
-
-
-// Flash.TEMPLATE = 2;
-// Flash.add({
-//   message: 'Hi, i am your danger message',
-//   type: 'danger',
-//   title: "Success !",
-//   icon:true
-// });
-
-
-// Flash.TEMPLATE = `
-// <div class="custom-body">
-//     <div class="custom-flash-header">
-//         <h3>{{title}}</h3>
-//         <span>{{icon}}</span>
-//     </div>
-//     <p>{{message}}</p>
-// </div>
-// <button type="button" _close_>Close</button>`;
-
-// Flash.add({
-//   message: 'Hi, I am your info message',
-//   type: 'danger',
-//   title: 'Alert !',
-//   icon: true,
-// });
-
-Flash.add()
+const tempdata = new TempData("test","test_data");
+tempdata.add({
+    firstname:"Sarah Elise",
+    lastname:"OBONE MBA",
+    age:18,
+    gender:"female",
+    job:"Student"
+})
+// tempdata.deleteAll();
+const backend = new Backend(tempdata,"http://localhost:8000/src/backend.php");
+backend.persist(undefined,(data:any)=>{
+    console.log(data);
+})

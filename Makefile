@@ -38,3 +38,7 @@ build:
 
 php-serv:
 	php -S localhost:8000
+deldir:
+	rmdir /s /q ${path}
+delfile:
+	del ${path}

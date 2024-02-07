@@ -100,6 +100,14 @@ export default class Utils {
      * @returns The value or key of the first matching property if found, otherwise false.
      */
     static findObjectDataByKeyName(object: any, keyOrShorKey: string, key?: boolean): boolean;
+    /**
+   * Finds the first occurrence of a character in the given string up to the specified limit.
+   *
+   * @param string - The string to search.
+   * @param limit - The limit up to which to search for the character.
+   * @param returnBool - Optional. If true, returns a boolean indicating whether the character was found. If false or not provided, returns the character found or null if not found.
+   * @returns  Returns the character found, a boolean indicating whether the character was found (if `returnBool` is true), or null if the character was not found.
+   */
     static findChar(string: string, limit: number, returnBool?: boolean): string | boolean;
     static findComputedStyle(element: HTMLElement, property: string | Array<string>): string;
     /**

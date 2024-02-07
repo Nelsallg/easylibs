@@ -13,9 +13,9 @@ declare interface FetchRequestOptions {
     responseType?: 'json' | 'text';
 }
 declare interface FetchRequestCallbacks {
-    onPostFetch?: (response?: any) => any;
+    onPostFetch?: (response?: Record<string, any> | string, status?: number) => any;
     onPreFetch?: (data?: any) => any;
-    onSuccess?: (response: any) => void;
+    onSuccess?: (response: Record<string, any> | string) => void;
     onError?: (error: Error, status: number) => void;
 }
 declare type FetchRequestType = {
@@ -33,6 +33,7 @@ declare type FetchRequestType = {
 export default class FetchRequest {
     private options;
     private response;
+    private status;
     constructor(options: FetchRequestType);
     private attachSubmitterEvent;
     private submitForm;

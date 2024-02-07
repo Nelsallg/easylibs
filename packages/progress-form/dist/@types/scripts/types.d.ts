@@ -6,4 +6,6 @@ export declare type ProgressFormType = {
     translateX?: number;
     targetMarginWidth?: number;
     fieldsetMargingWidth?: number;
+    onPreNext?: (isValidFieldset?: boolean) => any;
+    onPostNext?: () => any;
 };
