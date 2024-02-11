@@ -1,6 +1,6 @@
 {
   "name": "easylibs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "title": "Easylibs Bundle",
   "description": "",
   "homepage": "https://github.com/Nelsallg/easylibs",
@@ -9,14 +9,16 @@
   },
   "dependencies": {
     "@easylibs/fetch-request": "~0.0.9",
-    "@easylibs/file-uploader": "~0.0.1"
+    "@easylibs/progress-form": "~0.0.1",
+    "@easylibs/utils": "~0.0.9",
+    "@easylibs/flash": "~0.0.1"
   },
   "type": "module",
   "keywords": [
-    "request",
-    "file",
-    "uploader",
-    "fetch"
+    "request fetch",
+    "flash",
+    "progress form",
+    "utils"
   ],
   "bugs": "https://github.com/Nelsallg/easylibs.git/issues",
   "repository": {
@@ -29,20 +31,20 @@
     "email": "nelsallg@contact.com",
     "url": "http://nelsallg.com/"
   },
-  "copyright": "2023 Easylibs.libs",
-  "types": "./@types/index.d.ts",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "unpkg": "./dist/index.global.min.js",
-  "jsdelivr": "./dist/index.global.min.js",
+  "copyright": "2023 Easylibs",
+  "types": "./@types/easylibs.d.ts",
+  "main": "./dist/easylibs.js",
+  "module": "./dist/easylibs.js",
+  "unpkg": "./dist/easylibs.global.min.js",
+  "jsdelivr": "./dist/easylibs.global.min.js",
   "exports": {
     "./package.json": "./package.json",
-    "./dist/index.cjs": "./dist/index.cjs",
-    "./dist/index.js": "./dist/index.js",
+    "./dist/easylibs.cjs": "./dist/easylibs.cjs",
+    "./dist/easylibs.js": "./dist/easylibs.js",
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "types": "./dist/easylibs.d.ts",
+      "require": "./dist/easylibs.cjs",
+      "import": "./dist/easylibs.js"
     }
   }
 }

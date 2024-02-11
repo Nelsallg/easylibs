@@ -13,9 +13,9 @@ declare interface FetchRequestOptions {
     responseType?: 'json' | 'text';
 }
 declare interface FetchRequestCallbacks {
-    onPostFetch?: (response?: Record<string, any> | string, status?: number) => any;
+    onPostFetch?: (response?: any, status?: number) => any;
     onPreFetch?: (data?: any) => any;
-    onSuccess?: (response: Record<string, any> | string) => void;
+    onSuccess?: (response: any) => void;
     onError?: (error: Error, status: number) => void;
 }
 declare type FetchRequestType = {
