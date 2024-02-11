@@ -8,10 +8,10 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "@easylibs/fetch-request": "~0.0.9",
-    "@easylibs/progress-form": "~0.0.1",
-    "@easylibs/utils": "~0.0.9",
-    "@easylibs/flash": "~0.0.1"
+    "@easylibs/fetch-request": "*",
+    "@easylibs/progress-form": "*",
+    "@easylibs/utils": "*",
+    "@easylibs/flash": "*"
   },
   "type": "module",
   "keywords": [
@@ -31,8 +31,8 @@
     "email": "nelsallg@contact.com",
     "url": "http://nelsallg.com/"
   },
-  "copyright": "2023 Easylibs",
-  "types": "./@types/easylibs.d.ts",
+  "copyright": "2024 Easylibs",
+  "types": "./easylibs.d.ts",
   "main": "./dist/easylibs.js",
   "module": "./dist/easylibs.js",
   "unpkg": "./dist/easylibs.global.min.js",
