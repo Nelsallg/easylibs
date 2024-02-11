@@ -24,9 +24,9 @@ dist-ssr
 *.sw?
 
 
-./dist
-./build
-./assets
+dist
+build
+assets
 doc.doc
 packages/animation
 packages/data-transformer

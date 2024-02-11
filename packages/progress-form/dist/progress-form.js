@@ -1512,9 +1512,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ ProgressForm)
 /* harmony export */ });
-/* harmony import */ var _scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scripts/focus-in-block */ "./src/scripts/focus-in-block.ts");
-/* harmony import */ var animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! animejs/lib/anime.es.js */ "../../node_modules/animejs/lib/anime.es.js");
-/* harmony import */ var _scripts_css_style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scripts/css-style */ "./src/scripts/css-style.ts");
+/* harmony import */ var animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! animejs/lib/anime.es.js */ "../../node_modules/animejs/lib/anime.es.js");
+/* harmony import */ var _scripts_css_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./scripts/css-style */ "./src/scripts/css-style.ts");
+/* harmony import */ var _scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./scripts/focus-in-block */ "./src/scripts/focus-in-block.ts");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
@@ -1526,24 +1526,41 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 var fieldSetElement = null;
+/**
+ * ProgressForm represents a class for managing a progressive form.
+ */
 var ProgressForm = /*#__PURE__*/function () {
+  /**
+   * @param enableDefaultCssStyle Determines whether the default CSS style should be enabled. Default is true.
+   */
   function ProgressForm() {
     var enableDefaultCssStyle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
     _classCallCheck(this, ProgressForm);
     _defineProperty(this, "fieldsetLength", 0);
     this.enableDefaultCssStyle = enableDefaultCssStyle;
   }
+  /**
+   * Defines the movement of each fieldset.
+   * @param params The parameters for setting translateX.
+   * @param fieldSet The fieldset element.
+  */
   _createClass(ProgressForm, [{
     key: "setTranslateX",
     value: function setTranslateX(params, fieldSet) {
       if (!fieldSet) return;
       this.translateX = params.translateX ? params.translateX : -fieldSet.offsetWidth;
     }
+    /**
+     * Executes the progressive form.
+     * @param params The parameters of the form.
+     * @param styleOptions Style options for the form.
+    */
   }, {
     key: "run",
     value: function run(params, styleOptions) {
       var _params$fieldsetMargi,
         _this = this;
+      this.params = params;
       this.hasValidHTMLStructure(params.form);
       var fieldSets = params.form.querySelectorAll('fieldset');
       this.setTranslateX(params, fieldSets[0]);
@@ -1575,7 +1592,7 @@ var ProgressForm = /*#__PURE__*/function () {
           _this.next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress);
           nextIndex++;
           if (i === 0) {
-            (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_0__.getFocusableElements)(fieldSetElement);
+            (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_2__.getFocusableElements)(fieldSetElement);
           }
           _this.prev(prevButton, prevIndex, prevTranslateX, progressElement, prevProgress);
           prevIndex--;
@@ -1585,9 +1602,17 @@ var ProgressForm = /*#__PURE__*/function () {
         progressElement.style.width = "".concat(progress, "%");
       }
       if (this.enableDefaultCssStyle) {
-        (0,_scripts_css_style__WEBPACK_IMPORTED_MODULE_2__.cssStyle)(params, fieldSets, this.translateX, this.fieldsetLength, this.fieldsetMarginWidth, styleOptions);
+        (0,_scripts_css_style__WEBPACK_IMPORTED_MODULE_1__.cssStyle)(params, fieldSets, this.translateX, this.fieldsetLength, this.fieldsetMarginWidth, styleOptions);
       }
     }
+    /**
+     * Handles the "next" button click event.
+     * @param nextButton The "next" button element.
+     * @param nextIndex The index of the next fieldset.
+     * @param nextTranslateX The translateX value for the next fieldset.
+     * @param progressElement The progress element.
+     * @param nextProgress The progress for the next fieldset.
+     */
   }, {
     key: "next",
     value: function next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress) {
@@ -1597,14 +1622,15 @@ var ProgressForm = /*#__PURE__*/function () {
         nextButton.addEventListener("click", function (e) {
           e.preventDefault();
           var fieldSet = document.querySelector(".fieldset".concat(nextIndex - 1));
-          var hasValidHTMLStructure = _this2.isValidFieldset(fieldSet);
-          if (hasValidHTMLStructure) {
+          var isValidFieldset = _this2.isValidFieldset(fieldSet);
+          if (_this2.params.onPreNext) _this2.params.onPreNext(isValidFieldset);
+          if (isValidFieldset) {
             fieldSetElement = document.querySelector(".fieldset".concat(nextIndex));
             if (fieldSetElement) {
               _this2.compartmentalizeFocusInFieldset(fieldSetElement);
-              (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_0__.getFocusableElements)(fieldSetElement);
+              (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_2__.getFocusableElements)(fieldSetElement);
             }
-            (0,animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+            (0,animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
               targets: targets,
               translateX: nextTranslateX,
               easing: 'easeInOutExpo'
@@ -1612,10 +1638,19 @@ var ProgressForm = /*#__PURE__*/function () {
             if (progressElement) {
               progressElement.style.width = "".concat(nextProgress !== null && nextProgress !== void 0 ? nextProgress : 0, "%");
             }
+            if (_this2.params.onPostNext) _this2.params.onPostNext();
           }
         });
       }
     }
+    /**
+     * Handles the "previous" button click event.
+     * @param prevButton The "previous" button element.
+     * @param prevIndex The index of the previous fieldset.
+     * @param prevTranslateX The translateX value for the previous fieldset.
+     * @param progressElement The progress element.
+     * @param prevProgress The progress for the previous fieldset.
+    */
   }, {
     key: "prev",
     value: function prev(prevButton, prevIndex, prevTranslateX, progressElement, prevProgress) {
@@ -1627,9 +1662,9 @@ var ProgressForm = /*#__PURE__*/function () {
           fieldSetElement = document.querySelector(".fieldset".concat(prevIndex));
           if (fieldSetElement) {
             _this3.compartmentalizeFocusInFieldset(fieldSetElement);
-            (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_0__.getFocusableElements)(fieldSetElement);
+            (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_2__.getFocusableElements)(fieldSetElement);
           }
-          (0,animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+          (0,animejs_lib_anime_es_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
             targets: targets,
             translateX: prevTranslateX,
             easing: 'easeInOutExpo'
@@ -1640,20 +1675,33 @@ var ProgressForm = /*#__PURE__*/function () {
         });
       }
     }
+    /**
+     * Calculates the progress percentage of the form.
+     * @returns The progress percentage.
+    */
   }, {
     key: "progress",
     get: function get() {
       return 100 / this.fieldsetLength;
     }
+    /**
+     * Compartmentalizes focus within a fieldset.
+     * @param fieldSet The fieldset to compartmentalize focus within.
+    */
   }, {
     key: "compartmentalizeFocusInFieldset",
     value: function compartmentalizeFocusInFieldset(fieldSet) {
       window.addEventListener('keydown', function (e) {
         if (e.key === 'Tab' && fieldSet !== null) {
-          (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_0__.focusInBlock)(e, fieldSet);
+          (0,_scripts_focus_in_block__WEBPACK_IMPORTED_MODULE_2__.focusInBlock)(e, fieldSet);
         }
       });
     }
+    /**
+     * Checks if a fieldset is valid.
+     * @param fieldSet The fieldset to validate.
+     * @returns true if the fieldset is valid, otherwise false.
+    */
   }, {
     key: "isValidFieldset",
     value: function isValidFieldset(fieldSet) {
@@ -1671,6 +1719,10 @@ var ProgressForm = /*#__PURE__*/function () {
       }
       return true;
     }
+    /**
+     * Generates an array of target selectors for fieldsets.
+     * @returns An array of target selectors.
+     */
   }, {
     key: "fieldsetTargetArray",
     get: function get() {
@@ -1682,6 +1734,11 @@ var ProgressForm = /*#__PURE__*/function () {
       }
       return fieldsetTargetArray;
     }
+    /**
+     * Checks if the HTML structure of the form is valid.
+     * @param form The form to validate.
+     * @throws Error if the HTML structure is not valid.
+     */
   }, {
     key: "hasValidHTMLStructure",
     value: function hasValidHTMLStructure(form) {
@@ -1704,10 +1761,10 @@ var ProgressForm = /*#__PURE__*/function () {
         var next_buttons = form.querySelectorAll("[__next__]");
         var prev_buttons = form.querySelectorAll("[__prev__]");
         if (!next_buttons) {
-          throw new Error('Aucun bouton "suivant" trouvé !');
+          throw new Error('No "next" button found!');
         }
         if (!prev_buttons) {
-          throw new Error("Aucun bouton 'précédent' trouvé !");
+          throw new Error("No 'previous' button found!");
         }
       } catch (error) {
         throw error;
