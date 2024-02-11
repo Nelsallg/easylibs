@@ -1,4 +1,4 @@
-import {Easylibs} from "../packages/easylibs";
+import {Easylibs} from "easylibs";
 
 const progress = new Easylibs.ProgressForm();
 const form = document.getElementById('progress-form') as HTMLFormElement;

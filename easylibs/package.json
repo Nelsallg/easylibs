@@ -5,7 +5,12 @@
   "description": "",
   "homepage": "https://github.com/Nelsallg/easylibs",
   "scripts": {
-    "build": "webpack --config webpack.config.js"
+    "babel": "babel assets/app.js --out-file public/script/app.js",
+    "dev": "webpack --config webpack.config.js --mode=development",
+    "build": "webpack --config webpack.config.js --mode=production",
+    "test": "node ./__tests__/fetch-request.test.js",
+    "tsc": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@easylibs/fetch-request": "*",
@@ -13,7 +18,7 @@
     "@easylibs/utils": "*",
     "@easylibs/flash": "*"
   },
-  "type": "module",
+  "type": "commonjs",
   "keywords": [
     "request fetch",
     "flash",
@@ -32,7 +37,7 @@
     "url": "http://nelsallg.com/"
   },
   "copyright": "2024 Easylibs",
-  "types": "./easylibs.d.ts",
+  "types": "./dist/@types/easylibs.d.ts",
   "main": "./dist/easylibs.js",
   "module": "./dist/easylibs.js",
   "unpkg": "./dist/easylibs.global.min.js",
@@ -42,9 +47,21 @@
     "./dist/easylibs.cjs": "./dist/easylibs.cjs",
     "./dist/easylibs.js": "./dist/easylibs.js",
     ".": {
-      "types": "./dist/easylibs.d.ts",
+      "types": "./dist/@types/easylibs.d.ts",
       "require": "./dist/easylibs.cjs",
       "import": "./dist/easylibs.js"
     }
+  },
+  "directories": {
+    "test": "__tests__",
+    "dist": "dist"
+  },
+  "files": [
+    "./dist",
+    "./__tests__"
+  ],
+  "sideEffect": false,
+  "publishConfig": {
+    "access": "public"
   }
 }
