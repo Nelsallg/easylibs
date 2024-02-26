@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const isGlobal = process.argv.includes('--global');
 const isProduction = process.argv.includes('--mode=production');
-console.log({isProduction});
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
