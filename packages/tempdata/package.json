@@ -20,10 +20,8 @@
     "babel": "babel assets/app.js --out-file public/script/app.js",
     "dev": "webpack --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js --mode=production",
-    "test": "node ./__tests__/tempdata.cy.js",
-    "tsc": "tsc",
-    "generate-declarations": "tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build && npm run generate-declarations"
+    "test": "node ./__tests__/fetch-request.test.js",
+    "tsc": "tsc"
   },
   "directories": {
     "test": "__tests__",
