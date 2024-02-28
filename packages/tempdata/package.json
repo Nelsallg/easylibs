@@ -1,14 +1,14 @@
 {
   "name": "@easylibs/tempdata",
-  "version": "1.0.2",
+  "version": "1.1.4",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
     "email": "nelsallg@contact.com",
-    "url": "http://easylibs.com/"
+    "url": "https://easylibs.com/"
   },
   "homepage": "https://github.com/Nelsallg/easylibs/tree/1.0.0/packages/tempdata",
-  "license": "ISC",
+  "license": "MIT",
   "main": "dist/tempdata.js",
   "types": "dist/@types/tempdata.d.ts",
   "type": "commonjs",
@@ -20,7 +20,7 @@
     "babel": "babel assets/app.js --out-file public/script/app.js",
     "dev": "webpack --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js --mode=production",
-    "test": "node ./__tests__/fetch-request.test.js",
+    "test": "node ./__tests__/temdata.cy.js",
     "tsc": "tsc"
   },
   "directories": {
