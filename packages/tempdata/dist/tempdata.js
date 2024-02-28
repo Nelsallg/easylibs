@@ -1,0 +1,475 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const helpers_1 = require("./scripts/helpers");
+const transformer_1 = require("./scripts/transformer");
+class TempData {
+    /**
+     * @param dbname - The name of the IndexedDB database to open or create.
+     * @param osname - The name of the object (object store) which will contain the elements to be stored
+     * @param version - The version of the IndexedDB database (default: 1).
+     */
+    constructor(dbname, osname, version = 1) {
+        this.dbname = dbname;
+        this.osname = osname;
+        this.version = version;
+    }
+    /**
+     * Adds a new element or elements to the IDBObjectStore with the provided object or array of objects.
+     * @param data - Data (a single object or an array of objects) to add to the IDBObjectStore.
+     * @returns A promise that resolves to an object indicating the success of the operation.
+     */
+    add(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return this._getObjectStore("readwrite").then((objectStore) => {
+                    const handleData = (item) => {
+                        const request = objectStore.add(item);
+                        return new Promise((resolve, reject) => {
+                            request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
+                                if (event.target) {
+                                    const elementId = event.target.result;
+                                    let elementObject = item;
+                                    elementObject["@id"] = elementId;
+                                    objectStore.put(elementObject, elementId);
+                                    resolve({ success: true, elementObject });
+                                }
+                            });
+                            request.onerror = (event) => {
+                                reject(new Error("Failed to add file to IndexedDB: " + event.target.error));
+                            };
+                        });
+                    };
+                    if (Array.isArray(data)) {
+                        return Promise.all(data.map((item) => handleData(item)))
+                            .then((results) => ({ success: true, elements: results }))
+                            .catch((error) => ({ success: false, error: error.message }));
+                    }
+                    else {
+                        return handleData(data);
+                    }
+                });
+            }
+            catch (error) {
+                console.error("Error accessing IndexedDB", error);
+                return { success: false };
+            }
+        });
+    }
+    /**
+     * Retrieves the form data at the specified index from the array of object data obtained from `getIndexedData`.
+     * @param i - The index of the form data to retrieve.
+     * @returns A promise that resolves to the form data at the specified index, or `undefined` if the index is out of range.
+     */
+    readOne(i, type) {
+        try {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                const objectStore = yield this._getObjectStore("readonly");
+                const request = objectStore.get(i);
+                request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
+                    const result = event.target.result;
+                    if (result) {
+                        const transformer = type === "form-data" ? new transformer_1.FormDataTransformer(result) : result;
+                        resolve(type === "form-data" ? transformer.transform() : transformer);
+                    }
+                    else {
+                        resolve(undefined); // Key not found
+                    }
+                });
+                request.onerror = (event) => {
+                    reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                };
+            }));
+        }
+        catch (error) {
+            console.error("Error accessing IndexedDB", error);
+            return undefined;
+        }
+    }
+    /**
+     * Finds the first record that matches the provided criteria.
+     * @param criteria - An object representing the key-value pairs to match against the records.
+     * @param type - Optional parameter to specify the return type: "form-data" or "record".
+     * @returns A promise that resolves to the first matching record or `undefined` if no match is found.
+     */
+    readOneBy(criteria, type) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const objectStore = yield this._getObjectStore("readonly");
+                const request = objectStore.getAll();
+                return new Promise((resolve, reject) => {
+                    request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
+                        const results = event.target.result;
+                        const matchedResult = results.find((item) => {
+                            return Object.keys(criteria).every((key) => criteria[key] === item[key]);
+                        });
+                        if (matchedResult) {
+                            const transformer = type === "form-data"
+                                ? new transformer_1.FormDataTransformer(matchedResult)
+                                : matchedResult;
+                            resolve(type === "form-data" ? transformer.transform() : transformer);
+                        }
+                        else {
+                            resolve(undefined); // No match found
+                        }
+                    });
+                    request.onerror = (event) => {
+                        reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                    };
+                });
+            }
+            catch (error) {
+                console.error("Error accessing IndexedDB", error);
+                return undefined;
+            }
+        });
+    }
+    /**
+     * Retrieves all elements from the IDBObjectStore and returns them as an array.
+     * @returns A promise that resolves to an array containing all the elements from the IDBObjectStore.
+     */
+    read() {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            const objectStore = yield this._getObjectStore("readonly");
+            const elements = [];
+            const request = objectStore.openCursor();
+            request.onerror = (event) => {
+                reject("Failed to read indexed data: " + event.target.error);
+            };
+            request.onsuccess = (event) => {
+                const cursor = event.target.result;
+                if (cursor) {
+                    elements.push(cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    resolve(elements);
+                }
+            };
+        }));
+    }
+    /**
+     * Retrieves all elements that match the specified criteria from the IDBObjectStore.
+     * @param criteria - An object representing the key-value pairs that the elements must match.
+     * @returns A promise that resolves to an array containing all matching elements from the IDBObjectStore.
+     */
+    readBy(criteria) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            const objectStore = yield this._getObjectStore("readonly");
+            const elements = [];
+            const request = objectStore.openCursor();
+            request.onerror = (event) => {
+                reject(new Error("Erreur lors de la récupération des éléments: " + event.target.error));
+            };
+            request.onsuccess = (event) => {
+                const cursor = event.target.result;
+                if (cursor) {
+                    if ((0, helpers_1.matchesCriteria)(cursor.value, criteria)) {
+                        elements.push(cursor.value);
+                    }
+                    cursor.continue();
+                }
+                else {
+                    resolve(elements);
+                }
+            };
+        }));
+    }
+    /**
+     * Updates an element in the database.
+     * @param id - The numeric ID of the element to be updated.
+     * @param data - The new data to be merged with the existing data.
+     * @returns A promise that resolves to a boolean indicating whether the update was successful (true) or the ID was not found (false).
+     */
+    update(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const objectStore = yield this._getObjectStore("readwrite");
+                const request = objectStore.get(id);
+                return new Promise((resolve, reject) => {
+                    request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
+                        const existingData = event.target.result;
+                        if (existingData) {
+                            const updatedData = Object.assign(Object.assign({}, existingData), data);
+                            const updateRequest = objectStore.put(updatedData, id);
+                            updateRequest.onsuccess = () => {
+                                resolve(true);
+                            };
+                            updateRequest.onerror = (error) => {
+                                var _a;
+                                reject(new Error("Failed to update data in IndexedDB: " + ((_a = error.target) === null || _a === void 0 ? void 0 : _a.error)));
+                            };
+                        }
+                        else {
+                            resolve(false);
+                        }
+                    });
+                    request.onerror = (event) => {
+                        reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                    };
+                });
+            }
+            catch (error) {
+                console.error("Error accessing IndexedDB", error);
+                return false;
+            }
+        });
+    }
+    /**
+     * Deletes the object from the IDBObjectStore.
+     * @param id - The ID of the object to delete.
+     */
+    deleteOne(id, refactoringShortKeyString) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const objectStore = yield this._getObjectStore("readwrite");
+                    const request = objectStore.delete(id);
+                    request.onsuccess = () => __awaiter(this, void 0, void 0, function* () {
+                        if (refactoringShortKeyString) {
+                            yield this.refactorIndexes(refactoringShortKeyString);
+                        }
+                        resolve(true);
+                    });
+                    request.onerror = (event) => {
+                        console.error(`Error removing file with id:${id}`, event);
+                        reject(false);
+                    };
+                }
+                catch (error) {
+                    console.error(`Error removing file with id:${id}: ${error}`);
+                    reject(false);
+                }
+            }));
+        });
+    }
+    /**
+     * Deletes the specified object store from the IndexedDB database.
+     * @returns A promise that resolves if the object store is successfully deleted, or rejects with an error if any error occurs during the operation.
+     */
+    deleteOS() {
+        return new Promise((resolve, reject) => {
+            const request = window.indexedDB.open(this.dbname, this.version);
+            request.onerror = () => {
+                console.error("Failed to open database.");
+                resolve(false);
+            };
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (db.objectStoreNames.contains(this.osname)) {
+                    try {
+                        db.deleteObjectStore(this.osname);
+                    }
+                    catch (error) {
+                        console.error(`Failed to delete ObjectStore ${this.osname}: ${error}`);
+                        resolve(false);
+                    }
+                }
+                else {
+                    console.log(`ObjectStore ${this.osname} does not exist.`);
+                    resolve(true);
+                }
+            };
+            request.onsuccess = () => {
+                resolve(true);
+            };
+        });
+    }
+    /**
+     * Clears the entire IndexedDB database by deleting the database.
+     */
+    deleteAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.openDB();
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.deleteDatabase(this.dbname);
+                    request.onsuccess = () => resolve(true);
+                    request.onerror = () => resolve(false);
+                });
+            }
+            catch (error) {
+                console.error(`Error deleting database ${this.dbname}: ${error}`);
+                return false;
+            }
+        });
+    }
+    /**
+     * Opens or creates a new IndexedDB database with the specified name and version.
+     * @returns A promise that resolves to the opened or created IDBDatabase object.
+     */
+    openDB() {
+        return new Promise((resolve, reject) => {
+            const request = window.indexedDB.open(this.dbname, this.version);
+            request.onerror = (event) => {
+                const { target } = event;
+                console.error("Failed to open database", target === null || target === void 0 ? void 0 : target.error);
+                reject(target === null || target === void 0 ? void 0 : target.error);
+            };
+            request.onsuccess = (event) => {
+                var _a;
+                const db = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
+                resolve(db);
+            };
+            request.onupgradeneeded = (event) => {
+                var _a;
+                const db = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
+                db.createObjectStore(this.osname, { autoIncrement: true });
+            };
+        });
+    }
+    /**
+     * Checks if database is empty.
+     * @returns A promise that resolves to `true` if database is empty, and `false` otherwise.
+     */
+    _isEmpty() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const objectStore = yield this._getObjectStore("readonly");
+            const countRequest = objectStore.count();
+            return new Promise((resolve, reject) => {
+                countRequest.onsuccess = () => {
+                    resolve(countRequest.result === 0);
+                };
+                countRequest.onerror = () => {
+                    reject(new Error("Failed to count items in IndexedDB"));
+                };
+            });
+        });
+    }
+    /**
+     * Retrieves the length of the object store.
+     * @returns A promise that resolves with the length of the object store.
+     */
+    _length() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const objectStore = yield this._getObjectStore("readonly");
+            const countRequest = objectStore.count();
+            return new Promise((resolve, reject) => {
+                countRequest.onsuccess = (e) => {
+                    resolve(countRequest.result);
+                };
+                countRequest.onerror = (err) => {
+                    reject(console.error("Error", err));
+                };
+            });
+        });
+    }
+    /**
+     * Retrieves the IDBObjectStore with the specified access mode from the opened database.
+     * @param access - The access mode for the transaction.
+     * @returns A promise that resolves to the IDBObjectStore with the specified access mode.
+     */
+    _getObjectStore(access) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const db = yield this.openDB();
+            const transaction = db.transaction([this.osname], access);
+            return transaction.objectStore(this.osname);
+        });
+    }
+    /**
+     * Refactors the indexes of the indexed data.
+     * @param refactoringShortKeyString - The string to be used for refactoring the indexes.
+     */
+    refactorIndexes(refactoringShortKeyString) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const objectData = yield this.read();
+            const isEmpty = yield this._isEmpty();
+            let updatedObjectArray = [];
+            if (isEmpty) {
+                return null;
+            }
+            objectData.forEach((object, i) => __awaiter(this, void 0, void 0, function* () {
+                const updatedObject = this.processObject(object, i, objectData.length, refactoringShortKeyString);
+                updatedObjectArray.push(updatedObject);
+            }));
+            this.refactor(updatedObjectArray);
+        });
+    }
+    /**
+     * Replaces the indexed data in the object store.
+     * This method opens the indexedDB, clears the existing data in the object store, and adds the new data from the provided array.
+     * @param object - The array of data to replace the indexed data with.
+     */
+    refactor(object) {
+        const openDBRequest = indexedDB.open(this.dbname, this.version);
+        openDBRequest.onsuccess = (event) => {
+            const IBDB = event.target.result;
+            const result = IBDB;
+            const transaction = result.transaction([this.osname], "readwrite");
+            const objetsStore = transaction.objectStore(this.osname);
+            const clear = objetsStore.clear();
+            clear.onsuccess = function () {
+                object.forEach(function (data) {
+                    const addRequest = objetsStore.add(data);
+                    addRequest.onsuccess = (event) => {
+                        if (event.target) {
+                            const elementId = event.target.result;
+                            let elementObject = data;
+                            elementObject[`@id`] = elementId;
+                            objetsStore.put(elementObject, elementId);
+                        }
+                    };
+                });
+            };
+            clear.onerror = function (event) {
+                console.error("Error deleting existing data :", event.target.error);
+            };
+        };
+        openDBRequest.onerror = function (event) {
+            console.error("Error opening database :", event.target.error);
+        };
+    }
+    /**
+     * Processes an object to update its keys.
+     * @param object - The object to be processed.
+     * @param i - The index value used for updating the keys.
+     * @param length - The length of the object.
+     * @param refactoringShortKeyString - The string used for splitting the keys.
+     * @returns The processed object with updated keys.
+     */
+    processObject(object, i, length, refactoringShortKeyString) {
+        const newObject = {};
+        let base64String, id, _token, tokenKey;
+        for (const key in object) {
+            if (Object.prototype.hasOwnProperty.call(object, key)) {
+                const keyParts = refactoringShortKeyString
+                    ? key.split(refactoringShortKeyString)
+                    : null;
+                const keyPart = keyParts ? keyParts[1] : null;
+                _token = (0, helpers_1.hasKeyWithNameSubstring)(object, "token");
+                if (null !== _token) {
+                    tokenKey = (0, helpers_1.hasKeyWithNameSubstring)(object, "token", true);
+                }
+                if ("@base64String" === key) {
+                    base64String = object[key];
+                }
+                if ("@id" === key) {
+                    id = parseInt(object[key]);
+                }
+                if (keyPart) {
+                    const findchar = (0, helpers_1.findChar)(keyPart, length);
+                    const char = findchar !== null && findchar !== void 0 ? findchar : "0";
+                    const newKeyPart = keyPart.replace(`[${char}]`, `[${i.toString()}]`);
+                    const newKey = `${keyParts[0]}${refactoringShortKeyString}${newKeyPart}`;
+                    newObject[newKey] = object[key];
+                }
+            }
+        }
+        if (base64String)
+            newObject["@base64String"] = base64String;
+        newObject["@id"] = id;
+        if (_token)
+            newObject[`${tokenKey}`] = _token;
+        return newObject;
+    }
+}
+exports.default = TempData;
+//# sourceMappingURL=tempdata.js.map

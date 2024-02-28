@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/tempdata",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -21,7 +21,8 @@
     "dev": "webpack --config webpack.config.js --mode=development",
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "node ./__tests__/temdata.cy.js",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "tsc.d": "tsc --declaration --emitDeclarationOnly"
   },
   "directories": {
     "test": "__tests__",
