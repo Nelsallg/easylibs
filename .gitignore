@@ -27,7 +27,6 @@ dist-ssr
 build
 assets
 doc.doc
-packages/animation
 packages/data-transformer
 packages/dom
 packages/dragdrop

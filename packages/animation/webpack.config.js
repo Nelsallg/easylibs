@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -7,10 +8,23 @@ const CopyPlugin = require('copy-webpack-plugin');
 const isGlobal = process.argv.includes('--global');
 const isProduction = process.argv.includes('--mode=production');
 
-module.exports = {
+const assetsDir = path.resolve(__dirname, 'src/assets');
+
+// Utiliser glob pour trouver des fichiers éligibles à la copie
+const eligibleFiles = glob.sync(`${assetsDir}/**`, {
+  ignore: [
+    "**/*.js",
+    "**/*.css",
+    "**/*.scss",
+    "**/*.svg"
+  ],
+  nodir: true, // Exclure les répertoires
+});
+
+let webpackConfig = {
   mode: isProduction ? 'production' : 'development',
   entry: {
-    'flash': './src/flash.ts'
+    'animation': './src/animation.ts'
   },
   output: {
     filename: isProduction ? '[name].min.js' : (isGlobal ? '[name].global.js' : '[name].js'),
@@ -69,30 +83,31 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: './assets/styles/flash.css',
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, 'src/assets/icons'), to: path.resolve(__dirname, 'dist/assets/icons') },
-        // Ajouter un nouveau pattern pour les fichiers audio
-        { from: path.resolve(__dirname, 'src/assets'), to: path.resolve(__dirname, 'dist/assets'), globOptions: { ignore: ["**/*.js", "**/*.css", "**/*.scss", "**/*.svg"] } },
-      ],
-    }),
+      filename: isProduction ? './assets/styles/animation.min.css' : './assets/styles/animation.css',
+    })
   ],
 };
 
+// Ajouter conditionnellement des plugins et des configurations supplémentaires en mode production
 if (isProduction) {
-  module.exports.plugins.push(
-    // Générer le fichier CSS minifié en plus
-    new MiniCssExtractPlugin({
-      filename: './assets/styles/flash.min.css',
-    })
-  );
-
-  module.exports.optimization.minimizer.push(
+  webpackConfig.optimization.minimizer.push(
     // Plugin pour minifier le CSS
     new CssMinimizerPlugin({
       test: /\.min\.css$/
     })
   );
+
+  if (eligibleFiles.length > 0) {
+    webpackConfig.plugins.push(
+      new CopyPlugin({
+        patterns: eligibleFiles.map(file => ({
+          from: file,
+          to: path.resolve(__dirname, 'dist/assets', path.relative(assetsDir, file))
+        })),
+      })
+    );
+  }
 }
+
+// Exportation de la configuration webpack
+module.exports = webpackConfig;
