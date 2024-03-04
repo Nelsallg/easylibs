@@ -27,11 +27,9 @@ dist-ssr
 build
 assets
 doc.doc
-packages/data-transformer
 packages/dom
 packages/fetch
 packages/fieldest
 packages/file-uploader
 packages/form-input
-packages/transformer
 

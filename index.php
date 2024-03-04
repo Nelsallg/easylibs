@@ -4,23 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./src/scss/style.css">
     <style>
         body{
             background-color: #F2F3F5;
             box-sizing: border-box;
             padding:0;
             margin: 0;
-        }
-        fieldset{
-            background-color: #fff;
-        }
-        .flash-box{
-          width:200px;
-          background-color: #FFFFFF;
-          padding: 15px;
-          margin:15px;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.400);
-          border-radius: 3px;
         }
         /* .custom-flash-header {
             display: flex;
@@ -73,14 +63,18 @@
             <fieldset>
               <label for="name" required-field>Name:</label>
               <input type="text" id="name">
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
+              <div class="button-container">
+                <button type="button" __prev__>previous</button>
+                <button type="button" __next__>next</button>
+              </div>
             </fieldset>
             <fieldset>
               <label for="surname" required-field>Surname:</label>
               <input type="text" id="surname">
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
+              <div class="button-container">
+                <button type="button" __prev__>previous</button>
+                <button type="button" __next__>next</button>
+              </div>
             </fieldset>
             <fieldset>
               <label for="sex" required-field>Sex:</label>
@@ -88,20 +82,26 @@
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
+              <div class="button-container">
+                <button type="button" __prev__>previous</button>
+                <button type="button" __next__>next</button>
+              </div>
             </fieldset>
             <fieldset>
               <label for="email" required-field>Email:</label>
               <input type="email" id="email" name="email">
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
+              <div class="button-container">
+                <button type="button" __prev__>previous</button>
+                <button type="button" __next__>next</button>
+              </div>
             </fieldset>
             <fieldset>
               <label for="password" required-field>Password:</label>
               <input type="password" id="password"  name="password">
-              <button type="button" __prev__>previous</button>
-              <button type="button" id="submitter">submit</button>
+              <div class="button-container">
+                <button type="button" __prev__>previous</button>
+                <button type="button" id="submiter">submit</button>
+              </div>
             </fieldset>
           </div>
         </div>

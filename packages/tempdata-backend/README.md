@@ -1,17 +1,17 @@
-# ProcessBackend
+# TempDataBackend
 
-The `ProcessBackend` class is a JavaScript class that provides methods for persisting data to a server and saving form data to a server. It uses the `FetchRequest` and `ProcessIndexedDB` classes to perform these tasks.
+The `TempDataBackend` class is a JavaScript class that provides methods for persisting data to a server and saving form data to a server. It uses the `FetchRequest` and `TempData` classes to perform these tasks.
 
 ## Usage
 
-To use the `ProcessBackend` class, you first need to create an instance of the class. You can do this by passing in a `ProcessIndexedDB` instance and a URI to the constructor.
+To use the `TempDataBackend` class, you first need to create an instance of the class. You can do this by passing in a `TempData` instance and a URI to the constructor.
 
 ```typescript
-const database = new ProcessIndexedDB("my-database");
-const backend = new ProcessBackend(database, "https://example.com/api/data");
+const database = new TempData("my-database");
+const backend = new TempDataBackend(database, "https://example.com/api/data");
 ```
 
-Once you have created an instance of the `ProcessBackend` class, you can use the `persist()` method to persist data to the server. The `persist()` method takes two optional parameters: a redirect URL and a callback function. The redirect URL is the URL that the user will be redirected to after the data is persisted. The callback function is called after the data is persisted.
+Once you have created an instance of the `TempDataBackend` class, you can use the `persist()` method to persist data to the server. The `persist()` method takes two optional parameters: a redirect URL and a callback function. The redirect URL is the URL that the user will be redirected to after the data is persisted. The callback function is called after the data is persisted.
 
 ```typescript
 backend.persist("/success", (response) => {
@@ -39,6 +39,6 @@ backend.save({
 
 ## Implementation Details
 
-The `ProcessBackend` class uses the `FetchRequest` class to send data to the server. The `FetchRequest` class is a wrapper around the Fetch API that provides a number of helpful features, such as automatic JSON parsing and error handling.
+The `TempDataBackend` class uses the `FetchRequest` class to send data to the server. The `FetchRequest` class is a wrapper around the Fetch API that provides a number of helpful features, such as automatic JSON parsing and error handling.
 
-The `ProcessBackend` class also uses the `ProcessIndexedDB` class to store data in the browser's IndexedDB database. The `ProcessIndexedDB` class provides a number of methods for working with IndexedDB
+The `TempDataBackend` class also uses the `TempData` class to store data in the browser's IndexedDB database. The `TempData` class provides a number of methods for working with IndexedDB

@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const anime_es_js_1 = __importDefault(require("animejs/lib/anime.es.js"));
 const css_style_1 = require("./scripts/css-style");
 const focus_in_block_1 = require("./scripts/focus-in-block");
 let fieldSetElement = null;
@@ -103,10 +99,9 @@ class ProgressForm {
                         this.compartmentalizeFocusInFieldset(fieldSetElement);
                         (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                     }
-                    (0, anime_es_js_1.default)({
+                    (0, css_style_1.anime)({
                         targets: targets,
-                        translateX: nextTranslateX,
-                        easing: 'easeInOutExpo'
+                        translateX: nextTranslateX
                     });
                     if (progressElement) {
                         progressElement.style.width = `${nextProgress !== null && nextProgress !== void 0 ? nextProgress : 0}%`;
@@ -135,10 +130,9 @@ class ProgressForm {
                     this.compartmentalizeFocusInFieldset(fieldSetElement);
                     (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                 }
-                (0, anime_es_js_1.default)({
+                (0, css_style_1.anime)({
                     targets: targets,
-                    translateX: prevTranslateX,
-                    easing: 'easeInOutExpo'
+                    translateX: prevTranslateX
                 });
                 if (progressElement) {
                     progressElement.style.width = `${prevProgress !== null && prevProgress !== void 0 ? prevProgress : 0}%`;

@@ -5,9 +5,9 @@ export declare interface StyleOptions {
         boxSizing?: string;
     };
     fieldsetParent?: {
-        height: string;
-        overflow: string;
-        width: string;
+        height?: string;
+        overflow?: string;
+        width?: string;
     };
     fieldsetContainer?: {
         width?: string;

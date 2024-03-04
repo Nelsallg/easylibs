@@ -74,26 +74,6 @@ const request = new FetchRequest({
 * `submitter:` The HTML element that triggers the request.
 * `options:` An object containing the request options.
 * `callbacks:` An object containing callback functions for various stages of the request.
-
-|  Options                |                                     type                                  |
-|-------------------------|---------------------------------------------------------------------------|
-|  method                 |  `'GET' \| 'POST'`                                                        |
-|                         |                                                                           |
-|  headers                |  `Object`                                                                 |
-|                         |                                                                           |
-|  credentials            |  `"omit" \| "same-origin"`                                                |
-|                         |                                                                           |
-|  mode                   |  `"cors" \| "no-cors" \|"same-origin"`                                    |
-|                         |                                                                           |
-|  cache                  |  `"default" \| "reload" \  "no-cache" \|"force-cache" \| "only-if-cached"`|
-|                         |                                                                           |
-|  timeOut                |  `number`                                                                 |
-|                         |                                                                           |
-|  contentType            |  `string`                                                                 |
-|                         |                                                                           |
-|  acceptDataFormat       |   `"form-data" \| "classic-object" \| "array"`                            |
-|                         |                                                                           |
-
 * `onPreFetch`:  Function called before the request is sent. It can modify the data or perform other tasks.
 * Example:
 

@@ -222,31 +222,24 @@ class Utils {
      * to iterate through the matched labels and append the asterisk.
      */
     static setAsteriskToRequiredField() {
-        const setIcon = (svgString) => {
-            const asterisk = this.textToHTMLElement(svgString);
-            const labels = document.querySelectorAll("label[required-field]");
-            asterisk.style.color = "#f89a9b";
-            asterisk.style.width = "10px";
-            asterisk.style.height = "10px";
-            if (labels) {
-                this.processNodes(labels, (label) => {
-                    const clonedAsterisk = asterisk.cloneNode(true);
-                    label.appendChild(clonedAsterisk);
-                });
-            }
-        };
-        const cacheIcon = sessionStorage.getItem("asterisk");
-        if (cacheIcon)
-            return setIcon(cacheIcon);
-        const svgUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/utils/dist/assets/asterisk.svg";
-        fetch(svgUrl)
-            .then((response) => response.text())
-            .then((svgString) => {
-            setIcon(svgString);
-            sessionStorage.setItem("asterisk", svgString);
-        })
-            .catch((error) => {
-            console.error("Erreur lors du chargement du fichier SVG:", error);
+        const styleId = 'custom-asterisk-style';
+        if (!document.getElementById(styleId)) {
+            const style = document.createElement('style');
+            style.id = styleId;
+            document.head.appendChild(style);
+            style.sheet.insertRule(`
+          label[required-field]::after {
+            content: '*';
+            color: #f89a9b;
+            width: 10px;
+            height: 10px;
+          }
+        `, 0);
+        }
+        const labels = document.querySelectorAll("label[required-field]");
+        labels.forEach((label) => {
+            label.style.display = "flex";
+            label.style.alignItems = "center";
         });
     }
     /**
