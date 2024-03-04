@@ -147,10 +147,10 @@ class FetchRequest {
      */
     prepareRequestBody(data) {
         var _a, _b;
-        if (((_a = this.options.options) === null || _a === void 0 ? void 0 : _a.requestDataType) === "form-data" && !(data instanceof FormData)) {
+        if (((_a = this.options.options) === null || _a === void 0 ? void 0 : _a.requestDataConvert) === "form-data" && !(data instanceof FormData)) {
             return this.convertObjectToFormData(data);
         }
-        else if (((_b = this.options.options) === null || _b === void 0 ? void 0 : _b.requestDataType) === "record") {
+        else if (((_b = this.options.options) === null || _b === void 0 ? void 0 : _b.requestDataConvert) === "record") {
             return JSON.stringify(data);
         }
         return data;

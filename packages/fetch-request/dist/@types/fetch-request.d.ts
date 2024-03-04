@@ -20,7 +20,7 @@ declare interface FetchRequestOptions {
     integrity?: string;
     timeOut?: number;
     contentType?: string;
-    requestDataType?: "form-data" | "record" | "array";
+    requestDataConvert?: "form-data" | "record";
     responseDataType?: 'json' | 'text';
 }
 /**

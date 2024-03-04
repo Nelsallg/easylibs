@@ -2,6 +2,12 @@
 
 The `TempDataBackend` class is a JavaScript class that provides methods for persisting data to a server and saving form data to a server. It uses the `FetchRequest` and `TempData` classes to perform these tasks.
 
+![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
+![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
+![npm version](https://img.shields.io/npm/v/@easylibs/tempdata-backend.svg?style=flat)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/tempdata-backend)
+
 ## Usage
 
 To use the `TempDataBackend` class, you first need to create an instance of the class. You can do this by passing in a `TempData` instance and a URI to the constructor.

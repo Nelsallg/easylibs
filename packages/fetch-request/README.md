@@ -49,8 +49,8 @@ const request = new FetchRequest({
   submitter: document.getElementById('submit-button'),
   options: {
     method: 'POST',
-    responseType:"json",
-    acceptDataFormat:"form-data",
+    responseDataType:"json",
+    requestDataConvert:"form-data",
     callbacks:{
       onPreFetch(data){
         const newdata = {...data, surname:"MABIALA MABIALA"}

@@ -1,5 +1,11 @@
 # Transformer: A Comprehensive Data Transformation Library
 
+![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
+![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
+![npm version](https://img.shields.io/npm/v/@easylibs/transformer.svg?style=flat)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/transformer)
+
 ## Introduction
 
 The Transformer library provides a comprehensive set of tools for transforming data between various formats, including base64 strings, Uint8Arrays, Blobs, and File objects. It also includes a FormDataTransformer class for converting between FormData objects and JavaScript objects.
