@@ -1,18 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.applyAnimation = exports.getElement = void 0;
+const loader_1 = require("./loader");
 /**
    * Effectue une animation de commutation sur un élément HTML spécifié.
    * @param element - L'élément HTML sur lequel l'animation doit être appliquée.
    * @param fromInToOut - Détermine si l'animation va de l'état "in" (entrée) à l'état "out" (sortie) ou vice versa.
    * @param animation - Les informations sur le type et la position de l'animation (facultatif).
    */
-function switchAnimation(element, fromInToOut, animation) {
+function switchAnimation(element, fromInToOut, animCSSProps, clearAfterApplying) {
     var _a, _b;
-    if (animation !== undefined) {
-        const animeType = (_a = animation.type) !== null && _a !== void 0 ? _a : "fade";
-        const animePosition = (_b = animation.position) !== null && _b !== void 0 ? _b : "top";
-        const { clearAfterApplying } = animation;
+    if (animCSSProps) {
+        const animeType = (_a = animCSSProps.animationType) !== null && _a !== void 0 ? _a : "fade";
+        const animePosition = (_b = animCSSProps.animationPosition) !== null && _b !== void 0 ? _b : "top";
+        (0, loader_1.loadCSSAnimation)(animCSSProps); // Charge les animations CSS si ce n'est pas déjà fait.
         if (fromInToOut) {
             element.classList.remove(`${animeType}-out-${animePosition}`);
             element.classList.add(`${animeType}-in-${animePosition}`);
@@ -41,8 +42,8 @@ function getElement(options) {
     };
 }
 exports.getElement = getElement;
-function applyAnimation(element, animateElement, animation, fromInToOut, options) {
-    switchAnimation(animateElement !== null && animateElement !== void 0 ? animateElement : element, fromInToOut, animation);
+function applyAnimation(element, animateElement, fromInToOut, options, animCSSProps) {
+    switchAnimation(animateElement !== null && animateElement !== void 0 ? animateElement : element, fromInToOut, animCSSProps);
     if (options.display !== null) {
         setTimeout(() => {
             var _a;

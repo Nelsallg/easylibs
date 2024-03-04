@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const runner_1 = __importDefault(require("./scripts/runner"));
-require("./assets/styles/flash.css");
+require("./assets/scss/flash.scss");
 const utils_1 = __importDefault(require("@easylibs/utils"));
 class FormatParamsToObject {
     constructor(options) {

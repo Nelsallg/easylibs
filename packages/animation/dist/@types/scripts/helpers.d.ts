@@ -1,10 +1,6 @@
-import { AnimeOptions } from "./types";
+import { AnimeOptions, LoaderOptions } from "./types";
 export declare function getElement(options: AnimeOptions): {
     element: HTMLElement;
     animateElement?: HTMLElement;
 };
-export declare function applyAnimation(element: HTMLElement, animateElement: HTMLElement | undefined, animation: {
-    type: string;
-    position: string;
-    clearAfterApplying?: boolean;
-}, fromInToOut: boolean, options: AnimeOptions): void;
+export declare function applyAnimation(element: HTMLElement, animateElement: HTMLElement | undefined, fromInToOut: boolean, options: AnimeOptions, animCSSProps?: LoaderOptions): void;

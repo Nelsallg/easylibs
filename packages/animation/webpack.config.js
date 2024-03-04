@@ -15,7 +15,6 @@ const eligibleFiles = glob.sync(`${assetsDir}/**`, {
   ignore: [
     "**/*.js",
     "**/*.css",
-    "**/*.scss",
     "**/*.svg"
   ],
   nodir: true, // Exclure les répertoires
@@ -80,6 +79,9 @@ let webpackConfig = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    fallback: {
+      "path": require.resolve("path-browserify")
+    }
   },
   plugins: [
     new MiniCssExtractPlugin({

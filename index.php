@@ -65,9 +65,15 @@
   <form id="progress-form" method="post">
         <div fieldset__parent>
           <div fieldset__container>
+          <fieldset>
+              <label for="photo" required-field>Photo:</label>
+              <input type="file" id="photo" multiple="multiple">
+              <button type="button" __next__>next</button>
+            </fieldset>
             <fieldset>
               <label for="name" required-field>Name:</label>
               <input type="text" id="name">
+              <button type="button" __prev__>previous</button>
               <button type="button" __next__>next</button>
             </fieldset>
             <fieldset>
@@ -99,7 +105,7 @@
             </fieldset>
           </div>
         </div>
-      </form>!-->
+      </form>
     <script type="module" src="./build/bundle.js"></script>
 </body>
 </html>

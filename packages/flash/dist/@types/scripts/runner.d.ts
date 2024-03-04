@@ -38,6 +38,7 @@ export default class Runner {
      * Méthode pour gérer la fermeture automatique de la modal.
      */
     private autoClose;
+    private animProps;
     /**
      * Méthode interne pour nettoyer les attributs de la modal.
      * @param modal L'élément modal à nettoyer.

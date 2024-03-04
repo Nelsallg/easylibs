@@ -29,17 +29,9 @@ assets
 doc.doc
 packages/data-transformer
 packages/dom
-packages/dragdrop
-packages/dragndrop
 packages/fetch
 packages/fieldest
 packages/file-uploader
-packages/form
 packages/form-input
-packages/image
-packages/modal
-packages/pagination
-packages/process-backend
-packages/scroll-behavior
 packages/transformer
 

@@ -21,7 +21,7 @@ export declare class BlobTransformer {
     fromBase64String(base64String: string, contentType?: string): Blob;
 }
 export declare class FormDataTransformer {
-    private _data;
+    private data;
     constructor(data: object | FormData);
     /**
      * Transforme les données en un objet FormData.

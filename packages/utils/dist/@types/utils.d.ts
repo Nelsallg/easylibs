@@ -133,5 +133,11 @@ export default class Utils {
      * @returns A string representing the attributes.
      */
     static formatHTMLAttributes(attributes: any): string;
+    /**
+     * Cette fonction redimensionne automatiquement un élément "select"
+     * en fonction de la longueur du texte sélectionné
+     * @param select
+    */
+    static autoResizeSelect(select: string | HTMLSelectElement): void;
 }
 export {};

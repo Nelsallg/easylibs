@@ -6,11 +6,6 @@ export declare type AnimeOptions = {
         animateElement: HTMLElement;
     };
     display?: string | null;
-    animation?: {
-        type: string;
-        position: string;
-        clearAfterApplying?: boolean;
-    };
     closeButton?: HTMLElement;
     dispatchCloseEvent?: {
         key?: any;
@@ -18,4 +13,10 @@ export declare type AnimeOptions = {
     };
     delay?: number;
     fromInToOut?: boolean;
+};
+export declare type LoaderOptions = {
+    animationType: string;
+    animationPosition: "top" | "right" | "bottom" | "left" | "corner-left-top" | "corner-right-top" | "corner-right-bottom" | "corner-left-bottom" | string;
+    animationEnter?: "in" | "out" | string;
+    animCSSProps?: Record<string, any>;
 };

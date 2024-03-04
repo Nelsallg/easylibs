@@ -24,11 +24,10 @@ class Runner {
             modal.setAttribute('aria-hidden', 'true');
             animation.animeOut({
                 element: modal,
-                animation: this.animation,
                 display: undefined,
                 delay: 350,
                 closeButton: this.closeButton
-            });
+            }, this.animProps("out"));
         };
         /**
          * Méthode pour gérer la fermeture automatique de la modal.
@@ -64,7 +63,7 @@ class Runner {
         }
         const animation = new animation_1.default();
         const modal = this.modal;
-        animation.animeIn({ element: modal, animation: this.animation, display: 'flex' });
+        animation.animeIn({ element: modal, display: 'flex' }, this.animProps("in"));
         const container = this.container;
         const existingFlash = document.querySelector('flash');
         if (existingFlash)
@@ -83,6 +82,13 @@ class Runner {
             this.closeButton = modal.querySelector('[_close_]');
         }
         (_a = this.closeButton) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.close);
+    }
+    animProps(enter) {
+        return {
+            animationType: this.animation.type,
+            animationPosition: this.animation.position,
+            animationEnter: enter
+        };
     }
     /**
      * Méthode interne pour nettoyer les attributs de la modal.

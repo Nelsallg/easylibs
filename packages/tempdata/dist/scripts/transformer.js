@@ -40,7 +40,7 @@ class BlobTransformer {
 exports.BlobTransformer = BlobTransformer;
 class FormDataTransformer {
     constructor(data) {
-        this._data = data;
+        this.data = data;
     }
     /**
      * Transforme les données en un objet FormData.
@@ -48,11 +48,11 @@ class FormDataTransformer {
      */
     transform() {
         const formData = new FormData();
-        if (typeof this._data === "object") {
-            let data = this._data;
+        if (typeof this.data === "object") {
+            let data = this.data;
             try {
-                for (const key in this._data) {
-                    if (this._data.hasOwnProperty(key)) {
+                for (const key in this.data) {
+                    if (this.data.hasOwnProperty(key)) {
                         formData.append(key, data[key]);
                     }
                 }
