@@ -37,21 +37,21 @@ The `BlobTransformer` interface provides methods for converting Uint8Arrays, Fil
 To convert a Uint8Array to a Blob, use the `fromUint8Array()` method:
 
 ```typescript
-const blobTransformer = new BlobTransformer();
+const blobTransformer = new Transformer.BlobTransformer();
 const blob = blobTransformer.fromUint8Array(uint8Array);
 ```
 
 To convert a File to a Blob, use the `fromFile()` method:
 
 ```typescript
-const blobTransformer = new BlobTransformer();
+const blobTransformer = new Transformer.BlobTransformer();
 const blob = blobTransformer.fromFile(file);
 ```
 
 To convert a base64 string to a Blob, use the `fromBase64String()` method:
 
 ```typescript
-const blobTransformer = new BlobTransformer();
+const blobTransformer = new Transformer.BlobTransformer();
 const blob = blobTransformer.fromBase64String(base64String);
 ```
 
@@ -62,14 +62,14 @@ The `FormDataTransformer` interface provides methods for transforming data into 
 To transform data into a FormData object, use the `transform()` method:
 
 ```typescript
-const formDataTransformer = new FormDataTransformer();
+const formDataTransformer = new Transformer.FormDataTransformer();
 const formData = formDataTransformer.transform();
 ```
 
 To revert a FormData object into a JavaScript object, use the `reverse()` method:
 
 ```typescript
-const formDataTransformer = new FormDataTransformer();
+const formDataTransformer = new Transformer.FormDataTransformer();
 const object = formDataTransformer.reverse();
 ```
 
