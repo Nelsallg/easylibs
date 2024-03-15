@@ -28,7 +28,7 @@ export default class TempDataBackend {
      */
     save(data: {
         submiter: HTMLElement;
-        callback: Function;
+        callback?: Function;
         redirectUrl?: string;
         loader?: string | Function;
         preFetchAction?: Function;
@@ -40,6 +40,7 @@ export default class TempDataBackend {
      * @returns The normalized FormData object.
      */
     protected normalizeArrayField(datas: Array<any>): FormData;
+    private escape;
     /**
      * Retourne la réponse du serveur.
      */

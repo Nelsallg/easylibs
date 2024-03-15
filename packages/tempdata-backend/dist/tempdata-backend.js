@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch_request_1 = __importDefault(require("@easylibs/fetch-request"));
 const transformer_1 = require("@easylibs/transformer");
-const utils_1 = __importDefault(require("@easylibs/utils"));
 class TempDataBackend {
     /**
      *
@@ -63,16 +62,15 @@ class TempDataBackend {
                 options: {
                     method: "POST",
                     responseDataType: "json",
-                    requestDataType: "form-data",
+                    requestDataConvert: "form-data",
                 },
                 callbacks: {
                     onSuccess: (response) => {
                         this._response = response;
                         callback(this._response);
-                        if (redirectURL && this._response && this._response.success) {
+                        if (redirectURL) {
                             return (window.location.href = redirectURL || "/");
                         }
-                        return this._response;
                     },
                 }
             });
@@ -96,7 +94,7 @@ class TempDataBackend {
             if (true === isEmpty && !form.checkValidity()) {
                 return form.reportValidity();
             }
-            const innerSubmiter = utils_1.default.escape(data.submiter.innerHTML);
+            const innerSubmiter = this.escape(data.submiter.innerHTML);
             if (data.loader) {
                 if (typeof data.loader === 'string') {
                     data.submiter.innerHTML = data.loader;
@@ -116,16 +114,16 @@ class TempDataBackend {
                     options: {
                         method: "POST",
                         responseDataType: "json",
-                        requestDataType: "form-data",
+                        requestDataConvert: "form-data",
                     },
                     callbacks: {
                         onSuccess(response) {
                             data.submiter.innerHTML = innerSubmiter;
-                            if (data.redirectUrl && response["success"] === true) {
+                            if (data.callback)
                                 data.callback(response);
+                            if (data.redirectUrl) {
                                 return (window.location.href = data.redirectUrl);
                             }
-                            return data.callback(response);
                         },
                     }
                 });
@@ -166,6 +164,14 @@ class TempDataBackend {
             index++;
             return result;
         }, new FormData());
+    }
+    escape(str) {
+        if (!str) {
+            return "";
+        }
+        const div = document.createElement("div");
+        div.appendChild(document.createTextNode(str));
+        return div.innerHTML;
     }
     /**
      * Retourne la réponse du serveur.
