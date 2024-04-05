@@ -1,3 +1,4 @@
+import { ProgressingInterface } from "./interfaces";
 export declare type ProgressFormType = {
     form: HTMLFormElement;
     progress?: {
@@ -9,3 +10,5 @@ export declare type ProgressFormType = {
     onPreNext?: (isValidFieldset?: boolean) => any;
     onPostNext?: () => any;
 };
+export declare type PreventType = "next" | "prev" | true | false;
+export declare type ProgressingType = Record<string, ProgressingInterface>;

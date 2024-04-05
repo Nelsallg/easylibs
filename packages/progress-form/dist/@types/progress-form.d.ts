@@ -1,5 +1,5 @@
 import { StyleOptions } from "./scripts/interfaces";
-import { ProgressFormType } from "./scripts/types";
+import { ProgressFormType, PreventType, ProgressingType } from "./scripts/types";
 /**
  * ProgressForm represents a class for managing a progressive form.
  */
@@ -9,6 +9,7 @@ export default class ProgressForm {
     private fieldsetLength;
     private fieldsetMarginWidth;
     private params;
+    private progressingData;
     /**
      * @param enableDefaultCssStyle Determines whether the default CSS style should be enabled. Default is true.
      */
@@ -24,7 +25,7 @@ export default class ProgressForm {
      * @param params The parameters of the form.
      * @param styleOptions Style options for the form.
     */
-    run(params: ProgressFormType, styleOptions?: StyleOptions): void;
+    run(params: ProgressFormType, styleOptions?: StyleOptions, preventProgress?: PreventType): void;
     /**
      * Handles the "next" button click event.
      * @param nextButton The "next" button element.
@@ -33,7 +34,7 @@ export default class ProgressForm {
      * @param progressElement The progress element.
      * @param nextProgress The progress for the next fieldset.
      */
-    private next;
+    next(nextButton: HTMLElement, nextIndex: number, nextTranslateX: number, progressElement?: HTMLElement, nextProgress?: number): void;
     /**
      * Handles the "previous" button click event.
      * @param prevButton The "previous" button element.
@@ -42,12 +43,16 @@ export default class ProgressForm {
      * @param progressElement The progress element.
      * @param prevProgress The progress for the previous fieldset.
     */
-    private prev;
+    prev(prevButton: HTMLElement, prevIndex: number, prevTranslateX: number, progressElement?: HTMLElement, prevProgress?: number): void;
     /**
      * Calculates the progress percentage of the form.
      * @returns The progress percentage.
     */
-    get progress(): number;
+    get PROGRESS(): number;
+    /**
+     * Retrieve progress data for each fieldset
+     */
+    get PROGRESSING_DATA(): ProgressingType;
     /**
      * Compartmentalizes focus within a fieldset.
      * @param fieldSet The fieldset to compartmentalize focus within.

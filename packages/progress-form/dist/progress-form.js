@@ -29,7 +29,7 @@ class ProgressForm {
      * @param params The parameters of the form.
      * @param styleOptions Style options for the form.
     */
-    run(params, styleOptions) {
+    run(params, styleOptions, preventProgress = false) {
         var _a;
         this.params = params;
         this.hasValidHTMLStructure(params.form);
@@ -41,7 +41,7 @@ class ProgressForm {
         let prevIndex = fieldSets.length;
         let prevTranslateX = 0;
         this.fieldsetLength = fieldSets.length;
-        const { progress } = this;
+        const { PROGRESS } = this;
         if (fieldSets && fieldSets.length > 1) {
             fieldSets.forEach((fieldSet, i) => {
                 var _a;
@@ -51,8 +51,8 @@ class ProgressForm {
                 const targetMarginWidth = (_a = params.targetMarginWidth) !== null && _a !== void 0 ? _a : 0;
                 let nextTranslateX = (translateX * nextIndex) - targetMarginWidth;
                 prevTranslateX = (translateX * nextIndex) + Math.abs(translateX * 2);
-                const nextProgress = progress * (i + 2);
-                const prevProgress = i > 1 ? progress * i : progress;
+                const nextProgress = PROGRESS * (i + 2);
+                const prevProgress = i > 1 ? PROGRESS * i : PROGRESS;
                 fieldSetElement = fieldSet;
                 fieldSet.classList.add(`fieldset${i}`);
                 if (i === 0) {
@@ -60,17 +60,25 @@ class ProgressForm {
                     fields[i].focus();
                     this.compartmentalizeFocusInFieldset(fieldSetElement);
                 }
-                this.next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress);
+                this.progressingData = { [`fieldset${i}`]: {
+                        i,
+                        target: progressElement,
+                        next: { i: nextIndex, button: nextButton, translateX: nextTranslateX, progress: nextProgress },
+                        prev: { i: prevIndex, button: prevButton, translateX: prevTranslateX, progress: prevProgress },
+                    } };
+                if (preventProgress === false || preventProgress === "prev")
+                    this.next(nextButton, nextIndex, nextTranslateX, progressElement, nextProgress);
                 nextIndex++;
                 if (i === 0) {
                     (0, focus_in_block_1.getFocusableElements)(fieldSetElement);
                 }
-                this.prev(prevButton, prevIndex, prevTranslateX, progressElement, prevProgress);
+                if (preventProgress === false || preventProgress === "next")
+                    this.prev(prevButton, prevIndex, prevTranslateX, progressElement, prevProgress);
                 prevIndex--;
             });
         }
         if (progressElement) {
-            progressElement.style.width = `${progress}%`;
+            progressElement.style.width = `${PROGRESS}%`;
         }
         if (this.enableDefaultCssStyle) {
             (0, css_style_1.cssStyle)(params, fieldSets, this.translateX, this.fieldsetLength, this.fieldsetMarginWidth, styleOptions);
@@ -144,8 +152,14 @@ class ProgressForm {
      * Calculates the progress percentage of the form.
      * @returns The progress percentage.
     */
-    get progress() {
+    get PROGRESS() {
         return 100 / this.fieldsetLength;
+    }
+    /**
+     * Retrieve progress data for each fieldset
+     */
+    get PROGRESSING_DATA() {
+        return this.progressingData;
     }
     /**
      * Compartmentalizes focus within a fieldset.

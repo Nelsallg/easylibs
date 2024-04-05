@@ -31,3 +31,23 @@ export declare interface StyleOptions {
         borderRadius?: string;
     };
 }
+/**
+ * Progressing interface
+ */
+export declare interface ProgressingInterface {
+    [x: string]: any;
+    i: number;
+    target: HTMLElement;
+    next: {
+        i: number;
+        button: HTMLElement;
+        translateX: number;
+        progress: number;
+    };
+    prev: {
+        i: number;
+        button: HTMLElement;
+        translateX: number;
+        progress: number;
+    };
+}
