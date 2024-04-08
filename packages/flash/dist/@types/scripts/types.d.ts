@@ -1,6 +1,7 @@
+export declare type FlashType = "success" | "danger" | "warning" | "info";
 export declare type FlashOptions = {
     message: string;
-    type?: 'success' | 'danger' | 'warning' | 'info';
+    type?: FlashType;
     flashBox?: HTMLElement;
     container?: HTMLElement;
     duration?: number | string;

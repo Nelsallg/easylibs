@@ -55,14 +55,23 @@
   <form id="progress-form" method="post">
         <div fieldset__parent>
           <div fieldset__container>
-          <fieldset>
+            <fieldset>
               <label for="photo" required-field>Photo:</label>
-              <input type="file" id="photo" multiple="multiple">
+              <input type="file" name="photo" id="photo" multiple="multiple">
               <button type="button" __next__>next</button>
             </fieldset>
-            <fieldset>
+          </div>
+        </div>
+      </form>
+    <script type="module" src="./build/bundle.js"></script>
+</body>
+</html>
+
+
+
+ <!--<fieldset>
               <label for="name" required-field>Name:</label>
-              <input type="text" id="name">
+              <input type="text" name="name" id="name">
               <div class="button-container">
                 <button type="button" __prev__>previous</button>
                 <button type="button" __next__>next</button>
@@ -70,7 +79,7 @@
             </fieldset>
             <fieldset>
               <label for="surname" required-field>Surname:</label>
-              <input type="text" id="surname">
+              <input type="text" name="surname" id="surname">
               <div class="button-container">
                 <button type="button" __prev__>previous</button>
                 <button type="button" __next__>next</button>
@@ -78,7 +87,7 @@
             </fieldset>
             <fieldset>
               <label for="sex" required-field>Sex:</label>
-              <select name="" id="">
+              <select name="sex" id="">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
@@ -100,12 +109,7 @@
               <input type="password" id="password"  name="password">
               <div class="button-container">
                 <button type="button" __prev__>previous</button>
+                <button type="button" class="add-btn">add</button>
                 <button type="button" id="submiter">submit</button>
               </div>
-            </fieldset>
-          </div>
-        </div>
-      </form>
-    <script type="module" src="./build/bundle.js"></script>
-</body>
-</html>
+            </fieldset>!-->

@@ -27,16 +27,17 @@ class TempData {
      * @param data - Data (a single object or an array of objects) to add to the IDBObjectStore.
      * @returns A promise that resolves to an object indicating the success of the operation.
      */
-    add(data) {
+    add(data, osname) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return this._getObjectStore("readwrite").then((objectStore) => {
+                return this._getObjectStore("readwrite", osname).then((objectStore) => __awaiter(this, void 0, void 0, function* () {
                     const handleData = (item) => {
                         const request = objectStore.add(item);
                         return new Promise((resolve, reject) => {
                             request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
-                                if (event.target) {
-                                    const elementId = event.target.result;
+                                const target = event.target;
+                                if (target) {
+                                    const elementId = target.result;
                                     let elementObject = item;
                                     elementObject["@id"] = elementId;
                                     objectStore.put(elementObject, elementId);
@@ -44,19 +45,24 @@ class TempData {
                                 }
                             });
                             request.onerror = (event) => {
-                                reject(new Error("Failed to add file to IndexedDB: " + event.target.error));
+                                const target = event.target;
+                                reject(new Error("Failed to add file to IndexedDB: " + target.error.message));
                             };
                         });
                     };
                     if (Array.isArray(data)) {
-                        return Promise.all(data.map((item) => handleData(item)))
-                            .then((results) => ({ success: true, elements: results }))
-                            .catch((error) => ({ success: false, error: error.message }));
+                        try {
+                            const results = yield Promise.all(data.map((item) => handleData(item)));
+                            return ({ success: true, elements: results });
+                        }
+                        catch (error) {
+                            return ({ success: false, error: error.message });
+                        }
                     }
                     else {
                         return handleData(data);
                     }
-                });
+                }));
             }
             catch (error) {
                 console.error("Error accessing IndexedDB", error);
@@ -69,23 +75,26 @@ class TempData {
      * @param i - The index of the form data to retrieve.
      * @returns A promise that resolves to the form data at the specified index, or `undefined` if the index is out of range.
      */
-    readOne(i, type) {
+    readOne(i, type, osname) {
         try {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                const objectStore = yield this._getObjectStore("readonly");
-                const request = objectStore.get(i);
+                const objectStore = yield this._getObjectStore("readonly", osname);
+                const request = objectStore.getAll();
                 request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
-                    const result = event.target.result;
+                    const target = event.target;
+                    const results = target.result;
+                    const result = results[i];
                     if (result) {
                         const transformer = type === "form-data" ? new transformer_1.FormDataTransformer(result) : result;
                         resolve(type === "form-data" ? transformer.transform() : transformer);
                     }
                     else {
-                        resolve(undefined); // Key not found
+                        resolve(undefined);
                     }
                 });
                 request.onerror = (event) => {
-                    reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                    const target = event.target;
+                    reject(new Error("Failed to get data from IndexedDB: " + target.error.message));
                 };
             }));
         }
@@ -100,14 +109,15 @@ class TempData {
      * @param type - Optional parameter to specify the return type: "form-data" or "record".
      * @returns A promise that resolves to the first matching record or `undefined` if no match is found.
      */
-    readOneBy(criteria, type) {
+    readOneBy(criteria, type, osname) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const objectStore = yield this._getObjectStore("readonly");
+                const objectStore = yield this._getObjectStore("readonly", osname);
                 const request = objectStore.getAll();
                 return new Promise((resolve, reject) => {
                     request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
-                        const results = event.target.result;
+                        const target = event.target;
+                        const results = target.result;
                         const matchedResult = results.find((item) => {
                             return Object.keys(criteria).every((key) => criteria[key] === item[key]);
                         });
@@ -122,7 +132,8 @@ class TempData {
                         }
                     });
                     request.onerror = (event) => {
-                        reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                        const target = event.target;
+                        reject(new Error("Failed to get data from IndexedDB: " + target.error.message));
                     };
                 });
             }
@@ -136,16 +147,18 @@ class TempData {
      * Retrieves all elements from the IDBObjectStore and returns them as an array.
      * @returns A promise that resolves to an array containing all the elements from the IDBObjectStore.
      */
-    read() {
+    read(osname) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const objectStore = yield this._getObjectStore("readonly");
+            const objectStore = yield this._getObjectStore("readonly", osname);
             const elements = [];
             const request = objectStore.openCursor();
             request.onerror = (event) => {
-                reject("Failed to read indexed data: " + event.target.error);
+                const target = event.target;
+                reject("Failed to read indexed data: " + target.error.message);
             };
             request.onsuccess = (event) => {
-                const cursor = event.target.result;
+                const target = event.target;
+                const cursor = target.result;
                 if (cursor) {
                     elements.push(cursor.value);
                     cursor.continue();
@@ -161,16 +174,18 @@ class TempData {
      * @param criteria - An object representing the key-value pairs that the elements must match.
      * @returns A promise that resolves to an array containing all matching elements from the IDBObjectStore.
      */
-    readBy(criteria) {
+    readBy(criteria, osname) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const objectStore = yield this._getObjectStore("readonly");
+            const objectStore = yield this._getObjectStore("readonly", osname);
             const elements = [];
             const request = objectStore.openCursor();
             request.onerror = (event) => {
-                reject(new Error("Erreur lors de la récupération des éléments: " + event.target.error));
+                const target = event.target;
+                reject(new Error("Erreur lors de la récupération des éléments: " + target.error.message));
             };
             request.onsuccess = (event) => {
-                const cursor = event.target.result;
+                const target = event.target;
+                const cursor = target.result;
                 if (cursor) {
                     if ((0, helpers_1.matchesCriteria)(cursor.value, criteria)) {
                         elements.push(cursor.value);
@@ -189,14 +204,15 @@ class TempData {
      * @param data - The new data to be merged with the existing data.
      * @returns A promise that resolves to a boolean indicating whether the update was successful (true) or the ID was not found (false).
      */
-    update(id, data) {
+    update(id, data, osname) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const objectStore = yield this._getObjectStore("readwrite");
+                const objectStore = yield this._getObjectStore("readwrite", osname);
                 const request = objectStore.get(id);
                 return new Promise((resolve, reject) => {
                     request.onsuccess = (event) => __awaiter(this, void 0, void 0, function* () {
-                        const existingData = event.target.result;
+                        const target = event.target;
+                        const existingData = target.result;
                         if (existingData) {
                             const updatedData = Object.assign(Object.assign({}, existingData), data);
                             const updateRequest = objectStore.put(updatedData, id);
@@ -213,7 +229,8 @@ class TempData {
                         }
                     });
                     request.onerror = (event) => {
-                        reject(new Error("Failed to get data from IndexedDB: " + event.target.error));
+                        const target = event.target;
+                        reject(new Error("Failed to get data from IndexedDB: " + target.error.message));
                     };
                 });
             }
@@ -227,15 +244,15 @@ class TempData {
      * Deletes the object from the IDBObjectStore.
      * @param id - The ID of the object to delete.
      */
-    deleteOne(id, refactoringShortKeyString) {
+    deleteOne(id, refactoringShortKeyString, osname) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const objectStore = yield this._getObjectStore("readwrite");
+                    const objectStore = yield this._getObjectStore("readwrite", osname);
                     const request = objectStore.delete(id);
                     request.onsuccess = () => __awaiter(this, void 0, void 0, function* () {
                         if (refactoringShortKeyString) {
-                            yield this.refactorIndexes(refactoringShortKeyString);
+                            yield this.refactorIndexes(refactoringShortKeyString, osname);
                         }
                         resolve(true);
                     });
@@ -255,7 +272,7 @@ class TempData {
      * Deletes the specified object store from the IndexedDB database.
      * @returns A promise that resolves if the object store is successfully deleted, or rejects with an error if any error occurs during the operation.
      */
-    deleteOS() {
+    deleteOS(osname) {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(this.dbname, this.version);
             request.onerror = () => {
@@ -263,18 +280,19 @@ class TempData {
                 resolve(false);
             };
             request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (db.objectStoreNames.contains(this.osname)) {
+                const target = event.target;
+                const db = target.result;
+                if (db.objectStoreNames.contains(osname !== null && osname !== void 0 ? osname : this.osname)) {
                     try {
-                        db.deleteObjectStore(this.osname);
+                        db.deleteObjectStore(osname !== null && osname !== void 0 ? osname : this.osname);
                     }
                     catch (error) {
-                        console.error(`Failed to delete ObjectStore ${this.osname}: ${error}`);
+                        console.error(`Failed to delete ObjectStore ${osname !== null && osname !== void 0 ? osname : this.osname}: ${error}`);
                         resolve(false);
                     }
                 }
                 else {
-                    console.log(`ObjectStore ${this.osname} does not exist.`);
+                    console.error(`ObjectStore ${osname !== null && osname !== void 0 ? osname : this.osname} does not exist.`);
                     resolve(true);
                 }
             };
@@ -286,18 +304,18 @@ class TempData {
     /**
      * Clears the entire IndexedDB database by deleting the database.
      */
-    deleteAll() {
+    deleteAll(osname) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.openDB();
                 return new Promise((resolve, reject) => {
-                    const request = indexedDB.deleteDatabase(this.dbname);
+                    const request = indexedDB.deleteDatabase(osname !== null && osname !== void 0 ? osname : this.dbname);
                     request.onsuccess = () => resolve(true);
                     request.onerror = () => resolve(false);
                 });
             }
             catch (error) {
-                console.error(`Error deleting database ${this.dbname}: ${error}`);
+                console.error(`Error deleting database ${osname !== null && osname !== void 0 ? osname : this.dbname}: ${error}`);
                 return false;
             }
         });
@@ -306,7 +324,7 @@ class TempData {
      * Opens or creates a new IndexedDB database with the specified name and version.
      * @returns A promise that resolves to the opened or created IDBDatabase object.
      */
-    openDB() {
+    openDB(osname) {
         return new Promise((resolve, reject) => {
             const request = window.indexedDB.open(this.dbname, this.version);
             request.onerror = (event) => {
@@ -315,14 +333,14 @@ class TempData {
                 reject(target === null || target === void 0 ? void 0 : target.error);
             };
             request.onsuccess = (event) => {
-                var _a;
-                const db = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
+                const target = event.target;
+                const db = target === null || target === void 0 ? void 0 : target.result;
                 resolve(db);
             };
             request.onupgradeneeded = (event) => {
-                var _a;
-                const db = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
-                db.createObjectStore(this.osname, { autoIncrement: true });
+                const target = event.target;
+                const db = target === null || target === void 0 ? void 0 : target.result;
+                db.createObjectStore(osname !== null && osname !== void 0 ? osname : this.osname, { autoIncrement: true });
             };
         });
     }
@@ -330,9 +348,9 @@ class TempData {
      * Checks if database is empty.
      * @returns A promise that resolves to `true` if database is empty, and `false` otherwise.
      */
-    _isEmpty() {
+    _isEmpty(osname) {
         return __awaiter(this, void 0, void 0, function* () {
-            const objectStore = yield this._getObjectStore("readonly");
+            const objectStore = yield this._getObjectStore("readonly", osname);
             const countRequest = objectStore.count();
             return new Promise((resolve, reject) => {
                 countRequest.onsuccess = () => {
@@ -348,9 +366,9 @@ class TempData {
      * Retrieves the length of the object store.
      * @returns A promise that resolves with the length of the object store.
      */
-    _length() {
+    _length(osname) {
         return __awaiter(this, void 0, void 0, function* () {
-            const objectStore = yield this._getObjectStore("readonly");
+            const objectStore = yield this._getObjectStore("readonly", osname);
             const countRequest = objectStore.count();
             return new Promise((resolve, reject) => {
                 countRequest.onsuccess = (e) => {
@@ -367,18 +385,18 @@ class TempData {
      * @param access - The access mode for the transaction.
      * @returns A promise that resolves to the IDBObjectStore with the specified access mode.
      */
-    _getObjectStore(access) {
+    _getObjectStore(access, osname) {
         return __awaiter(this, void 0, void 0, function* () {
-            const db = yield this.openDB();
-            const transaction = db.transaction([this.osname], access);
-            return transaction.objectStore(this.osname);
+            const db = yield this.openDB(osname);
+            const transaction = db.transaction([osname !== null && osname !== void 0 ? osname : this.osname], access);
+            return transaction.objectStore(osname !== null && osname !== void 0 ? osname : this.osname);
         });
     }
     /**
      * Refactors the indexes of the indexed data.
      * @param refactoringShortKeyString - The string to be used for refactoring the indexes.
      */
-    refactorIndexes(refactoringShortKeyString) {
+    refactorIndexes(refactoringShortKeyString, osname) {
         return __awaiter(this, void 0, void 0, function* () {
             const objectData = yield this.read();
             const isEmpty = yield this._isEmpty();
@@ -390,7 +408,7 @@ class TempData {
                 const updatedObject = this.processObject(object, i, objectData.length, refactoringShortKeyString);
                 updatedObjectArray.push(updatedObject);
             }));
-            this.refactor(updatedObjectArray);
+            this.refactor(updatedObjectArray, osname);
         });
     }
     /**
@@ -398,20 +416,21 @@ class TempData {
      * This method opens the indexedDB, clears the existing data in the object store, and adds the new data from the provided array.
      * @param object - The array of data to replace the indexed data with.
      */
-    refactor(object) {
+    refactor(object, osname) {
         const openDBRequest = indexedDB.open(this.dbname, this.version);
         openDBRequest.onsuccess = (event) => {
-            const IBDB = event.target.result;
-            const result = IBDB;
-            const transaction = result.transaction([this.osname], "readwrite");
-            const objetsStore = transaction.objectStore(this.osname);
+            const target = event.target;
+            const result = target.result;
+            const transaction = result.transaction([osname !== null && osname !== void 0 ? osname : this.osname], "readwrite");
+            const objetsStore = transaction.objectStore(osname !== null && osname !== void 0 ? osname : this.osname);
             const clear = objetsStore.clear();
             clear.onsuccess = function () {
                 object.forEach(function (data) {
                     const addRequest = objetsStore.add(data);
                     addRequest.onsuccess = (event) => {
-                        if (event.target) {
-                            const elementId = event.target.result;
+                        const target = event.target;
+                        if (target) {
+                            const elementId = target.result;
                             let elementObject = data;
                             elementObject[`@id`] = elementId;
                             objetsStore.put(elementObject, elementId);
@@ -420,11 +439,13 @@ class TempData {
                 });
             };
             clear.onerror = function (event) {
-                console.error("Error deleting existing data :", event.target.error);
+                const target = event.target;
+                console.error("Error deleting existing data :", target.error.message);
             };
         };
         openDBRequest.onerror = function (event) {
-            console.error("Error opening database :", event.target.error);
+            const target = event.target;
+            console.error("Error opening database :", target.error.message);
         };
     }
     /**

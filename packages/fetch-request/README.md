@@ -73,8 +73,15 @@ const request = new FetchRequest({
 * `data:` The data to be sent with the request.
 * `submitter:` The HTML element that triggers the request.
 * `options:` An object containing the request options.
+* * `options.method:` An object containing the request options.
+* * `options.timeOut:` An object containing the request options.
+* * `options.requestDataConvert:` An object containing the request options.
+* * `options.responseDataType:` An object containing the request options.
 * `callbacks:` An object containing callback functions for various stages of the request.
-* `onPreFetch`:  Function called before the request is sent. It can modify the data or perform other tasks.
+* * `callbacks.onPreFetch`:  Function called before the request is sent. It can modify the data or perform other tasks.
+* * `callbacks.onPostFetch`:  Function called before the request is sent. It can modify the data or perform other tasks.
+* * `callbacks.onSuccess`:  Function called before the request is sent. It can modify the data or perform other tasks.
+* * `callbacks.onError`:  Function called before the request is sent. It can modify the data or perform other tasks.
 * Example:
 
 ```javascript

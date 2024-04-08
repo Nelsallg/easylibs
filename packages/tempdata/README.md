@@ -114,7 +114,7 @@ const customer = [
     lastname: 'OBONE MVOU',
     age: 30,
     job: 'journalist',
-    C:'Gabon' 
+    country:'Gabon' 
   },
   {
     firstname: 'Merline',
@@ -123,7 +123,7 @@ const customer = [
     country:'Gabon' 
   }
 ];
-tempdata.readBy({job},"customers_os").then((data)=>{
+tempdata.readBy({job:"taxi driver"},"customers_os").then((data)=>{
     console.log(data)
 }) // returns all customers that have the key "job"
 tempdata.readBy({country:"Gabon"},"record","customers_os").then((data)=>{

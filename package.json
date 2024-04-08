@@ -7,6 +7,7 @@
   "scripts": {
     "babel": "babel index.js --out-file public/script/app.js",
     "dev": "webpack --config webpack.config.js",
+    "watch": "npm run dev --watch",
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "cypress",
     "tsc": "tsc",
@@ -57,10 +58,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@easylibs/animation": "^1.0.1",
     "@easylibs/utils": "^1.2.14",
-    "css-minimizer-webpack-plugin": "^6.0.0",
-    "nx": "^17.2.7",
-    "path-browserify": "^1.0.1"
+    "css-minimizer-webpack-plugin": "^6.0.0"
   }
 }
