@@ -36,50 +36,80 @@ Or use direct inclusion with CDN:
 To use the `TempData` class, you first need to create an instance of the class. You can do this by providing the name of the database, the name of the object store, and the version of the database.
 
 ```javascript
-new TempData('my-database', 'products_os');
-new TempData('my-database', 'customers_os');
-new TempData('my-database', 'carts_os');
+const database = new TempData('my_database',[
+    { osname:"products",options:{autoIncrement:true} },
+    { osname:"customers", options:{autoIncrement:true} }
+]);
 ```
 
 ## Adding Data
 
-This code creates a new `TempData` database called `my-database` with object stores called `products_os, customers_os, carts_os` respectively. It then adds the data objects to the object stores. The `add` method returns a promise that resolves to an object indicating the success of the operation.
+This code creates a new `TempData` database called `my-database` with object stores called `products, customers` respectively. It then adds the data objects to the object stores. The `add` method returns a promise that resolves to an object indicating the success of the operation.
 
 ```javascript
-const tempdata = new TempData("my-database");
 const products = [
-  {
-    name: 'Natural wood chair from Gabon',
-    price: 150 600,
-    description: 30,
-    category:"",
-    seller: 'Evangzat',
-  },
-  {
-    name: 'Natural wood chair from Gabon',
-    price: 3 200,
-    color:""
-    description: 30,
-    category:"Smart phone"
-    seller: 'Elise Service',
-  }
+
+    {
+        "name": "Natural wood chair from Gabon",
+        "price": 150600,
+        "color":"undefined",
+        "description": "Made by N'KOK",
+        "category":"fournitures",
+        "seller": "Evangzat"
+      },
+      {
+        "name": "Samsung C3050",
+        "price": 3200,
+        "color":"black",
+        "description": "People from 2005 don't kwnow It",
+        "category":"Smart phone",
+        "seller": "Elise Service"
+      },
+      {
+          "name": "MSI All Of One Desktop",
+          "price": 475000,
+          "color":"undefined",
+          "description": "Very expensive for you",
+          "category":"Desktop",
+          "seller": "Elise Service"
+      }
 ];
-const customer = {
-  firstname: 'Guy Bertrant',
-  lastname: 'MABIALA MABIALA',
-  age: 25,
-  job: 'taxi driver',
-  country:'RDC'
-};
-const cart = {
-  totalItems: 5,
-  totalAmount: 45 775,
-  totalFavoriteItems: 1,
-  status: "pendding",
-};
-tempdata.add(customer,"customers_os");
-tempdata.add(cart,"carts_os");
-tempdata.add(products,"products_os");
+const customers = [
+   {
+        "firstname":"Guy Bertrant",
+        "lastname":"Mabiala Mabiala",
+        "email": "guybertrant@gmail.com",
+        "phone": "+24174421200",
+        "sex":"male",
+        "nationality":"Gabonese"
+    },
+    {
+        "firstname":"Fatima",
+        "lastname":"Diom",
+        "email": "fatima2@gmail.com",
+        "phone": "+221771234567",
+        "sex":"female",
+        "nationality":"Senegalese"
+    },
+    {
+        "firstname":"Cynthia Lesly",
+        "lastname":"Fiangwa",
+        "email": "cynthiafiangwa@gmail.com",
+        "phone": "+237664584741",
+        "sex":"female",
+        "nationality":"Cameroon"
+    },
+    {
+      "firstname": "Marina",
+      "lastname": "Moulouma Moussavou",
+      "phone": "+241066001736",
+      "email": "marina.ms@gmail.com",
+      "sex": "female",
+      "nationality":"Gabonese"
+    }
+]
+tempdata.add(customers,"customers");
+tempdata.add(products,"products");
 ```
 
 The `add` method returns a promise that resolves to an object indicating the success of the operation. The object has the following properties:
@@ -87,7 +117,7 @@ The `add` method returns a promise that resolves to an object indicating the suc
 * `success`: A boolean value indicating whether the operation was successful.
 * `elementObject`: The object that was added to the database.
 
-This code creates a new TempData database called `my-database` with an object store called `my-object-store`. It then adds the data object to the object store. The `add` method returns a promise that resolves to an object indicating the success of the operation.
+This code creates a new TempData database called `my-database` with an object store called `customers` and `products`. It then adds the data object to the object store. The `add` method returns a promise that resolves to an object indicating the success of the operation.
 
 If you do not specify the object store in the `add` method, `TempData` will consider that it is the one specified by default when creating the instance, assuming that you had defined it. Otherwise an error will be thrown.
 
@@ -96,42 +126,23 @@ If you do not specify the object store in the `add` method, `TempData` will cons
 ### simple reading
 
 ```javascript
-tempdata.read().then((data)=>{
+database.read("products").then((data)=>{
+    console.log(data) // retrieve all products
+})
+database.readOne(6,"customers").then((data)=>{
     console.log(data)
-}) //read all elements
-tempdata.readOne(1).then((data)=>{
-    console.log(data)
-}) //read element at index 1
+}) // retrieve customer to index 6
 ```
 
 ### reading by criteria
 
 ```javascript
-// let's add a new customers to the customers object store
-const customer = [
-  {
-    firstname: 'Sarah Elise',
-    lastname: 'OBONE MVOU',
-    age: 30,
-    job: 'journalist',
-    country:'Gabon' 
-  },
-  {
-    firstname: 'Merline',
-    lastname: 'SABA GAMBA',
-    age: 17,
-    country:'Gabon' 
-  }
-];
-tempdata.readBy({job:"taxi driver"},"customers_os").then((data)=>{
+database.readBy({sex:"female",nationality:"Senegalese"},"customers").then((data)=>{
     console.log(data)
-}) // returns all customers that have the key "job"
-tempdata.readBy({country:"Gabon"},"customers_os").then((data)=>{
-    console.log(data) // returns all customers that have the country="Gabon"
 })
-tempdata.readOneBy({'@id':1},"products_os","record").then((data)=>{
+database.readOneBy({color:"undefined"},"products").then((data)=>{
     console.log(data)
-}) // returns element with '@id'=1. this "@id" key is automatically generated by `TempData` to be able to retrieve each element more easily.
+})
 ```
 
 ## Deleting Data
@@ -139,10 +150,9 @@ tempdata.readOneBy({'@id':1},"products_os","record").then((data)=>{
 To delete data from the database, you can use the `deleteAll`, `deleteOne`or `deleteOS` methods
 
 ```typescript
-const tempdata = new TempData("my-database","customers_os");
 tempdata.deleteDB() // delete database
-tempdata.deleteOne(1,null,"carts_os") // delete one element at index 1 from "carts_os'
-tempdata.deleteOS('products_os') // delete object store "products_os'
+database.deleteOne(1,"customers")  // delete one element at index 1 from "customers'
+tempdata.deleteOS('products') // delete object store "products'
 ```
 
 ## Refactoring Indexes
@@ -162,7 +172,8 @@ The `TempData` class provides the following methods:
 * `deleteOne(id,refactoringShortKeyString,callback)`: Deletes the object with the specified ID from the IDBObjectStore.
 * `deleteOS`: Delete the `ObjectStore`
 * `deleteAll()`: Removes every record stored in the database.
-* `_isEmpty()`: Checks if databse is empty.
+* `_isItEmpty()`: Checks if databse is empty.
 * `_length()`: Retrieves the length of the object store.
+* `__isItExpired()`: Check expriation date of database
 * `_getObjectStore(access)`: Retrieves the IDBObjectStore with the specified access mode from the opened database.
 * `refactorIndexes(refactoringShortKeyString)`: Refactors the indexes of the indexed data based on the provided string.

@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/tempdata",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -22,8 +22,7 @@
     "build": "webpack --config webpack.config.js --mode=production",
     "test": "node ./__tests__/fetch-request.test.js",
     "tsc": "tsc",
-    "generate-declarations": "tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build && npm run generate-declarations"
+    "generate-declarations": "tsc --emitDeclarationOnly"
   },
   "directories": {
     "test": "__tests__",
