@@ -36,8 +36,10 @@ export declare interface StyleOptions {
  */
 export declare interface ProgressingInterface {
     [x: string]: any;
-    i: number;
-    target: HTMLElement;
+    '@i': number;
+    '@translateX': number;
+    '@progress': number;
+    '@target': HTMLElement;
     next: {
         i: number;
         button: HTMLElement;

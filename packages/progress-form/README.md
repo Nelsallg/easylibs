@@ -80,14 +80,14 @@ Next, you need to create a `ProgressForm` object and pass the form element to th
 
 ```javascript
 import ProgressForm from "@easylibs/progress-form";
-const progressForm = new ProgressForm();
+const form = document.getElementById('progress-form');
+const progressForm = new ProgressForm(form);
 ```
 
 Finally, you need to call the `run()` method on the `ProgressForm` object. This will initialize the form and add the event listeners for the "Next" and "Previous" buttons.
 
 ```javascript
-const form = document.getElementById('progress-form');
-progressForm.run({ form });
+progressForm.run();
 ```
 
 **`NB:`** This configuration is normally sufficient to correctly initialize the form, but you may want to modify the width of your form. We strongly recommend that you do this directly via the `translateX` property of `ProgressForm`, this will correctly adjust the movement of the Fieldsets
@@ -96,7 +96,7 @@ progressForm.run({ form });
 
 ```javascript
 const translateX = -560;
-progressForm.run({ form, translateX });
+progressForm.run({ translateX });
 ```
 
 Note also that if you have required fields, the progress of the form will be automatically prevented in the event of an invalid field. Validation is only done on the client side via the corresponding HTML attributes, so there is no server-side validation
@@ -145,14 +145,16 @@ echo $json_data;
 <script type="module" src="./build/bundle.js"></script>
 ```
 
+***3- run js progressForm instance***
+
 ```javascript
 import Utils from "@easylibs/utils";
 import FetchRequest from "@easylibs/fetch-request";
 
 const form = document.querySelector("#progress-form");
-const progress = new ProgressForm();
+const progress = new ProgressForm(form);
 
-progress.lazyRun(6,{form},{
+progress.lazyRun(6,{
   fieldsetParent:{
     width:"null"
   },
@@ -165,7 +167,7 @@ progress.lazyRun(6,{form},{
 });
 ```
 
-**`lazyRun(fieldsetLength,params,styleOptions)`**
+**`lazyRun(fieldsetLength,progressOptions,styleOptions)`**
 This method takes as its first argument the length of the fieldsets, which is simply the number of fieldsets you want to have, and then the two other arguments correspond to the first two arguments of the previous `run()` method.
 
 ```javascript
@@ -248,7 +250,7 @@ In this code we want to deactivate the `Width` properties of `Form` and `FieldSe
 ```javascript
 const form = document.getElementById('progress-form');
 const translateX = -560;
-progressForm.run({ form, translateX }, {
+progressForm.run({ translateX }, {
   from:{
     width:"null"
   },

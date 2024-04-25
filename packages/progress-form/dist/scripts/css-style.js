@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.anime = exports.cssStyle = void 0;
-function cssStyle(params, fieldSets, translateX, fieldsetLength, fieldsetMarginWidth, styleOptions) {
+function cssStyle(form, fieldSets, translateX, fieldsetLength, fieldsetMarginWidth, styleOptions) {
     try {
-        const fieldSetParent = params.form.querySelector("[fieldset__parent]");
+        const fieldSetParent = form.querySelector("[fieldset__parent]");
         const fieldsetContainer = fieldSetParent.querySelector("[fieldset__container]");
         const fieldsetWidth = Math.abs(translateX);
         const fieldsetContainerWidth = fieldsetLength * fieldsetWidth + fieldsetMarginWidth;
@@ -41,13 +41,14 @@ function cssStyle(params, fieldSets, translateX, fieldsetLength, fieldsetMarginW
         const fieldSetParentStyle = Object.assign({}, defaultFieldSetParentStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldsetParent);
         const fieldsetContainerStyle = Object.assign({}, defaultFieldsetContainerStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldsetContainer);
         const fieldsetStyle = Object.assign({}, defaultFieldsetStyle, styleOptions === null || styleOptions === void 0 ? void 0 : styleOptions.fieldset);
-        Object.assign(params.form.style, formStyle);
+        Object.assign(form.style, formStyle);
         Object.assign(fieldSetParent.style, fieldSetParentStyle);
         Object.assign(fieldsetContainer.style, fieldsetContainerStyle);
         fieldSets.forEach((fieldSet, index) => {
             Object.assign(fieldSet.style, fieldsetStyle);
             fieldSet.classList.add(`fieldset${index}`);
         });
+        return { fieldSetParentStyle, fieldsetContainerStyle, formStyle, fieldsetStyle };
     }
     catch (error) {
         console.error(error);
@@ -57,7 +58,7 @@ exports.cssStyle = cssStyle;
 const lastTranslateXMap = new Map();
 function anime(options) {
     options.targets.forEach(target => {
-        const element = typeof target === 'string' ? document.querySelector(target) : target;
+        const element = typeof target === 'string' ? options.form.querySelector(target) : target;
         if (element) {
             const lastTranslateX = lastTranslateXMap.get(element) || 0;
             const translateX = options.translateX;
@@ -65,13 +66,20 @@ function anime(options) {
                 { transform: `translateX(${lastTranslateX}px)` },
                 { transform: `translateX(${translateX}px)` }
             ];
-            const _options = {
+            const _animateOptions = {
                 duration: 1000,
                 fill: 'forwards', // L'animation reste appliquée à la fin
                 easing: 'cubic-bezier(1, 0, 0, 1)' // Approximation de l'effet d'assouplissement easeInOutExpo
             };
+            const _unanimateOptions = {
+                fill: 'forwards',
+            };
             if (element.animate) {
-                element.animate(keyframes, _options);
+                if (options.isAnimate != false)
+                    element.animate(keyframes, _animateOptions);
+                else {
+                    element.animate(keyframes, _unanimateOptions);
+                }
                 lastTranslateXMap.set(element, translateX);
             }
         }
