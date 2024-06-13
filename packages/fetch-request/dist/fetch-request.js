@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * FetchRequest class designed to simplify the process of making HTTP requests within web applications.
@@ -19,94 +10,85 @@ class FetchRequest {
      */
     constructor(options) {
         this.options = options;
+        this.count = 0;
         /**
          * Asynchronous method that handles the form submission process.
          * It optionally executes pre-fetch and post-fetch callbacks and makes the HTTP request.
          */
-        this.submitForm = () => __awaiter(this, void 0, void 0, function* () {
+        this.submitForm = async () => {
             try {
                 if (this.options.callbacks && this.options.callbacks.onPreFetch) {
-                    yield this.preFetch();
+                    await this.preFetch();
                 }
-                yield this.run();
+                await this.run();
                 if (this.options.callbacks && this.options.callbacks.onPostFetch) {
-                    yield this.postFetch(this.response, this.status);
+                    await this.postFetch(this.response, this.status);
                 }
             }
             catch (error) {
-                this.handleError(error, undefined, 'Error executing query : ');
+                this.handleError(error, this.status, 'Error executing query : ');
             }
-        });
+        };
         /**
          * Asynchronous method that performs the HTTP request using the Fetch API.
          * It constructs the request based on the provided options and handles the response.
          */
-        this.run = () => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+        this.run = async () => {
             let response = null;
             try {
                 const { uri, data, options } = this.options;
                 if (!uri)
                     throw new Error("URI is required");
+                this.uri = uri;
+                this.data = data;
                 let finalUri = uri;
-                let body = null;
-                const method = (options === null || options === void 0 ? void 0 : options.method) || 'GET';
+                const method = options?.method || 'GET';
                 if (method === "GET" && data) {
                     finalUri = this.buildGetRequestUrl(uri, data);
                 }
-                else if (method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && data) {
-                    body = this.prepareRequestBody(data);
+                else if (!["GET", "HEAD", "OPTIONS"].includes(method) && data) {
+                    this.body = this.prepareRequestBody(data);
                 }
                 const fetchOptions = {
                     method: method,
-                    headers: options === null || options === void 0 ? void 0 : options.headers,
-                    body: body,
-                    credentials: options === null || options === void 0 ? void 0 : options.credentials,
-                    mode: options === null || options === void 0 ? void 0 : options.mode,
-                    cache: options === null || options === void 0 ? void 0 : options.cache,
-                    integrity: options === null || options === void 0 ? void 0 : options.integrity,
+                    headers: options?.headers,
+                    body: this.body,
+                    credentials: options?.credentials,
+                    mode: options?.mode,
+                    cache: options?.cache,
+                    integrity: options?.integrity,
                 };
-                if (method === "GET" || method === "HEAD" || method === "OPTIONS") {
+                if (["GET", "HEAD", "OPTIONS"].includes(method)) {
                     delete fetchOptions.body;
                 }
-                response = yield fetch(finalUri, fetchOptions);
-                this.status = response.status;
-                if (options) {
-                    const responseDataType = options.responseDataType;
-                    if (responseDataType) {
-                        this.response = responseDataType === "text" ? yield response.text() : yield response.json();
-                    }
-                }
-                if (((_a = this.options.callbacks) === null || _a === void 0 ? void 0 : _a.onSuccess) && response.ok) {
-                    this.options.callbacks.onSuccess(this.response);
-                }
+                await this.lazyFatching(finalUri, fetchOptions);
             }
             catch (error) {
                 this.handleError(error, response ? response.status : 0);
             }
-        });
+        };
         /**
          * Executes the pre-fetch callback, allowing for data modification before the request is sent.
          */
-        this.preFetch = () => __awaiter(this, void 0, void 0, function* () {
+        this.preFetch = async () => {
             if (typeof this.options.callbacks.onPreFetch === 'function') {
-                let data = yield this.options.callbacks.onPreFetch(this.options.data);
+                let data = await this.options.callbacks.onPreFetch(this.options.data);
                 if (data) {
                     this.options.data = data.hasOwnProperty('data') ? data.data : data;
                 }
             }
-        });
+        };
         /**
          * Executes the post-fetch callback, allowing for actions to be taken after the request has been processed.
          * @param response The response from the fetch request.
          * @param status The HTTP status code of the response.
          */
-        this.postFetch = (response, status) => __awaiter(this, void 0, void 0, function* () {
+        this.postFetch = async (response, status) => {
             if (this.options.submitter instanceof HTMLButtonElement) {
                 this.options.submitter.removeAttribute('disabled');
             }
             return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch(response, status) : undefined;
-        });
+        };
         this.attachSubmitterEvent();
     }
     /**
@@ -115,6 +97,63 @@ class FetchRequest {
      */
     attachSubmitterEvent() {
         this.options.submitter ? this.options.submitter.addEventListener('click', this.submitForm) : this.submitForm();
+    }
+    async lazyFatching(uri, fetchOptions) {
+        if (this.options) {
+            const options = this.options.options;
+            if (options && options.timeOut) {
+                const timeOut = options.timeOut;
+                const response = await fetch(uri, fetchOptions);
+                setTimeout(async () => {
+                    await this.handleResult(response, options);
+                }, timeOut);
+                return;
+            }
+            const response = await fetch(uri, fetchOptions);
+            await this.handleResult(response, options);
+        }
+    }
+    async handleResult(response, options) {
+        this.status = response.status;
+        const EXCLUDE_STATUS = [204];
+        if (options) {
+            const responseDataType = options.responseDataType;
+            if (responseDataType) {
+                if (!(this.status in EXCLUDE_STATUS))
+                    try {
+                        this.response = responseDataType === "text" ? await response.text() : await response.json();
+                    }
+                    catch (error) {
+                        try {
+                            this.response = await response.json();
+                        }
+                        catch (error) {
+                            this.response = await response.text();
+                        }
+                    }
+            }
+        }
+        if (this.options.callbacks?.onSuccess && response.ok) {
+            this.options.callbacks.onSuccess(this.response);
+        }
+        else if (this.options.callbacks?.onError && !(this.status in EXCLUDE_STATUS) && !response.ok) {
+            this.options.callbacks.onError(new Error(typeof this.response === "string" ? this.response : "Fetch Request Error"), response.status);
+        }
+    }
+    /**
+     * Repeats the execution of the current query
+     * @experimental This method is experimental. Its API may change without notice
+     * @param  data
+     */
+    async recursion(data) {
+        if (this.options.iteration) {
+            if (this.count < this.options.iteration) {
+                if (data)
+                    this.options.data = Object.assign(this.data, data);
+                await this.run();
+                this.count++;
+            }
+        }
     }
     /**
      * Constructs the URL for a GET request by appending query parameters.
@@ -132,10 +171,18 @@ class FetchRequest {
                 }
             }
         }
-        else {
+        else if (typeof data === 'object' && !Array.isArray(data)) {
             for (let [key, value] of Object.entries(data)) {
                 params.append(key, value);
             }
+        }
+        else if (Array.isArray(data)) {
+            for (let i = 0; i < data.length; i++) {
+                params.append(`${i}`, `${data[i]}`);
+            }
+        }
+        else {
+            params.append("data", `${data}`);
         }
         url.search = params.toString();
         return url.toString();
@@ -146,14 +193,59 @@ class FetchRequest {
      * @returns The prepared request body.
      */
     prepareRequestBody(data) {
-        var _a, _b;
-        if (((_a = this.options.options) === null || _a === void 0 ? void 0 : _a.requestDataConvert) === "form-data" && !(data instanceof FormData)) {
+        if (this.options.options?.requestDataConvert === "form-data") {
+            if (data instanceof FormData)
+                return data;
+            if (Array.isArray(data))
+                return this.convertArrayToFormData(data);
+            if (typeof data === "number" || typeof data === "string" || typeof data === "boolean")
+                return this.convertPrimaryDataToFormData(data);
             return this.convertObjectToFormData(data);
         }
-        else if (((_b = this.options.options) === null || _b === void 0 ? void 0 : _b.requestDataConvert) === "record") {
+        else if (this.options.options?.requestDataConvert === "record") {
+            if (Array.isArray(data))
+                return this.convertArrayToRecord(data);
+            if (typeof data === "number" || typeof data === "string" || typeof data === "boolean")
+                return this.convertPrimaryDataToRecord(data);
             return JSON.stringify(data);
         }
+        return this.stringify(data);
+    }
+    stringify(data) {
+        for (const key in data) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+                if (typeof data[key] === "object") {
+                    data[key] = JSON.stringify(data[key]);
+                }
+            }
+        }
         return data;
+    }
+    convertArrayToFormData(data) {
+        const formData = new FormData();
+        for (let i = 0; i < data.length; i++) {
+            if (Array.isArray(data[i]) || typeof data[i] === "object")
+                formData.set(`${i}`, JSON.stringify(data[i]));
+            else {
+                formData.set(`${i}`, `${data[i]}`);
+            }
+        }
+        return formData;
+    }
+    convertArrayToRecord(data) {
+        const record = {};
+        for (let i = 0; i < data.length; i++) {
+            record[i] = data[i];
+        }
+        return JSON.stringify(record);
+    }
+    convertPrimaryDataToFormData(data) {
+        const formData = new FormData();
+        formData.set("data", `${data}`);
+        return formData;
+    }
+    convertPrimaryDataToRecord(data) {
+        return JSON.stringify({ data });
     }
     /**
      * Converts an object to FormData.
@@ -162,8 +254,20 @@ class FetchRequest {
      */
     convertObjectToFormData(data) {
         const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+        Object.entries(data).forEach(([key, value]) => {
+            if (Array.isArray(value) || typeof value === "object")
+                formData.append(key, JSON.stringify(value));
+            else {
+                formData.append(key, value);
+            }
+        });
         return formData;
+    }
+    /**
+     * returns the response sent by the server, null if nothing was sent
+     */
+    get RESPONSE() {
+        return this.response ? this.response : null;
     }
     /**
      * Handles errors that occur during the fetch request process.
@@ -173,9 +277,8 @@ class FetchRequest {
      * @param message Optional custom error message.
      */
     handleError(error, status, message = 'Fetch Request Error: ') {
-        var _a;
         console.error(message, error);
-        if ((_a = this.options.callbacks) === null || _a === void 0 ? void 0 : _a.onError) {
+        if (this.options.callbacks?.onError) {
             this.options.callbacks.onError(error, status || 0);
         }
     }

@@ -23,6 +23,7 @@ declare interface FetchRequestOptions {
     requestDataConvert?: "form-data" | "record";
     responseDataType?: 'json' | 'text';
 }
+declare type DataType = Record<string, any> | FormData | Array<any> | string | number | boolean;
 /**
  * Interface for callbacks that can be executed at different stages of the fetch request process.
  * Includes optional methods for actions post-fetch, pre-fetch, on success, and on error.
@@ -39,10 +40,11 @@ declare interface FetchRequestCallbacks {
  */
 declare type FetchRequestType = {
     uri: string;
-    data?: Record<any, any> | FormData | null;
+    data?: DataType;
     submitter?: HTMLElement | null;
     options?: FetchRequestOptions;
     callbacks?: FetchRequestCallbacks;
+    iteration?: number;
 };
 /**
  * FetchRequest class designed to simplify the process of making HTTP requests within web applications.
@@ -52,6 +54,11 @@ export default class FetchRequest {
     private options;
     private response;
     private status;
+    private uri;
+    private body;
+    private data;
+    private count;
+    static RECURSION_COUNT: number;
     /**
      * @param options Configuration for the fetch request.
      */
@@ -71,6 +78,8 @@ export default class FetchRequest {
      * It constructs the request based on the provided options and handles the response.
      */
     private run;
+    private lazyFatching;
+    private handleResult;
     /**
      * Executes the pre-fetch callback, allowing for data modification before the request is sent.
      */
@@ -81,6 +90,12 @@ export default class FetchRequest {
      * @param status The HTTP status code of the response.
      */
     private postFetch;
+    /**
+     * Repeats the execution of the current query
+     * @experimental This method is experimental. Its API may change without notice
+     * @param  data
+     */
+    recursion(data?: Record<string, any> | FormData): Promise<void>;
     /**
      * Constructs the URL for a GET request by appending query parameters.
      * @param uri The base URI for the request.
@@ -94,12 +109,21 @@ export default class FetchRequest {
      * @returns The prepared request body.
      */
     private prepareRequestBody;
+    private stringify;
+    private convertArrayToFormData;
+    private convertArrayToRecord;
+    private convertPrimaryDataToFormData;
+    private convertPrimaryDataToRecord;
     /**
      * Converts an object to FormData.
      * @param data The data object to convert.
      * @returns The FormData representation of the data.
      */
     private convertObjectToFormData;
+    /**
+     * returns the response sent by the server, null if nothing was sent
+     */
+    get RESPONSE(): string | Record<string, any>;
     /**
      * Handles errors that occur during the fetch request process.
      * Logs the error and executes the onError callback if provided.
