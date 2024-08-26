@@ -53,3 +53,10 @@ export declare interface ProgressingInterface {
         progress: number;
     };
 }
+export declare interface FieldSetGetterData {
+    template?: HTMLFieldSetElement;
+    nextButton?: HTMLElement;
+    spinner?: HTMLElement | string;
+    shouldFetch?: boolean;
+    callback?: (...data: any[]) => {};
+}

@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/progress-form",
-  "version": "1.4.21",
+  "version": "2.4.21",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -9,10 +9,10 @@
   },
   "homepage": "https://github.com/Nelsallg/easylibs/tree/1.0.0/packages/progress-form",
   "license": "ISC",
-  "main": "dist/progress-form.js",
   "types": "dist/@types/progress-form.d.ts",
   "type": "commonjs",
-  "module": "dist/progress-form.js",
+  "main": "dist/progress-form.js",
+  "module": "dist/progress-fom.esm.js",
   "keywords": [
     "form",
     "progress",

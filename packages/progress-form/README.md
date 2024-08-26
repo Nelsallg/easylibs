@@ -1,6 +1,8 @@
-# Progress Form
+# ProgressForm Library
 
-The `ProgressForm` class provides a way to create a multi-step form with a progress bar. The form is divided into multiple fieldsets, and the user can navigate between the fieldsets using the "Next" and "Previous" buttons. The progress bar indicates the user's progress through the form.
+## Introduction
+
+The `ProgressForm` class provides an elegant solution for creating multi-step forms with a progress bar. It allows users to navigate through different sections of a form efficiently by breaking it down into manageable fieldsets. Each step of the form is displayed one at a time, and users can move forward or backward through the steps using the provided navigation buttons. The progress bar dynamically reflects the user's current position within the form.
 
 ![GitHub stars](https://img.shields.io/github/stars/Nelsallg/easylibs?style=social)
 ![GitHub issues](https://img.shields.io/github/issues/Nelsallg/easylibs)
@@ -8,268 +10,249 @@ The `ProgressForm` class provides a way to create a multi-step form with a progr
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![jsDelivr downloads](https://img.shields.io/jsdelivr/npm/hm/@easylibs/progress-form)
 
+## Features
+
+- **Progressive Form Handling**: Easily manage and transition between multiple steps of a form.
+- **Lazy Loading**: Dynamically load form sections as needed, improving performance and user experience.
+- **Customizable Styles**: Adjust the appearance of the form using customizable style options.
+- **Built-in Validations**: Automatically validate form fields on the client side to ensure data integrity.
+- **Flexible Event Handling**: Customize form behavior by hooking into various events during form progression.
+
 ## Installation
 
-To install the `ProgressForm` class, you can use npm:
+To install the `ProgressForm` library, use one of the following methods:
+
+**Via npm:**
 
 ```bash
 npm install @easylibs/progress-form
-# Or
+```
+
+**Via Yarn:**
+
+```bash
 yarn add @easylibs/progress-form
-# Or
+```
+
+**Via pnpm:**
+
+```bash
 pnpm add @easylibs/progress-form
 ```
 
-Or use direct inclusion with CDN:
+Alternatively, you can include the library directly from a CDN:
+
+**Minified:**
 
 ```html
-<!--MINIFIED-->
 <script src="https://cdn.jsdelivr.net/npm/@easylibs/progress-form@latest/dist/progress-form.min.js"></script>
 <script src="https://unpkg.com/@easylibs/progress-form@latest/dist/progress-form.min.js"></script>
-<!-- OR UNMINIFIED-->
+```
+
+**Unminified:**
+
+```html
 <script src="https://cdn.jsdelivr.net/npm/@easylibs/progress-form@latest/dist/progress-form.js"></script>
 <script src="https://unpkg.com/@easylibs/progress-form@latest/dist/progress-form.js"></script>
 ```
 
 ## Usage
 
-To use the `ProgressForm` class, you need to create a form element and add the fieldsets to the form. Each fieldset should contain the inputs for one step of the form.
+### Basic Usage with `ProgressForm`
 
-```html
-<form id="progress-form" method="post">
-        <div fieldset__parent>
-          <div fieldset__container>
-            <fieldset>
-              <label for="name">Name:</label>
-              <input type="text" id="name">
-              <button type="button" __next__>next</button>
-            </fieldset>
-            <fieldset>
-              <label for="surname">Surname:</label>
-              <input type="text" id="surname">
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
-            </fieldset>
-            <fieldset>
-              <label for="sex">Sex:</label>
-              <select name="" id="">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
-            </fieldset>
-            <fieldset>
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email">
-              <button type="button" __prev__>previous</button>
-              <button type="button" __next__>next</button>
-            </fieldset>
-            <fieldset>
-              <label for="password">Password:</label>
-              <input type="password" id="password"  name="password">
-              <button type="button" __prev__>previous</button>
-              <button type="button" id="submitter">submit</button>
-            </fieldset>
-          </div>
-        </div>
-      </form>
-```
+To create a multi-step form using `ProgressForm`, you need to structure your HTML with fieldsets. Each fieldset represents a step in the form.
 
-Next, you need to create a `ProgressForm` object and pass the form element to the constructor.
-
-```javascript
-import ProgressForm from "@easylibs/progress-form";
-const form = document.getElementById('progress-form');
-const progressForm = new ProgressForm(form);
-```
-
-Finally, you need to call the `run()` method on the `ProgressForm` object. This will initialize the form and add the event listeners for the "Next" and "Previous" buttons.
-
-```javascript
-progressForm.run();
-```
-
-**`NB:`** This configuration is normally sufficient to correctly initialize the form, but you may want to modify the width of your form. We strongly recommend that you do this directly via the `translateX` property of `ProgressForm`, this will correctly adjust the movement of the Fieldsets
-
-* Exemple:
-
-```javascript
-const translateX = -560;
-progressForm.run({ translateX });
-```
-
-Note also that if you have required fields, the progress of the form will be automatically prevented in the event of an invalid field. Validation is only done on the client side via the corresponding HTML attributes, so there is no server-side validation
-
-## Lazy running
-
-The previous case evokes a particular situation. Let's assume that all fields are already available in the DOM. However, consider a time when we do not want to display all sets of fields simultaneously, but rather only display the first one, provided the user has successfully validated the data in the form to proceed to the next step.
-
-To achieve this, `ProgressForm` offers a `lazyRun()` method which allows you to initialize only the process, then combined with the `next()` and `prev()` methods gives you full control over when you want to move to the next step.
-
-***1- Create a backend file using the language of your choice, PHP in our case.***
-
-```php
-// backend.php
-<?php
-$template = [
-    'template' => '<fieldset class="fieldset1">
-                    <label for="name" required-field>Name:</label>
-                    <input type="text" name="name" id="name">
-                    <div class="button-container">
-                      <button type="button" __prev__>previous</button>
-                      <button type="button" __next__>next</button>
-                    </div>
-            </fieldset>'
-];
-$json_data = json_encode($template);
-header('Content-Type: application/json');
-echo $json_data;
-?>
-```
-
-***2- Set first fieldset html***
+**HTML Example:**
 
 ```html
 <form id="progress-form" method="post">
   <div fieldset__parent>
     <div fieldset__container>
-      <fieldset> <!-- This is the first fieldset and is mandatory to start. !-->
-        <label for="photo" required-field>Photo:</label>
-        <input type="file" name="photo" id="photo" multiple="multiple">
-        <button type="button" __next__>next</button>
+      <!-- First Fieldset -->
+      <fieldset>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <button type="button" __next__>Next</button>
+      </fieldset>
+      
+      <!-- Second Fieldset -->
+      <fieldset>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname">
+        <button type="button" __prev__>Previous</button>
+        <button type="button" __next__>Next</button>
+      </fieldset>
+      
+      <!-- Third Fieldset -->
+      <fieldset>
+        <label for="sex">Sex:</label>
+        <select id="sex">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <button type="button" __prev__>Previous</button>
+        <button type="button" __next__>Next</button>
+      </fieldset>
+      
+      <!-- Fourth Fieldset -->
+      <fieldset>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <button type="button" __prev__>Previous</button>
+        <button type="button" __next__>Next</button>
+      </fieldset>
+      
+      <!-- Fifth Fieldset -->
+      <fieldset>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <button type="button" __prev__>Previous</button>
+        <button type="button" id="submitter">Submit</button>
       </fieldset>
     </div>
   </div>
 </form>
-<script type="module" src="./build/bundle.js"></script>
 ```
 
-***3- run js progressForm instance***
+**JavaScript Example:**
 
 ```javascript
-import Utils from "@easylibs/utils";
-import FetchRequest from "@easylibs/fetch-request";
+import {ProgressForm} from "@easylibs/progress-form";
 
-const form = document.querySelector("#progress-form");
-const progress = new ProgressForm(form);
+// Select the form element
+const form = document.getElementById('progress-form');
 
-progress.lazyRun(6,{
-  fieldsetParent:{
-    width:"null"
-  },
-  fieldsetContainer:{
-    justifyContent:'null' // It is recommended in lazyRun to disable the CSS property `justifyContent` of `fieldsetContainer` because due to its length, the other fields apart from the first one will end up outside the visible space.
-  },
-  fieldset:{
-    width:"650px"
-  },
-});
+// Create a new ProgressForm instance
+const progressForm = new ProgressForm(form);
+
+// Initialize the form
+progressForm.run();
 ```
 
-**`lazyRun(fieldsetLength,progressOptions,styleOptions)`**
-This method takes as its first argument the length of the fieldsets, which is simply the number of fieldsets you want to have, and then the two other arguments correspond to the first two arguments of the previous `run()` method.
+**Customizing Fieldset Movement:**
+
+You can adjust the form's appearance and fieldset transitions using the `translateX` option:
 
 ```javascript
-const nextButton = form.querySelector("button");
+const translateX = -560; // Adjust this value based on your design
+progressForm.run({ translateX });
+```
 
-nextButton.addEventListener('click',()=>{
-  new FetchRequest({
-    uri:"http://localhost:8000/backend.php",
-    options:{
-      method:"POST",
-      responseDataType:"text"
-    },
-    callbacks:{
-      onSuccess(response) {
-        // Convert the JSON text into HTML element
-        const template = Utils.textToHTMLElement(response.template);
-        const fieldsetContainer = document.querySelector('[fieldset__container]');
-        // Select the previous button in the template
-        const prevButton = template.querySelector("[__prev__]");
-      },
+### Advanced Usage with `LazyProgressForm`
+
+When dealing with large forms or dynamic content, `LazyProgressForm` allows for efficient lazy loading of fieldsets. This means that fieldsets are only loaded as needed, rather than all at once.
+
+**JavaScript Example:**
+
+```javascript
+import {LazyProgressForm} from "@easylibs/progress-form";
+
+// Select the form element
+const lazyFormElement = document.querySelector('form');
+
+// Create a new LazyProgressForm instance
+const url = "https://exemple.com/api"
+const lazyProgressForm = new LazyProgressForm(lazyFormElement, url);
+
+// Initialize the lazy form with configuration options
+lazyProgress.lazyRun(3,{translateX:-700},{
+    form:{ width:"700px" },
+    fieldset:{ width:"640px" },
+    fieldsetContainer:{
+        justifyContent:"null"
     }
-  })
-})
-
+}).fetchNextFieldSet({spinner:"Chargement...",shouldFetch: true})
 ```
 
-At this stage, we already have the buttons to proceed to the next step and the one to go back to the previous step in order to be able to execute the next and prev methods. However, this is not sufficient because these two methods also require knowing the indexes and the value of the X translation of each fieldset, which is not obvious. To achieve this, we will use a variable `PROGRESSING_DATA` available during the execution of `lazyRun()`
+## API Reference
 
-```javascript
-onSuccess(response) {
-  // Convert the JSON text into HTML element
-  const template = Utils.textToHTMLElement(response.template);
-  const fieldsetContainer = document.querySelector('[fieldset__container]');
+### ProgressForm
 
-  // Select the previous button in the template
-  const prevButton = template.querySelector("[__prev__]");
+- **constructor(form: HTMLFormElement, enableDefaultCssStyle: boolean = true)**
+  - Initializes a new `ProgressForm` instance.
+  - `form`: The HTML form element to be managed.
+  - `enableDefaultCssStyle`: Whether to apply default CSS styles (default: `true`).
 
-  // Retrieve variable
-  const PROGRESSING_DATA = progress.PROGRESSING_DATA
-  const nextIndex = PROGRESSING_DATA['fieldset1'].i;
-  const nextTranslateX = PROGRESSING_DATA['fieldset1'].translateX;
-  const prevIndex = PROGRESSING_DATA['fieldset1'].prev.i;
-  const prevTranslateX = PROGRESSING_DATA['fieldset1'].prev.translateX;
+- **run(progressOptions?: ProgressFormType, styleOptions?: StyleOptions, preventProgress?: PreventType)**
+  - Starts the form progression.
+  - `progressOptions`: Configuration for form progression (e.g., transition effects).
+  - `styleOptions`: Custom styles for the form.
+  - `preventProgress`: Conditions under which progression should be prevented.
 
-  // Now, retrieve the CSS styles attached to the fieldsets.
-  const renderedStyle = prsogress.RENDERED_STYLE.fieldsetStyle
+- **next(nextIndex: number, nextTranslateX: number, nextButton?: HTMLElement, progressElement?: HTMLElement, nextProgress?: number)**
+  - Handles the "Next" button click event.
+  - `nextIndex`: Index of the next fieldset.
+  - `nextTranslateX`: X translation value for the transition.
+  - `nextButton`: The button element that triggered the action.
+  - `progressElement`: Element displaying progress.
+  - `nextProgress`: Progress value.
 
-  // Apply those styles to the template and append it in the DOM
-  Object.assign(template.style,renderedStyle);
-  fieldsetContainer.appendChild(template);
+- **prev(prevIndex: number, prevTranslateX: number, prevButton?: HTMLElement, progressElement?: HTMLElement, prevProgress?: number)**
+  - Handles the "Previous" button click event.
+  - `prevIndex`: Index of the previous fieldset.
+  - `prevTranslateX`: X translation value for the transition.
+  - `prevButton`: The button element that triggered the action.
+  - `progressElement`: Element displaying progress.
+  - `prevProgress`: Progress value.
 
-  // Finally, execute the next() and prev() methods by passing the corresponding parameters.
-  /**
-   * At this stage, the next() method does not need a nextButton because the click event has already been bound to this button during fetching. By executing the next() method like this, without a button, it will automatically run without waiting for a click, unlike the prev() method.
-   */
-  progress.prev(prevIndex,prevTranslateX,prevButton)
-  progress.next(nextIndex,nextTranslateX)
-},
-```
+### LazyProgressForm
 
-Now, when the user clicks on the `next` button, the template `(fieldset1)` will be retrieved to the server. When the request is successful with a status 200, the template will be converted into an HTML element, injected into the DOM, and displayed as a normal progressive form thanks to the `next` method attached to its. Furthermore, if the user clicks on the `previous` button, they will be redirected to the preceding fieldset `(fieldset0)` thanks to the `prev` method attached to this button.
-This approach will prove particularly effective for server-side form verification for exemple, unlike the previous approach.
+- **constructor(form: HTMLFormElement, url: string, parentTarget?: string)**
+  - Initializes a new `LazyProgressForm` instance.
+  - `form`: The HTML form element to be managed.
+  - `url`: URL to fetch fieldsets from.
+  - `parentTarget`: Optional CSS class for the parent container.
+
+- **lazyRun(fieldsetLength: number, progressOptions?: ProgressFormType, styleOptions?: StyleOptions)**
+  - Initializes the lazy loading process.
+  - `fieldsetLength`: Number of fieldsets.
+  - `progressOptions`: Configuration for form progression.
+  - `styleOptions`: Custom styles for the form.
+
+- **fetchNextFieldSet(data: FieldSetGetterData)**
+  - Fetches and displays the next fieldset.
+  - `data.template`: The template for the fieldset.
+  - `data.spinner`: Spinner or loading indicator.
+  - `data.shouldFetch`: Whether to fetch the next fieldset.
+  - `data.callback`: Function to execute after the fieldset is loaded.
+
+## Events
+
+### `onPreNext`
+
+- **Description**: Triggered before transitioning to the next fieldset.
+- **Use Case**: Use this event to perform actions or validations before moving to the next step.
+
+### `onPostNext`
+
+- **Description**: Triggered after transitioning to the next fieldset.
+- **Use Case**: Use this event to update UI elements or perform actions once the transition is complete.
 
 ## Styling
 
-The `ProgressForm` class includes a default CSS style that you can use to style the form. You can also override the default CSS style by passing a `styleOptions` object to the `run()` method.
+Customize the
 
-The `styleOptions` object can contain the following properties:
+ appearance of the form by providing style options via the `run` or `lazyRun` methods. Apply custom classes to the form, fieldsets, and parent containers to match your website’s design.
 
-* `form`: The CSS style for the form element.
-* `fieldsetParent`: The CSS style for the fieldset parent element.
-* `fieldsetContainer`: The CSS style for the fieldset container element.
-* `fieldset`: The CSS style for the fieldset elements.
+**Note**: Since version 1.1.10, modifying CSS styles directly through the `ProgressForm` instance is less common. Instead, adjust styles using your CSS stylesheet.
 
-**Alert ! `since version 1.1.10 it is no longer useful to modify the css style from the` `ProgressForm` `instance unless necessary.`**
+**Example**:
 
-* Exemple:
-In this code we want to deactivate the `Width` properties of `Form` and `FieldSetParent`.
+To deactivate default width properties of `Form` and `FieldSetParent`, use custom styles:
 
-```javascript
-const form = document.getElementById('progress-form');
-const translateX = -560;
-progressForm.run({ translateX }, {
-  from:{
-    width:"null"
-  },
-  fieldsetParent:{
-    width:"null"
-  }
-});
+```css
+/* Example of custom CSS to adjust form styling */
+.custom-form-class {
+    /* Custom styles */
+}
 ```
 
 ![A preview of the first fieldset](./src/assets/form-image.png)
 
-* Note:  These elements do not contain all existing css properties, but only the one necessary for correct initialization of the form. You should therefore modify or add additional css properties from your css style sheet.
-
 ## Conclusion
 
-The `ProgressForm` class simplifies the creation of multi-step forms with an integrated progress bar, enhancing user experience in navigating through complex input sequences. By dividing forms into manageable steps and providing a visual indicator of progress, this class streamlines user interactions and improves form completion rates.
+The `ProgressForm` class offers a powerful and user-friendly solution for creating multi-step forms with integrated progress indicators. It simplifies form navigation and enhances the user experience by breaking down complex forms into manageable steps. With its easy installation, customization options, and advanced features like lazy loading, `ProgressForm` is an excellent choice for modern web applications.
 
-With straightforward installation via npm and easy-to-use methods, integrating the `ProgressForm` into your web application can significantly enhance the form-filling experience for your users.
-
-Remember to explore the customizable styling options provided by the class to harmonize the form's appearance with your website's design theme.
+Explore the customizable styling options to ensure the form integrates seamlessly with your website's design.
 
 ---
