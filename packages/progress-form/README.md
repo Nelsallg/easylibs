@@ -214,6 +214,7 @@ lazyProgress.lazyRun(3,{translateX:-700},{
   - `data.template`: The template for the fieldset.
   - `data.spinner`: Spinner or loading indicator.
   - `data.shouldFetch`: Whether to fetch the next fieldset.
+  - `data.extraData`: Additional data to add to the form at each step
   - `data.callback`: Function to execute after the fieldset is loaded.
 
 ## Events

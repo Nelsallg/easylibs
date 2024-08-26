@@ -1,6 +1,5 @@
 import ProgressForm from "./default-progress-form";
-import { FieldSetGetterData, StyleOptions } from "./scripts/interfaces";
-import { ProgressFormType } from "./scripts/types";
+import { FieldSetGetterData, LazyOptions } from "./scripts/interfaces";
 /**
  * LazyProgressForm est une classe qui étend ProgressForm pour gérer des formulaires à étapes
  * avec une progression paresseuse (lazy loading) des fieldsets.
@@ -19,25 +18,22 @@ export default class LazyProgressForm extends ProgressForm {
     constructor(form: HTMLFormElement, url: string, parentTarget?: string);
     /**
      * Initialise la progression paresseuse des fieldsets.
-     * @param {number} fieldsetLength - Le nombre de fieldsets à charger.
-     * @param {ProgressFormType} [progressOptions] - Options pour la progression du formulaire.
-     * @param {StyleOptions} [styleOptions] - Options de style pour le formulaire.
      * @returns {LazyProgressForm} - Retourne l'instance de LazyProgressForm.
      */
-    lazyRun(fieldsetLength: number, progressOptions?: ProgressFormType, styleOptions?: StyleOptions): LazyProgressForm;
+    lazyRun(lazyOptions: LazyOptions): LazyProgressForm;
     /**
      * Gère la récupération et l'affichage du prochain fieldset.
      * @param {FieldSetGetterData} data - Les données nécessaires pour récupérer le prochain fieldset.
      */
     fetchNextFieldSet(data: FieldSetGetterData): void;
     /**
-     * Récupère les données du formulaire pour le fieldset donné.
-     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-     * @param {HTMLFormElement} [form] - L'élément de formulaire HTML (facultatif).
-     * @param {string} [i] - L'indice du fieldset (facultatif).
-     * @returns {FormData} - Les données du formulaire sous forme de FormData.
-     */
-    getFormData(template: HTMLFieldSetElement, form?: HTMLFormElement, i?: string): FormData;
+   * Récupère les données du formulaire pour le fieldset donné.
+   * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
+   * @param {string} [i] - L'indice du fieldset (facultatif).
+   * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
+   * @returns {FormData} - Les données du formulaire sous forme de FormData.
+   */
+    getFormData(template: HTMLFieldSetElement, i?: string, extraData?: Record<string, any>): FormData;
     /**
      * Insère le fieldset reçu dans le DOM et gère les événements.
      * @param {any} response - La réponse du serveur contenant le template du fieldset.

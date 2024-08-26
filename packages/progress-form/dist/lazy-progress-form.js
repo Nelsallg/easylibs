@@ -36,15 +36,13 @@ class LazyProgressForm extends default_progress_form_1.default {
     }
     /**
      * Initialise la progression paresseuse des fieldsets.
-     * @param {number} fieldsetLength - Le nombre de fieldsets à charger.
-     * @param {ProgressFormType} [progressOptions] - Options pour la progression du formulaire.
-     * @param {StyleOptions} [styleOptions] - Options de style pour le formulaire.
      * @returns {LazyProgressForm} - Retourne l'instance de LazyProgressForm.
      */
-    lazyRun(fieldsetLength, progressOptions, styleOptions) {
+    lazyRun(lazyOptions) {
         var _a;
         this.isLazyRunCalled = true;
         this.isLazyProgress = true;
+        let { fieldsetLength, progressOptions, styleOptions } = lazyOptions;
         this.lazyFieldsetLength = fieldsetLength;
         let { fieldSets, nextIndex, prevTranslateX, PROGRESS, progressElement } = this.init(progressOptions);
         let translateX = this.translateX - this.fieldsetMarginWidth / this.fieldsetLength;
@@ -92,7 +90,7 @@ class LazyProgressForm extends default_progress_form_1.default {
         if (!this.isLazyRunCalled) {
             throw new Error("You must call LazyProgressForm.lazyRun() before.");
         }
-        let { callback, spinner, template, shouldFetch } = data;
+        let { callback, spinner, template, shouldFetch, extraData } = data;
         template = template ? template : this.form.querySelector("fieldset");
         const nextButton = template.querySelector("[__next__]");
         if (nextButton) {
@@ -108,7 +106,7 @@ class LazyProgressForm extends default_progress_form_1.default {
                         if (previousFieldset) {
                             new fetch_request_1.default({
                                 uri: this.url,
-                                data: this.getFormData(previousFieldset, this.form, i),
+                                data: this.getFormData(previousFieldset, i, extraData),
                                 options: {
                                     method: "POST",
                                     responseDataType: "json",
@@ -144,7 +142,7 @@ class LazyProgressForm extends default_progress_form_1.default {
                 }
                 new fetch_request_1.default({
                     uri: this.url,
-                    data: this.getFormData(template, this.form, i),
+                    data: this.getFormData(template, i, extraData),
                     options: {
                         method: "POST",
                         responseDataType: "json",
@@ -173,6 +171,7 @@ class LazyProgressForm extends default_progress_form_1.default {
                                 template: elements.fieldset,
                                 nextButton,
                                 shouldFetch: data.shouldFetch,
+                                extraData
                             });
                             if (!nextButton) {
                                 // On soumet le formulaire car on est à la fin de la progression
@@ -188,22 +187,25 @@ class LazyProgressForm extends default_progress_form_1.default {
         }
     }
     /**
-     * Récupère les données du formulaire pour le fieldset donné.
-     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-     * @param {HTMLFormElement} [form] - L'élément de formulaire HTML (facultatif).
-     * @param {string} [i] - L'indice du fieldset (facultatif).
-     * @returns {FormData} - Les données du formulaire sous forme de FormData.
-     */
-    getFormData(template, form, i) {
-        let formData = null;
-        if (null === formData) {
-            formData = new FormData();
-            let fields = template.querySelectorAll("input,select,textarea");
-            fields.forEach((field) => {
-                if (i)
-                    formData.set("nextIndex", i);
-                formData.set(field.name, field.value);
-            });
+   * Récupère les données du formulaire pour le fieldset donné.
+   * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
+   * @param {string} [i] - L'indice du fieldset (facultatif).
+   * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
+   * @returns {FormData} - Les données du formulaire sous forme de FormData.
+   */
+    getFormData(template, i, extraData) {
+        let formData = new FormData();
+        let fields = template.querySelectorAll("input,select,textarea");
+        fields.forEach((field) => {
+            formData.set(field.name, field.value);
+        });
+        if (i) {
+            formData.set("nextIndex", i);
+        }
+        if (extraData) {
+            for (const [key, value] of Object.entries(extraData)) {
+                formData.set(key, value);
+            }
         }
         return formData;
     }

@@ -1,3 +1,4 @@
+import { ProgressFormType } from "./types";
 export declare interface StyleOptions {
     form?: {
         width?: string;
@@ -58,5 +59,16 @@ export declare interface FieldSetGetterData {
     nextButton?: HTMLElement;
     spinner?: HTMLElement | string;
     shouldFetch?: boolean;
+    extraData?: Record<string, any>;
     callback?: (...data: any[]) => {};
+}
+/**
+   * @param {number} fieldsetLength - Le nombre de fieldsets à charger.
+   * @param {ProgressFormType} [progressOptions] - Options pour la progression du formulaire.
+   * @param {StyleOptions} [styleOptions] - Options de style pour le formulaire.
+*/
+export declare interface LazyOptions {
+    fieldsetLength: number;
+    progressOptions?: ProgressFormType;
+    styleOptions?: StyleOptions;
 }
