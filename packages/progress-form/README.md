@@ -155,13 +155,31 @@ const url = "https://exemple.com/api"
 const lazyProgressForm = new LazyProgressForm(lazyFormElement, url);
 
 // Initialize the lazy form with configuration options
-lazyProgress.lazyRun(3,{translateX:-700},{
+lazyProgress.lazyRun({
+  fieldsetLength:3,
+  progressOptions:{
+    translateX:-700
+  },
+  styleOptions:{
     form:{ width:"700px" },
     fieldset:{ width:"640px" },
     fieldsetContainer:{
         justifyContent:"null"
     }
-}).fetchNextFieldSet({spinner:"Chargement...",shouldFetch: true})
+  }
+})
+
+lazyProgress.fetchNextFieldSet({
+  spinner:"Chargement...",
+  shouldFetch: true,
+  callback(response, status, index, ...data){
+    switch(index){
+      case 1: // is first fetched fieldset
+        //Do something, for example graft the events that this fieldset 1 needs
+      case 2: // ...and so on depending on the number of fieldsets you have
+    }
+  }
+})
 ```
 
 ## API Reference
@@ -215,7 +233,7 @@ lazyProgress.lazyRun(3,{translateX:-700},{
   - `data.spinner`: Spinner or loading indicator.
   - `data.shouldFetch`: Whether to fetch the next fieldset.
   - `data.extraData`: Additional data to add to the form at each step
-  - `data.callback`: Function to execute after the fieldset is loaded.
+  - `data.callback(response, status, index, ...data)`: Function to execute after the fieldset is loaded.
 
 ## Events
 

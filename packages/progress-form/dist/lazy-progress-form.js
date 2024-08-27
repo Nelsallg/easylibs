@@ -97,6 +97,9 @@ class LazyProgressForm extends default_progress_form_1.default {
             nextButton.addEventListener("click", (e) => {
                 var _a, _b;
                 e.preventDefault();
+                if (!this.isValidFieldset(template)) {
+                    return;
+                }
                 const nextButtonInner = nextButton.innerHTML;
                 const i = nextButton.dataset.nextIndex;
                 let existingFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${i}`);
@@ -113,23 +116,33 @@ class LazyProgressForm extends default_progress_form_1.default {
                                 },
                                 callbacks: {
                                     onPreFetch() {
-                                        if (spinner) {
-                                            nextButton.innerHTML = "";
-                                            if (typeof spinner === "string") {
-                                                nextButton.innerHTML = spinner;
+                                        if (nextButton) {
+                                            if (spinner) {
+                                                nextButton.innerHTML = "";
+                                                if (typeof spinner === "string") {
+                                                    nextButton.innerHTML = spinner;
+                                                }
+                                                else {
+                                                    nextButton.appendChild(spinner);
+                                                }
                                             }
-                                            else {
-                                                nextButton.appendChild(spinner);
-                                            }
+                                            nextButton.setAttribute("disabled", "disabled");
                                         }
-                                        nextButton.setAttribute("disabled", "disabled");
                                     },
                                     onPostFetch(response, status) {
-                                        nextButton.innerHTML = nextButtonInner;
-                                        nextButton.removeAttribute("disabled");
+                                        if (nextButton) {
+                                            nextButton.innerHTML = nextButtonInner;
+                                            nextButton.removeAttribute("disabled");
+                                        }
+                                        if (callback)
+                                            callback(response, status, parseInt(i));
                                     },
                                     onSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
                                         this._next(parseInt(i));
+                                        if (!nextButton) {
+                                            if (callback)
+                                                callback(response, 200, parseInt(i));
+                                        }
                                     }),
                                 },
                             });
@@ -150,32 +163,45 @@ class LazyProgressForm extends default_progress_form_1.default {
                     callbacks: {
                         onPreFetch() {
                             if (spinner) {
-                                nextButton.innerHTML = "";
-                                if (typeof spinner === "string") {
-                                    nextButton.innerHTML = spinner;
+                                if (nextButton) {
+                                    nextButton.innerHTML = "";
+                                    if (typeof spinner === "string") {
+                                        nextButton.innerHTML = spinner;
+                                    }
+                                    else {
+                                        nextButton.appendChild(spinner);
+                                    }
                                 }
-                                else {
-                                    nextButton.appendChild(spinner);
-                                }
+                                nextButton.setAttribute("disabled", "disabled");
                             }
-                            nextButton.setAttribute("disabled", "disabled");
                         },
                         onPostFetch(response, status) {
                             nextButton.innerHTML = nextButtonInner;
                             nextButton.removeAttribute("disabled");
+                            if (callback)
+                                callback(response, status, parseInt(i));
                         },
                         onSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                            const elements = this.greftEvents(response, parseInt(i));
+                            const elements = this.graftEvents(response, parseInt(i));
                             const nextButton = elements.nextButton;
                             this.fetchNextFieldSet({
                                 template: elements.fieldset,
+                                spinner,
                                 nextButton,
                                 shouldFetch: data.shouldFetch,
-                                extraData
+                                extraData,
+                                callback(response, status, index, ...data) { callback(response, status, index); },
                             });
                             if (!nextButton) {
                                 // On soumet le formulaire car on est à la fin de la progression
-                                callback(elements.submitButton, elements.fieldset);
+                                const { submitButton } = elements;
+                                submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("click", (e) => {
+                                    e.preventDefault();
+                                    submitButton.innerHTML = nextButtonInner;
+                                    submitButton.setAttribute("disabled", "disabled");
+                                });
+                                if (callback)
+                                    callback(response, 200, parseInt(i), elements.submitButton, elements.fieldset);
                             }
                             else {
                                 nextButton.setAttribute("data-next-index", String(parseInt(i) + 1));
@@ -215,7 +241,7 @@ class LazyProgressForm extends default_progress_form_1.default {
      * @param {number} i - L'indice du fieldset actuel.
      * @returns {Record<string,any>} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
      */
-    greftEvents(response, i) {
+    graftEvents(response, i) {
         const fieldsetContainer = document.querySelector(`${this.parentTarget ? this.parentTarget + " " : ""}[fieldset__container]`);
         const fieldset = utils_1.default.textToHTMLElement(response.template);
         const prevButton = fieldset.querySelector("[__prev__]");

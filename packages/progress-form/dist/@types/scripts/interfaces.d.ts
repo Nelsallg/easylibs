@@ -60,7 +60,7 @@ export declare interface FieldSetGetterData {
     spinner?: HTMLElement | string;
     shouldFetch?: boolean;
     extraData?: Record<string, any>;
-    callback?: (...data: any[]) => {};
+    callback?: (response: any, status: number, index: number, ...data: any[]) => any;
 }
 /**
    * @param {number} fieldsetLength - Le nombre de fieldsets à charger.

@@ -40,7 +40,7 @@ export default class LazyProgressForm extends ProgressForm {
      * @param {number} i - L'indice du fieldset actuel.
      * @returns {Record<string,any>} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
      */
-    protected greftEvents(response: any, i: number): Record<string, any>;
+    protected graftEvents(response: any, i: number): Record<string, any>;
     /**
      * Déplace la progression vers le fieldset suivant.
      * @param {number} i - L'indice du fieldset actuel.
