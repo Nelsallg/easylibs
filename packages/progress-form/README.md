@@ -117,7 +117,7 @@ To create a multi-step form using `ProgressForm`, you need to structure your HTM
 **JavaScript Example:**
 
 ```javascript
-import {ProgressForm} from "@easylibs/progress-form";
+import { ProgressForm } from "@easylibs/progress-form";
 
 // Select the form element
 const form = document.getElementById('progress-form');
@@ -145,37 +145,37 @@ When dealing with large forms or dynamic content, `LazyProgressForm` allows for 
 **JavaScript Example:**
 
 ```javascript
-import {LazyProgressForm} from "@easylibs/progress-form";
+import { LazyProgressForm } from "@easylibs/progress-form";
 
 // Select the form element
 const lazyFormElement = document.querySelector('form');
 
 // Create a new LazyProgressForm instance
-const url = "https://exemple.com/api"
+const url = "https://example.com/api"
 const lazyProgressForm = new LazyProgressForm(lazyFormElement, url);
 
 // Initialize the lazy form with configuration options
-lazyProgress.lazyRun({
-  fieldsetLength:3,
-  progressOptions:{
-    translateX:-700
+lazyProgressForm.lazyRun({
+  fieldsetLength: 3,
+  progressOptions: {
+    translateX: -700
   },
-  styleOptions:{
-    form:{ width:"700px" },
-    fieldset:{ width:"640px" },
-    fieldsetContainer:{
-        justifyContent:"null"
+  styleOptions: {
+    form: { width: "700px" },
+    fieldset: { width: "640px" },
+    fieldsetContainer: {
+      justifyContent: "null"
     }
   }
 })
 
-lazyProgress.fetchNextFieldSet({
-  spinner:"Chargement...",
-  shouldFetch: true,
-  callback(response, status, index, ...data){
-    switch(index){
+lazyProgressForm.fetchNextFieldSet({
+  spinner: "Loading...",
+  shouldRepost: true,
+  callback(response, status, index, ...data) {
+    switch (index) {
       case 1: // is first fetched fieldset
-        //Do something, for example graft the events that this fieldset 1 needs
+        // Do something, for example, graft the events that this fieldset 1 needs
       case 2: // ...and so on depending on the number of fieldsets you have
     }
   }
@@ -231,7 +231,7 @@ lazyProgress.fetchNextFieldSet({
   - Fetches and displays the next fieldset.
   - `data.template`: The template for the fieldset.
   - `data.spinner`: Spinner or loading indicator.
-  - `data.shouldFetch`: Whether to fetch the next fieldset.
+  - `data.shouldRepost`: Whether to post a fieldset's data when its "next" button is clicked again.
   - `data.extraData`: Additional data to add to the form at each step
   - `data.callback(response, status, index, ...data)`: Function to execute after the fieldset is loaded.
 
@@ -244,34 +244,54 @@ lazyProgress.fetchNextFieldSet({
 
 ### `onPostNext`
 
-- **Description**: Triggered after transitioning to the next fieldset.
-- **Use Case**: Use this event to update UI elements or perform actions once the transition is complete.
+- **Description**
 
-## Styling
+: Triggered after transitioning to the next fieldset.
 
-Customize the
+- **Use Case**: Use this event to perform actions or update UI elements after moving to the next step.
 
- appearance of the form by providing style options via the `run` or `lazyRun` methods. Apply custom classes to the form, fieldsets, and parent containers to match your website’s design.
+### `onPrePrev`
 
-**Note**: Since version 1.1.10, modifying CSS styles directly through the `ProgressForm` instance is less common. Instead, adjust styles using your CSS stylesheet.
+- **Description**: Triggered before transitioning to the previous fieldset.
+- **Use Case**: Use this event to perform actions or validations before moving back to the previous step.
 
-**Example**:
+### `onPostPrev`
 
-To deactivate default width properties of `Form` and `FieldSetParent`, use custom styles:
+- **Description**: Triggered after transitioning to the previous fieldset.
+- **Use Case**: Use this event to perform actions or update UI elements after moving back to the previous step.
 
-```css
-/* Example of custom CSS to adjust form styling */
-.custom-form-class {
-    /* Custom styles */
-}
-```
+## Customization Options
 
-![A preview of the first fieldset](./src/assets/form-image.png)
+### StyleOptions
+
+Customize the appearance of your form using the following options:
+
+- **form**: Styles for the form element.
+- **fieldset**: Styles for the fieldset elements.
+- **fieldsetContainer**: Styles for the container holding the fieldsets.
+
+### ProgressFormType
+
+Configure form progression with these options:
+
+- **translateX**: X translation value for the transition effect.
+
+### PreventType
+
+Define conditions under which form progression should be prevented.
 
 ## Conclusion
 
-The `ProgressForm` class offers a powerful and user-friendly solution for creating multi-step forms with integrated progress indicators. It simplifies form navigation and enhances the user experience by breaking down complex forms into manageable steps. With its easy installation, customization options, and advanced features like lazy loading, `ProgressForm` is an excellent choice for modern web applications.
+The `ProgressForm` library offers a powerful and flexible solution for creating dynamic, multi-step forms with a user-friendly progress bar. Whether you need a simple form or a more complex form with lazy loading capabilities, this library provides the tools and customization options to meet your needs.
 
-Explore the customizable styling options to ensure the form integrates seamlessly with your website's design.
+## License
 
----
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Links
+
+- [GitHub Repository](https://github.com/Nelsallg/easylibs)
+- [npm Package](https://www.npmjs.com/package/@easylibs/progress-form)
+- [Documentation](https://github.com/Nelsallg/easylibs#readme)
+
+For more detailed information and examples, please refer to the official documentation and resources provided.
