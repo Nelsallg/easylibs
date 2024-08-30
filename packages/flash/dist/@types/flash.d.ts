@@ -1,7 +1,7 @@
 import { FlashOptions } from "./scripts/types";
 import "./assets/scss/flash.scss";
 export default class Flash {
-    private static OPTIONS;
+    private static OPTIONS?;
     static TEMPLATE: string | number;
     /**
     * Adds a Flash message with the specified options.
@@ -17,9 +17,8 @@ export default class Flash {
      */
     private static run;
     /**
-     * Returns the HTML template for the Flash message.
-     * @param properties - Flash message properties.
-     * @returns - The HTML template for the Flash message.
+     *
+     * @returns - A HTMLCollection of template childrend for the Flash message.
      */
     private static template;
     private static parseTemplate;

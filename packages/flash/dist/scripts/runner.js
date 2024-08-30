@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = __importDefault(require("@easylibs/utils"));
-const animation_1 = __importDefault(require("@easylibs/animation"));
+const animation_1 = require("./animation");
 class Runner {
     /**
      * Cette classe  encapsule la logique liée à la manipulation des modals,
@@ -19,15 +19,16 @@ class Runner {
          * Méthode pour fermer la modal.
          */
         this.close = () => {
-            const animation = new animation_1.default();
+            const animation = new Animation();
             const modal = this.modal;
             modal.setAttribute('aria-hidden', 'true');
-            animation.animeOut({
+            (0, animation_1.animeOut)({
                 element: modal,
                 display: undefined,
                 delay: 350,
-                closeButton: this.closeButton
-            }, this.animProps("out"));
+                closeButton: this.closeButton,
+                animation: this.animation
+            });
         };
         /**
          * Méthode pour gérer la fermeture automatique de la modal.
@@ -45,7 +46,7 @@ class Runner {
         this.duration = parseInt(this.modal.getAttribute('duration') || "0", 10);
         this.modal.setAttribute('aria-hidden', 'true');
         this.container = options.container;
-        this.animation = options.animation ? options.animation : { type: 'fade', position: 'top' };
+        this.animation = options.animation ? options.animation : { type: 'slide', position: 'top' };
         this.closeButton;
         this.openButton;
         this.autoClose();
@@ -54,16 +55,18 @@ class Runner {
      * Méthode pour ouvrir la modal.
      */
     open() {
-        var _a;
         if (this.tone) {
             const toneUrl = "https://raw.githubusercontent.com/Nelsallg/easylibs/1.0.0/packages/flash/dist/assets/tone.ogg";
             const tone = utils_1.default.setAudio(toneUrl);
             tone.volume = this.volume;
             tone.play();
         }
-        const animation = new animation_1.default();
         const modal = this.modal;
-        animation.animeIn({ element: modal, display: 'flex' }, this.animProps("in"));
+        (0, animation_1.animeIn)({
+            element: modal,
+            display: 'flex',
+            animation: this.animation
+        });
         const container = this.container;
         const existingFlash = document.querySelector('flash');
         if (existingFlash)
@@ -81,14 +84,7 @@ class Runner {
         if (!this.closeButton) {
             this.closeButton = modal.querySelector('[_close_]');
         }
-        (_a = this.closeButton) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.close);
-    }
-    animProps(enter) {
-        return {
-            animationType: this.animation.type,
-            animationPosition: this.animation.position,
-            animationEnter: enter
-        };
+        this.closeButton?.addEventListener('click', this.close);
     }
     /**
      * Méthode interne pour nettoyer les attributs de la modal.
