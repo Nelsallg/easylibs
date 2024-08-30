@@ -178,11 +178,6 @@ class ProgressForm {
                     handlePrev();
                 });
             }
-            else {
-                if (this.isLazyProgress) {
-                    handlePrev();
-                }
-            }
         }
         catch (error) {
             console.error(error);

@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -68,8 +59,18 @@ class LazyProgressForm extends default_progress_form_1.default {
                 "@translateX": i === 0 ? 0 : i === 1 ? translateX : nextTranslateX - translateX,
                 "@progress": PROGRESS * (i + 1),
                 "@target": this.fieldSetElement,
-                next: { i: nextIndex, button: nextButton, translateX: nextTranslateX, progress: nextProgress },
-                prev: { i: i - 1, button: null, translateX: prevTranslateX, progress: prevProgress },
+                next: {
+                    i: nextIndex,
+                    button: nextButton,
+                    translateX: nextTranslateX,
+                    progress: nextProgress,
+                },
+                prev: {
+                    i: i - 1,
+                    button: null,
+                    translateX: prevTranslateX,
+                    progress: prevProgress,
+                },
             };
             nextIndex++;
             this.formatProgressingData(i);
@@ -90,141 +91,145 @@ class LazyProgressForm extends default_progress_form_1.default {
         if (!this.isLazyRunCalled) {
             throw new Error("You must call LazyProgressForm.lazyRun() before.");
         }
-        let { callback, spinner, template, shouldFetch, extraData } = data;
-        template = template ? template : this.form.querySelector("fieldset");
+        let { callback, spinner, template, shouldRepost, extraData, preventSubmit, submitAllData, } = data;
+        template = template !== null && template !== void 0 ? template : this.form.querySelector("fieldset");
         const nextButton = template.querySelector("[__next__]");
         if (nextButton) {
             nextButton.addEventListener("click", (e) => {
-                var _a, _b;
+                var _a;
                 e.preventDefault();
                 if (!this.isValidFieldset(template)) {
                     return;
                 }
-                const nextButtonInner = nextButton.innerHTML;
-                const i = nextButton.dataset.nextIndex;
-                let existingFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${i}`);
+                this._buttonInner = nextButton.innerHTML;
+                const index = parseInt(nextButton.dataset.nextIndex).toString();
+                let existingFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${index}`);
+                const fetchParams = {
+                    index,
+                    spinner,
+                    extraData,
+                    nextButton,
+                    nextButtonInner: this._buttonInner,
+                    callback,
+                    handleFetchSuccess: (response, status) => {
+                        this.handleSpinner(nextButton, spinner, "remove");
+                        const elements = this.graftEvents(response, parseInt(index));
+                        this.prepareNextStep(elements, Object.assign(Object.assign({}, fetchParams), { shouldRepost,
+                            submitAllData,
+                            preventSubmit }));
+                        callback === null || callback === void 0 ? void 0 : callback(response, status, parseInt(index));
+                    },
+                    shouldRepost,
+                    submitAllData,
+                    preventSubmit,
+                };
                 if (existingFieldset) {
-                    if (shouldFetch) {
-                        const previousFieldset = (_b = this.form) === null || _b === void 0 ? void 0 : _b.querySelector(`.fieldset${parseInt(i) - 1}`);
-                        if (previousFieldset) {
-                            new fetch_request_1.default({
-                                uri: this.url,
-                                data: this.getFormData(previousFieldset, i, extraData),
-                                options: {
-                                    method: "POST",
-                                    responseDataType: "json",
-                                },
-                                callbacks: {
-                                    onPreFetch() {
-                                        if (nextButton) {
-                                            if (spinner) {
-                                                nextButton.innerHTML = "";
-                                                if (typeof spinner === "string") {
-                                                    nextButton.innerHTML = spinner;
-                                                }
-                                                else {
-                                                    nextButton.appendChild(spinner);
-                                                }
-                                            }
-                                            nextButton.setAttribute("disabled", "disabled");
-                                        }
-                                    },
-                                    onPostFetch(response, status) {
-                                        if (nextButton) {
-                                            nextButton.innerHTML = nextButtonInner;
-                                            nextButton.removeAttribute("disabled");
-                                        }
-                                        if (callback)
-                                            callback(response, status, parseInt(i));
-                                    },
-                                    onSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                                        this._next(parseInt(i));
-                                        if (!nextButton) {
-                                            if (callback)
-                                                callback(response, 200, parseInt(i));
-                                        }
-                                    }),
-                                },
-                            });
-                        }
-                    }
-                    else {
-                        this._next(parseInt(i));
-                    }
-                    return;
+                    this.processExistingFieldset(existingFieldset, fetchParams);
                 }
-                new fetch_request_1.default({
-                    uri: this.url,
-                    data: this.getFormData(template, i, extraData),
-                    options: {
-                        method: "POST",
-                        responseDataType: "json",
-                    },
-                    callbacks: {
-                        onPreFetch() {
-                            if (spinner) {
-                                if (nextButton) {
-                                    nextButton.innerHTML = "";
-                                    if (typeof spinner === "string") {
-                                        nextButton.innerHTML = spinner;
-                                    }
-                                    else {
-                                        nextButton.appendChild(spinner);
-                                    }
-                                }
-                                nextButton.setAttribute("disabled", "disabled");
-                            }
-                        },
-                        onPostFetch(response, status) {
-                            nextButton.innerHTML = nextButtonInner;
-                            nextButton.removeAttribute("disabled");
-                            if (callback)
-                                callback(response, status, parseInt(i));
-                        },
-                        onSuccess: (response) => __awaiter(this, void 0, void 0, function* () {
-                            const elements = this.graftEvents(response, parseInt(i));
-                            const nextButton = elements.nextButton;
-                            this.fetchNextFieldSet({
-                                template: elements.fieldset,
-                                spinner,
-                                nextButton,
-                                shouldFetch: data.shouldFetch,
-                                extraData,
-                                callback(response, status, index, ...data) { callback(response, status, index); },
-                            });
-                            if (!nextButton) {
-                                // On soumet le formulaire car on est à la fin de la progression
-                                const { submitButton } = elements;
-                                submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("click", (e) => {
-                                    e.preventDefault();
-                                    submitButton.innerHTML = nextButtonInner;
-                                    submitButton.setAttribute("disabled", "disabled");
-                                });
-                                if (callback)
-                                    callback(response, 200, parseInt(i), elements.submitButton, elements.fieldset);
-                            }
-                            else {
-                                nextButton.setAttribute("data-next-index", String(parseInt(i) + 1));
-                            }
-                        }),
-                    },
-                });
+                else {
+                    this.postFieldsetData(template, fetchParams);
+                }
             });
         }
     }
     /**
-   * Récupère les données du formulaire pour le fieldset donné.
-   * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-   * @param {string} [i] - L'indice du fieldset (facultatif).
-   * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
-   * @returns {FormData} - Les données du formulaire sous forme de FormData.
-   */
-    getFormData(template, i, extraData) {
-        let formData = new FormData();
-        let fields = template.querySelectorAll("input,select,textarea");
-        fields.forEach((field) => {
-            formData.set(field.name, field.value);
+     * Processes an existing fieldset.
+     * @param {HTMLFieldSetElement} existingFieldset - The existing fieldset element.
+     * @param {FetchFieldsetParams} params - Parameters for fetching the fieldset.
+     */
+    processExistingFieldset(existingFieldset, params) {
+        var _a;
+        if (params.shouldRepost) {
+            const previousFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${parseInt(params.index) - 1}`);
+            if (previousFieldset) {
+                this.postFieldsetData(previousFieldset, params);
+            }
+        }
+        else {
+            this._next(parseInt(params.index));
+        }
+    }
+    /**
+     * Posts fieldset data to the server.
+     * @param {HTMLFieldSetElement} fieldset - The fieldset element to post.
+     * @param {FetchFieldsetParams} params - Parameters for posting the fieldset data.
+     */
+    postFieldsetData(fieldset, params) {
+        const form = params.submitAllData && params.submitAllData === "atEachStep" ? this.form : undefined;
+        new fetch_request_1.default({
+            uri: this.url,
+            data: this.getFormData(fieldset, params.index, params.extraData, form),
+            options: {
+                method: "POST",
+                responseDataType: "json",
+            },
+            callbacks: {
+                onPreFetch: () => {
+                    this.handleSpinner(params.nextButton, params.spinner, "add");
+                },
+                onPostFetch: (response, status) => params.handleFetchSuccess(response, status),
+            },
         });
+    }
+    /**
+     * Prepares the next step in the form progression.
+     * @param {any} elements - The elements involved in the next step.
+     * @param {FetchFieldsetParams} params - Parameters for fetching the next fieldset.
+     */
+    prepareNextStep(elements, params) {
+        if (!elements)
+            return;
+        const nextButton = elements.nextButton;
+        if (!nextButton) {
+            if (params.preventSubmit) {
+                const { submitButton } = elements;
+                submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("click", (e) => {
+                    this.handleSpinner(submitButton, params.spinner, "add");
+                    const form = params.submitAllData && params.submitAllData === "atEachStep" ? this.form : undefined;
+                    const formData = form || params.submitAllData && params.submitAllData === "atEnd" ? new FormData(this.form)
+                        : this.getFormData(elements.fieldset, undefined, params.extraData);
+                    new fetch_request_1.default({
+                        uri: this.url,
+                        data: formData,
+                        options: {
+                            method: "POST",
+                            responseDataType: "json",
+                        },
+                        callbacks: {
+                            onPostFetch: (response, status) => params.handleFetchSuccess(response, status),
+                        },
+                    });
+                });
+            }
+        }
+        else {
+            nextButton.setAttribute("data-next-index", String(parseInt(params.index) + 1));
+            this.fetchNextFieldSet({
+                template: elements.fieldset,
+                spinner: params.spinner,
+                shouldRepost: params.shouldRepost,
+                extraData: params.extraData,
+                submitAllData: params.submitAllData,
+                callback: params.callback,
+                preventSubmit: params.preventSubmit,
+            });
+        }
+    }
+    /**
+     * Récupère les données du formulaire pour le fieldset donné.
+     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
+     * @param {string} [i] - L'indice du fieldset (facultatif).
+     * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
+     * @returns {FormData} - Les données du formulaire sous forme de FormData.
+     */
+    getFormData(template, i, extraData, form) {
+        let formData = form ? new FormData(form) : new FormData();
+        let fields = template.querySelectorAll("input,select,textarea");
+        if (!form) {
+            fields.forEach((field) => {
+                formData.set(field.name, field.value);
+            });
+        }
         if (i) {
             formData.set("nextIndex", i);
         }
@@ -239,18 +244,24 @@ class LazyProgressForm extends default_progress_form_1.default {
      * Insère le fieldset reçu dans le DOM et gère les événements.
      * @param {any} response - La réponse du serveur contenant le template du fieldset.
      * @param {number} i - L'indice du fieldset actuel.
-     * @returns {Record<string,any>} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
+     * @returns {Record<string,any> | null} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
      */
     graftEvents(response, i) {
         const fieldsetContainer = document.querySelector(`${this.parentTarget ? this.parentTarget + " " : ""}[fieldset__container]`);
         const fieldset = utils_1.default.textToHTMLElement(response.template);
+        if (!fieldset) {
+            return null;
+        }
         const prevButton = fieldset.querySelector("[__prev__]");
         const nextButton = fieldset.querySelector("[__next__]");
         const submitButton = fieldset.querySelector("[__submit__]");
+        const existingFieldset = document.querySelector(`.fieldset${i}`);
+        if (!existingFieldset)
+            fieldsetContainer.appendChild(fieldset);
         Object.assign(fieldset.style, this.RENDERED_STYLE.fieldsetStyle);
-        fieldsetContainer.appendChild(fieldset);
         this._prev(i, prevButton);
-        this._next(i);
+        if (this.fieldsetLength !== i)
+            this._next(i);
         return { nextButton, prevButton, fieldset, submitButton };
     }
     /**
@@ -289,6 +300,28 @@ class LazyProgressForm extends default_progress_form_1.default {
             },
         };
         return data[`${type}`];
+    }
+    /**
+     * Handles adding or removing a spinner element.
+     * @param {HTMLElement} nextButton - The button triggering the spinner.
+     * @param {HTMLElement} spinner - The spinner element.
+     * @param {string} action - The action to perform ("add" or "remove").
+     */
+    handleSpinner(button, spinner, action) {
+        button.innerHTML = "";
+        if (action === "add") {
+            if (typeof spinner === "string") {
+                button.innerHTML = spinner;
+            }
+            else {
+                button.appendChild(spinner);
+            }
+            button.setAttribute("disabled", "disabled");
+        }
+        if (action === "remove") {
+            button.innerHTML = this._buttonInner;
+            button.removeAttribute("disabled");
+        }
     }
 }
 exports.default = LazyProgressForm;

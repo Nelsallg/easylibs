@@ -9,6 +9,7 @@ export default class LazyProgressForm extends ProgressForm {
     url: string;
     parentTarget?: string;
     private isLazyRunCalled;
+    private _buttonInner;
     /**
      * Constructeur de la classe LazyProgressForm.
      * @param {HTMLFormElement} form - L'élément de formulaire HTML.
@@ -27,20 +28,38 @@ export default class LazyProgressForm extends ProgressForm {
      */
     fetchNextFieldSet(data: FieldSetGetterData): void;
     /**
-   * Récupère les données du formulaire pour le fieldset donné.
-   * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-   * @param {string} [i] - L'indice du fieldset (facultatif).
-   * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
-   * @returns {FormData} - Les données du formulaire sous forme de FormData.
-   */
-    getFormData(template: HTMLFieldSetElement, i?: string, extraData?: Record<string, any>): FormData;
+     * Processes an existing fieldset.
+     * @param {HTMLFieldSetElement} existingFieldset - The existing fieldset element.
+     * @param {FetchFieldsetParams} params - Parameters for fetching the fieldset.
+     */
+    private processExistingFieldset;
+    /**
+     * Posts fieldset data to the server.
+     * @param {HTMLFieldSetElement} fieldset - The fieldset element to post.
+     * @param {FetchFieldsetParams} params - Parameters for posting the fieldset data.
+     */
+    private postFieldsetData;
+    /**
+     * Prepares the next step in the form progression.
+     * @param {any} elements - The elements involved in the next step.
+     * @param {FetchFieldsetParams} params - Parameters for fetching the next fieldset.
+     */
+    private prepareNextStep;
+    /**
+     * Récupère les données du formulaire pour le fieldset donné.
+     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
+     * @param {string} [i] - L'indice du fieldset (facultatif).
+     * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
+     * @returns {FormData} - Les données du formulaire sous forme de FormData.
+     */
+    getFormData(template: HTMLFieldSetElement, i?: string, extraData?: Record<string, any>, form?: HTMLFormElement): FormData;
     /**
      * Insère le fieldset reçu dans le DOM et gère les événements.
      * @param {any} response - La réponse du serveur contenant le template du fieldset.
      * @param {number} i - L'indice du fieldset actuel.
-     * @returns {Record<string,any>} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
+     * @returns {Record<string,any> | null} - Contient les éléments du fieldset, les boutons prev/next et le bouton submit.
      */
-    protected graftEvents(response: any, i: number): Record<string, any>;
+    protected graftEvents(response: any, i: number): Record<string, any> | null;
     /**
      * Déplace la progression vers le fieldset suivant.
      * @param {number} i - L'indice du fieldset actuel.
@@ -59,4 +78,11 @@ export default class LazyProgressForm extends ProgressForm {
      * @returns {Record<string,any>} - Les données de progression pour le fieldset.
      */
     private getProgressingData;
+    /**
+     * Handles adding or removing a spinner element.
+     * @param {HTMLElement} nextButton - The button triggering the spinner.
+     * @param {HTMLElement} spinner - The spinner element.
+     * @param {string} action - The action to perform ("add" or "remove").
+     */
+    private handleSpinner;
 }

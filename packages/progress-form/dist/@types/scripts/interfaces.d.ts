@@ -54,11 +54,25 @@ export declare interface ProgressingInterface {
         progress: number;
     };
 }
+export declare interface FetchFieldsetParams {
+    index: string;
+    spinner: any;
+    extraData: any;
+    nextButton: HTMLElement;
+    nextButtonInner: string;
+    callback: any;
+    handleFetchSuccess: (response?: Record<string, any>, status?: number) => any;
+    shouldRepost: boolean;
+    submitAllData?: "atEnd" | "atEachStep";
+    preventSubmit: boolean;
+}
 export declare interface FieldSetGetterData {
     template?: HTMLFieldSetElement;
     nextButton?: HTMLElement;
     spinner?: HTMLElement | string;
-    shouldFetch?: boolean;
+    shouldRepost?: boolean;
+    preventSubmit?: boolean;
+    submitAllData?: "atEnd" | "atEachStep";
     extraData?: Record<string, any>;
     callback?: (response: any, status: number, index: number, ...data: any[]) => any;
 }
