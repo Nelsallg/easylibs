@@ -227,7 +227,12 @@ class LazyProgressForm extends default_progress_form_1.default {
         let fields = template.querySelectorAll("input,select,textarea");
         if (!form) {
             fields.forEach((field) => {
-                formData.set(field.name, field.value);
+                if (field.type === "radio" && field.checked) {
+                    formData.set(field.name, field.value);
+                }
+                else if (field.type !== "checkbox" || field.checked) {
+                    formData.set(field.name, field.value);
+                }
             });
         }
         if (i) {
