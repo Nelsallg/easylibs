@@ -226,12 +226,27 @@ class LazyProgressForm extends default_progress_form_1.default {
         let formData = form ? new FormData(form) : new FormData();
         let fields = template.querySelectorAll("input,select,textarea");
         if (!form) {
+            let radioGroups = {};
             fields.forEach((field) => {
-                if (field.type === "radio" && field.checked) {
-                    formData.set(field.name, field.value);
+                if (field.type === "radio") {
+                    if (!radioGroups[field.name]) {
+                        radioGroups[field.name] = false;
+                    }
+                    if (field.checked) {
+                        formData.set(field.name, field.value);
+                        radioGroups[field.name] = true;
+                    }
                 }
                 else if (field.type !== "checkbox" || field.checked) {
                     formData.set(field.name, field.value);
+                }
+            });
+            // Ensure all radio groups have a value, even if not selected
+            fields.forEach((field) => {
+                if (field.type === "radio" && !radioGroups[field.name]) {
+                    // If no radio button is selected for this name, set an empty value or handle it as needed
+                    formData.set(field.name, "");
+                    radioGroups[field.name] = true;
                 }
             });
         }
