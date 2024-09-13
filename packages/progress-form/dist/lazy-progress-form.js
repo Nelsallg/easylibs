@@ -155,7 +155,9 @@ class LazyProgressForm extends default_progress_form_1.default {
      * @param {FetchFieldsetParams} params - Parameters for posting the fieldset data.
      */
     postFieldsetData(fieldset, params) {
-        const form = params.submitAllData && params.submitAllData === "atEachStep" ? this.form : undefined;
+        const form = params.submitAllData && params.submitAllData === "atEachStep"
+            ? this.form
+            : undefined;
         new fetch_request_1.default({
             uri: this.url,
             data: this.getFormData(fieldset, params.index, params.extraData, form),
@@ -185,8 +187,11 @@ class LazyProgressForm extends default_progress_form_1.default {
                 const { submitButton } = elements;
                 submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener("click", (e) => {
                     this.handleSpinner(submitButton, params.spinner, "add");
-                    const form = params.submitAllData && params.submitAllData === "atEachStep" ? this.form : undefined;
-                    const formData = form || params.submitAllData && params.submitAllData === "atEnd" ? new FormData(this.form)
+                    const form = params.submitAllData && params.submitAllData === "atEachStep"
+                        ? this.form
+                        : undefined;
+                    const formData = form || (params.submitAllData && params.submitAllData === "atEnd")
+                        ? new FormData(this.form)
                         : this.getFormData(elements.fieldset, undefined, params.extraData);
                     new fetch_request_1.default({
                         uri: this.url,
@@ -224,7 +229,7 @@ class LazyProgressForm extends default_progress_form_1.default {
      */
     getFormData(template, i, extraData, form) {
         let formData = form ? new FormData(form) : new FormData();
-        let fields = template.querySelectorAll("input,select,textarea");
+        let fields = template.querySelectorAll("input, select, textarea");
         if (!form) {
             let radioGroups = {};
             fields.forEach((field) => {
@@ -237,14 +242,24 @@ class LazyProgressForm extends default_progress_form_1.default {
                         radioGroups[field.name] = true;
                     }
                 }
-                else if (field.type !== "checkbox" || field.checked) {
+                else if (field.type === "checkbox" && field.checked) {
+                    formData.set(field.name, field.value);
+                }
+                else if (field.type === "file" &&
+                    field.files &&
+                    field.files.length > 0) {
+                    // Ajouter tous les fichiers sélectionnés au FormData
+                    Array.from(field.files).forEach((file) => {
+                        formData.append(field.name, file);
+                    });
+                }
+                else if (field.type !== "checkbox" && field.type !== "file") {
                     formData.set(field.name, field.value);
                 }
             });
-            // Ensure all radio groups have a value, even if not selected
+            // S'assurer que tous les groupes radio ont une valeur, même si aucun n'est sélectionné
             fields.forEach((field) => {
                 if (field.type === "radio" && !radioGroups[field.name]) {
-                    // If no radio button is selected for this name, set an empty value or handle it as needed
                     formData.set(field.name, "");
                     radioGroups[field.name] = true;
                 }

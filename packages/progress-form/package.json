@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/progress-form",
-  "version": "2.7.34",
+  "version": "2.7.35",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -58,5 +58,8 @@
   "sideEffect": false,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@easylibs/flash": "file:../flash"
   }
 }
