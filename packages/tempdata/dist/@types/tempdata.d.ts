@@ -7,10 +7,11 @@ declare interface OSOptions {
 }
 export default class TempData {
     private dbname;
-    private osnames;
+    osnames: string | OSOptions[];
     private version;
     target: any;
     private db;
+    current_osname: string | OSOptions[];
     /**
      * @param dbname - The name of the IndexedDB database to open or create.
      * @param osname - The name of the object (object store) which will contain the elements to be stored
@@ -22,48 +23,48 @@ export default class TempData {
      * @param data - Data (a single object or an array of objects) to add to the IDBObjectStore.
      * @returns A promise that resolves to an object indicating the success of the operation.
      */
-    add(data: Record<string, any> | Array<Record<string, any>>, osname: string): Promise<Record<string, any>>;
+    add(data: Record<string, any> | Array<Record<string, any>>, osname?: string): Promise<Record<string, any>>;
     /**
      * Retrieves the form data at the specified index from the array of object data obtained from `getIndexedData`.
      * @param i - The index of the form data to retrieve.
      * @returns A promise that resolves to the form data at the specified index, or `undefined` if the index is out of range.
      */
-    readOne(i: number, osname: string, type?: "form-data" | "record"): Promise<FormData | Record<string, any> | undefined>;
+    readOne(i: number, osname?: string, type?: "form-data" | "record"): Promise<FormData | Record<string, any> | undefined>;
     /**
      * Finds the first record that matches the provided criteria.
      * @param criteria - An object representing the key-value pairs to match against the records.
      * @param type - Optional parameter to specify the return type: "form-data" or "record".
      * @returns A promise that resolves to the first matching record or `undefined` if no match is found.
      */
-    readOneBy(criteria: Record<string, any>, osname: string, type?: "form-data" | "record"): Promise<FormData | Record<string, any> | undefined>;
+    readOneBy(criteria: Record<string, any>, osname?: string, type?: "form-data" | "record"): Promise<FormData | Record<string, any> | undefined>;
     /**
      * Retrieves all elements from the IDBObjectStore and returns them as an array.
      * @returns A promise that resolves to an array containing all the elements from the IDBObjectStore.
      */
-    read(osname: string): Promise<Array<Record<string, any>>>;
+    read(osname?: string): Promise<Array<Record<string, any>>>;
     /**
      * Retrieves all elements that match the specified criteria from the IDBObjectStore.
      * @param criteria - An object representing the key-value pairs that the elements must match.
      * @returns A promise that resolves to an array containing all matching elements from the IDBObjectStore.
      */
-    readBy(criteria: Record<string, any>, osname: string): Promise<Array<Record<string, any>>>;
+    readBy(criteria: Record<string, any>, osname?: string): Promise<Array<Record<string, any>>>;
     /**
      * Updates an element in the database.
      * @param id - The numeric ID of the element to be updated.
      * @param data - The new data to be merged with the existing data.
      * @returns A promise that resolves to a boolean indicating whether the update was successful (true) or the ID was not found (false).
      */
-    update(id: number, data: Record<string, any>, osname: string): Promise<boolean>;
+    update(id: number, data: Record<string, any>, osname?: string): Promise<boolean>;
     /**
      * Deletes the object from the IDBObjectStore.
      * @param id - The ID of the object to delete.
      */
-    deleteOne(id: number, osname: string, refactoringShortKeyString?: string | null): Promise<boolean>;
+    deleteOne(id: number, osname?: string, refactoringShortKeyString?: string | null): Promise<boolean>;
     /**
      * Deletes the specified object store from the IndexedDB database.
      * @returns A promise that resolves if the object store is successfully deleted, or rejects with an error if any error occurs during the operation.
      */
-    deleteOS(osname: string): Promise<boolean>;
+    deleteOS(osname?: string): Promise<boolean>;
     /**
      * Clears the entire IndexedDB database by deleting the database.
      */
@@ -77,20 +78,20 @@ export default class TempData {
      * Checks if database is empty.
      * @returns A promise that resolves to `true` if database is empty, and `false` otherwise.
      */
-    _isItEmpty(osname?: string): Promise<boolean>;
+    isItEmpty(osname?: string): Promise<boolean>;
     /**
      * Retrieves the length of the object store.
      * @returns A promise that resolves with the length of the object store.
      */
-    _length(osname?: string): Promise<number>;
-    _isItExpired(db?: IDBDatabase): Promise<boolean | undefined>;
-    _setExpire(date: Date): Promise<unknown>;
+    length(osname?: string): Promise<number>;
+    isItExpired(db?: IDBDatabase): Promise<boolean | undefined>;
+    setExpire(date: Date): Promise<unknown>;
     /**
      * Retrieves the IDBObjectStore with the specified access mode from the opened database.
      * @param access - The access mode for the transaction.
      * @returns A promise that resolves to the IDBObjectStore with the specified access mode.
      */
-    _getObjectStore(access: IDBTransactionMode, osname: string): Promise<IDBObjectStore>;
+    getObjectStore(access: IDBTransactionMode, osname: string): Promise<IDBObjectStore>;
     /**
      * Refactors the indexes of the indexed data.
      * @param refactoringShortKeyString - The string to be used for refactoring the indexes.
