@@ -32,8 +32,8 @@ class TempDataBackend {
      * @param callback - The callback function to be called after the data is persisted.
      * @returns A promise that resolves when the data is persisted.
      */
-    persist(redirectURL, callback = (result) => { }) {
-        return __awaiter(this, void 0, void 0, function* () {
+    persist(redirectURL_1) {
+        return __awaiter(this, arguments, void 0, function* (redirectURL, callback = (result) => { }) {
             const elements = yield this.database.read();
             const promises = [];
             if (elements instanceof Array && elements.length > 0) {
@@ -43,8 +43,8 @@ class TempDataBackend {
                             try {
                                 const data = yield this.database.readOne(currentIndex, "record");
                                 if (data) {
-                                    delete data["@base64String"];
-                                    delete data["@id"];
+                                    delete data["base64String"];
+                                    delete data["mk"];
                                 }
                                 resolve(data);
                             }
@@ -90,7 +90,7 @@ class TempDataBackend {
         const form = (_a = data.submiter.closest("form")) !== null && _a !== void 0 ? _a : document.querySelector("form");
         data.submiter.addEventListener("click", (e) => __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
-            const isEmpty = yield this.database._isEmpty();
+            const isEmpty = yield this.database.isItEmpty();
             if (true === isEmpty && !form.checkValidity()) {
                 return form.reportValidity();
             }
