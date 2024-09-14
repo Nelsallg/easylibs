@@ -1,6 +1,6 @@
 {
   "name": "@easylibs/fetch-request",
-  "version": "1.3.25",
+  "version": "1.4.25",
   "description": "",
   "author": {
     "name": "Lévy Stéphane NGUEMA-EKOMOE",
@@ -65,5 +65,8 @@
   "sideEffect": false,
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@easylibs/fetch-request": "file:"
   }
 }

@@ -24,6 +24,9 @@ class FetchRequest {
                 if (this.options.callbacks && this.options.callbacks.onPostFetch) {
                     await this.postFetch(this.response, this.status);
                 }
+                if (this.options.callbacks && this.options.callbacks.onSuccess) {
+                    await this.onSuccess(this.status);
+                }
             }
             catch (error) {
                 this.handleError(error, this.status, 'Error executing query : ');
@@ -89,6 +92,11 @@ class FetchRequest {
             }
             return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch(response, status) : undefined;
         };
+        this.onSuccess = async (status) => {
+            if (this.options.callbacks?.onSuccess && status === 200) {
+                this.options.callbacks.onSuccess(this.response);
+            }
+        };
         this.attachSubmitterEvent();
     }
     /**
@@ -133,11 +141,8 @@ class FetchRequest {
                     }
             }
         }
-        if (this.options.callbacks?.onSuccess && response.ok) {
-            this.options.callbacks.onSuccess(this.response);
-        }
-        else if (this.options.callbacks?.onError && !(this.status in EXCLUDE_STATUS) && !response.ok) {
-            this.options.callbacks.onError(new Error(typeof this.response === "string" ? this.response : "Fetch Request Error"), response.status);
+        if (this.options.callbacks?.onError && !(this.status in EXCLUDE_STATUS) && !response.ok) {
+            this.options.callbacks.onError(new Error(typeof this.response === "string" ? this.response : (this.response.message ? this.response.message : "Fetch Request Error")), response.status);
         }
     }
     /**

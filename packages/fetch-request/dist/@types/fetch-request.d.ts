@@ -90,6 +90,7 @@ export default class FetchRequest {
      * @param status The HTTP status code of the response.
      */
     private postFetch;
+    private onSuccess;
     /**
      * Repeats the execution of the current query
      * @experimental This method is experimental. Its API may change without notice
