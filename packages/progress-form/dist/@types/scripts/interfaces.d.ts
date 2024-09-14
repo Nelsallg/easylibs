@@ -32,6 +32,14 @@ export declare interface StyleOptions {
         borderRadius?: string;
     };
 }
+declare interface Callbacks {
+    onPreFetch?: (data?: any, index?: number) => any;
+    onSuccess?: (response: any, index?: number, ...data: any) => void;
+    onError?: (error: Error, status: number, index?: number) => void;
+}
+declare interface BaseCallbacks extends Callbacks {
+    onPostFetch?: (response?: any, status?: number, index?: number) => any;
+}
 /**
  * Progressing interface
  */
@@ -55,13 +63,12 @@ export declare interface ProgressingInterface {
     };
 }
 export declare interface FetchFieldsetParams {
-    index: string;
+    index: number;
     spinner: any;
     extraData: any;
     nextButton: HTMLElement;
     nextButtonInner: string;
-    callback: any;
-    handleFetchSuccess: (response?: Record<string, any>, status?: number) => any;
+    callbacks: BaseCallbacks;
     shouldRepost: boolean;
     submitAllData?: "atEnd" | "atEachStep";
     preventSubmit: boolean;
@@ -74,7 +81,7 @@ export declare interface FieldSetGetterData {
     preventSubmit?: boolean;
     submitAllData?: "atEnd" | "atEachStep";
     extraData?: Record<string, any>;
-    callback?: (response: any, status: number, index: number, ...data: any[]) => any;
+    callbacks?: Callbacks;
 }
 /**
    * @param {number} fieldsetLength - Le nombre de fieldsets à charger.
@@ -86,3 +93,4 @@ export declare interface LazyOptions {
     progressOptions?: ProgressFormType;
     styleOptions?: StyleOptions;
 }
+export {};

@@ -29,7 +29,6 @@ export default class LazyProgressForm extends ProgressForm {
     fetchNextFieldSet(data: FieldSetGetterData): void;
     /**
      * Processes an existing fieldset.
-     * @param {HTMLFieldSetElement} existingFieldset - The existing fieldset element.
      * @param {FetchFieldsetParams} params - Parameters for fetching the fieldset.
      */
     private processExistingFieldset;
@@ -52,7 +51,7 @@ export default class LazyProgressForm extends ProgressForm {
      * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
      * @returns {FormData} - Les données du formulaire sous forme de FormData.
      */
-    getFormData(template: HTMLFieldSetElement, i?: string, extraData?: Record<string, any>, form?: HTMLFormElement): FormData;
+    getFormData(template: HTMLFieldSetElement, i?: number, extraData?: Record<string, any>, form?: HTMLFormElement): FormData;
     /**
      * Insère le fieldset reçu dans le DOM et gère les événements.
      * @param {any} response - La réponse du serveur contenant le template du fieldset.

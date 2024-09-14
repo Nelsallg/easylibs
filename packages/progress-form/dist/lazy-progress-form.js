@@ -91,7 +91,7 @@ class LazyProgressForm extends default_progress_form_1.default {
         if (!this.isLazyRunCalled) {
             throw new Error("You must call LazyProgressForm.lazyRun() before.");
         }
-        let { callback, spinner, template, shouldRepost, extraData, preventSubmit, submitAllData, } = data;
+        let { callbacks, spinner, template, shouldRepost, extraData, preventSubmit, submitAllData, } = data;
         template = template !== null && template !== void 0 ? template : this.form.querySelector("fieldset");
         const nextButton = template.querySelector("[__next__]");
         if (nextButton) {
@@ -102,7 +102,7 @@ class LazyProgressForm extends default_progress_form_1.default {
                     return;
                 }
                 this._buttonInner = nextButton.innerHTML;
-                const index = parseInt(nextButton.dataset.nextIndex).toString();
+                const index = parseInt(nextButton.dataset.nextIndex);
                 let existingFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${index}`);
                 const fetchParams = {
                     index,
@@ -110,21 +110,24 @@ class LazyProgressForm extends default_progress_form_1.default {
                     extraData,
                     nextButton,
                     nextButtonInner: this._buttonInner,
-                    callback,
-                    handleFetchSuccess: (response, status) => {
-                        this.handleSpinner(nextButton, spinner, "remove");
-                        const elements = this.graftEvents(response, parseInt(index));
-                        this.prepareNextStep(elements, Object.assign(Object.assign({}, fetchParams), { shouldRepost,
-                            submitAllData,
-                            preventSubmit }));
-                        callback === null || callback === void 0 ? void 0 : callback(response, status, parseInt(index));
+                    callbacks: {
+                        onPreFetch: (data) => (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onPreFetch) ? callbacks.onPreFetch(data, index) : undefined,
+                        onPostFetch: (response, status) => {
+                            this.handleSpinner(nextButton, spinner, "remove");
+                            const elements = this.graftEvents(response, index);
+                            this.prepareNextStep(elements, Object.assign(Object.assign({}, fetchParams), { shouldRepost,
+                                submitAllData,
+                                preventSubmit }));
+                        },
+                        onError: (error, status) => (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onError) ? callbacks === null || callbacks === void 0 ? void 0 : callbacks.onError(error, status, index) : undefined,
+                        onSuccess: (response, index, ...data) => (callbacks === null || callbacks === void 0 ? void 0 : callbacks.onSuccess) ? callbacks === null || callbacks === void 0 ? void 0 : callbacks.onSuccess(response, index, ...data) : undefined,
                     },
                     shouldRepost,
                     submitAllData,
                     preventSubmit,
                 };
                 if (existingFieldset) {
-                    this.processExistingFieldset(existingFieldset, fetchParams);
+                    this.processExistingFieldset(fetchParams);
                 }
                 else {
                     this.postFieldsetData(template, fetchParams);
@@ -134,19 +137,18 @@ class LazyProgressForm extends default_progress_form_1.default {
     }
     /**
      * Processes an existing fieldset.
-     * @param {HTMLFieldSetElement} existingFieldset - The existing fieldset element.
      * @param {FetchFieldsetParams} params - Parameters for fetching the fieldset.
      */
-    processExistingFieldset(existingFieldset, params) {
+    processExistingFieldset(params) {
         var _a;
         if (params.shouldRepost) {
-            const previousFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${parseInt(params.index) - 1}`);
+            const previousFieldset = (_a = this.form) === null || _a === void 0 ? void 0 : _a.querySelector(`.fieldset${params.index - 1}`);
             if (previousFieldset) {
                 this.postFieldsetData(previousFieldset, params);
             }
         }
         else {
-            this._next(parseInt(params.index));
+            this._next(params.index);
         }
     }
     /**
@@ -166,10 +168,14 @@ class LazyProgressForm extends default_progress_form_1.default {
                 responseDataType: "json",
             },
             callbacks: {
-                onPreFetch: () => {
+                onPreFetch: (data) => {
+                    var _a, _b;
                     this.handleSpinner(params.nextButton, params.spinner, "add");
+                    return ((_a = params.callbacks) === null || _a === void 0 ? void 0 : _a.onPreFetch) ? (_b = params.callbacks) === null || _b === void 0 ? void 0 : _b.onPreFetch(data, params.index) : undefined;
                 },
-                onPostFetch: (response, status) => params.handleFetchSuccess(response, status),
+                onPostFetch: (response, status) => { var _a, _b; return ((_a = params.callbacks) === null || _a === void 0 ? void 0 : _a.onPostFetch) ? (_b = params.callbacks) === null || _b === void 0 ? void 0 : _b.onPostFetch(response, status, params.index) : undefined; },
+                onError: (error, status) => { var _a, _b; return ((_a = params.callbacks) === null || _a === void 0 ? void 0 : _a.onError) ? (_b = params.callbacks) === null || _b === void 0 ? void 0 : _b.onError(error, status, params.index) : undefined; },
+                onSuccess: (response) => { var _a, _b; return ((_a = params.callbacks) === null || _a === void 0 ? void 0 : _a.onSuccess) ? (_b = params.callbacks) === null || _b === void 0 ? void 0 : _b.onSuccess(response, params.index) : undefined; },
             },
         });
     }
@@ -200,24 +206,14 @@ class LazyProgressForm extends default_progress_form_1.default {
                             method: "POST",
                             responseDataType: "json",
                         },
-                        callbacks: {
-                            onPostFetch: (response, status) => params.handleFetchSuccess(response, status),
-                        },
+                        callbacks: params.callbacks,
                     });
                 });
             }
         }
         else {
-            nextButton.setAttribute("data-next-index", String(parseInt(params.index) + 1));
-            this.fetchNextFieldSet({
-                template: elements.fieldset,
-                spinner: params.spinner,
-                shouldRepost: params.shouldRepost,
-                extraData: params.extraData,
-                submitAllData: params.submitAllData,
-                callback: params.callback,
-                preventSubmit: params.preventSubmit,
-            });
+            nextButton.setAttribute("data-next-index", String(params.index + 1));
+            this.fetchNextFieldSet(Object.assign({ template: elements.fieldset }, params));
         }
     }
     /**
@@ -266,7 +262,7 @@ class LazyProgressForm extends default_progress_form_1.default {
             });
         }
         if (i) {
-            formData.set("nextIndex", i);
+            formData.set("nextIndex", i.toString());
         }
         if (extraData) {
             for (const [key, value] of Object.entries(extraData)) {

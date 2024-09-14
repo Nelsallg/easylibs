@@ -142,16 +142,39 @@ progressForm.run({ translateX });
 
 When dealing with large forms or dynamic content, `LazyProgressForm` allows for efficient lazy loading of fieldsets. This means that fieldsets are only loaded as needed, rather than all at once.
 
+**HTML Structre:**
+
+Just define the first fieldset
+
+```html
+<form id="progress-form" method="post">
+  <div fieldset__parent>
+    <div fieldset__container>
+      <!-- First Fieldset -->
+      <fieldset>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <button type="button" __next__>Next</button>
+      </fieldset>
+    </div>
+  </div>
+</form>
+```
+
 **JavaScript Example:**
 
 ```javascript
 import { LazyProgressForm } from "@easylibs/progress-form";
-
 // Select the form element
 const lazyFormElement = document.querySelector('form');
 
+//the link to your server to retrieve the other fieldsets. 
+//note that you will need to add to each fieldset a class "fieldset{i}" with "i" 
+//corresponding to the index of the fieldset. 
+//LazyProgressForm will automatically inject the class "fieldset0" to the first fieldset by default.
+const url = "https://example.com/fieldset-getter"
+
 // Create a new LazyProgressForm instance
-const url = "https://example.com/api"
 const lazyProgressForm = new LazyProgressForm(lazyFormElement, url);
 
 // Initialize the lazy form with configuration options
@@ -172,11 +195,15 @@ lazyProgressForm.lazyRun({
 lazyProgressForm.fetchNextFieldSet({
   spinner: "Loading...",
   shouldRepost: true,
-  callback(response, status, index, ...data) {
-    switch (index) {
-      case 1: // is first fetched fieldset
-        // Do something, for example, graft the events that this fieldset 1 needs
-      case 2: // ...and so on depending on the number of fieldsets you have
+  callbacks:{
+    onSuccess(response, index, ...data) {
+      console.log({ index, response, data}) // run if request status is 200
+    },
+    onPreFetch(data, index) {
+      console.log({data, index}) // run before fetch call
+    },
+    onError(error, status, index) {
+      console.log({error, status, index}) // run if request status is not a 200 group status exemple:(500, 400 or 300)
     }
   }
 })
@@ -233,32 +260,7 @@ lazyProgressForm.fetchNextFieldSet({
   - `data.spinner`: Spinner or loading indicator.
   - `data.shouldRepost`: Whether to post a fieldset's data when its "next" button is clicked again.
   - `data.extraData`: Additional data to add to the form at each step
-  - `data.callback(response, status, index, ...data)`: Function to execute after the fieldset is loaded.
-
-## Events
-
-### `onPreNext`
-
-- **Description**: Triggered before transitioning to the next fieldset.
-- **Use Case**: Use this event to perform actions or validations before moving to the next step.
-
-### `onPostNext`
-
-- **Description**
-
-: Triggered after transitioning to the next fieldset.
-
-- **Use Case**: Use this event to perform actions or update UI elements after moving to the next step.
-
-### `onPrePrev`
-
-- **Description**: Triggered before transitioning to the previous fieldset.
-- **Use Case**: Use this event to perform actions or validations before moving back to the previous step.
-
-### `onPostPrev`
-
-- **Description**: Triggered after transitioning to the previous fieldset.
-- **Use Case**: Use this event to perform actions or update UI elements after moving back to the previous step.
+  - `data.callbacks`
 
 ## Customization Options
 
