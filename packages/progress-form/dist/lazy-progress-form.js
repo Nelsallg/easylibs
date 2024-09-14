@@ -115,6 +115,7 @@ class LazyProgressForm extends default_progress_form_1.default {
                         onPostFetch: (response, status) => {
                             this.handleSpinner(nextButton, spinner, "remove");
                             const elements = this.graftEvents(response, index);
+                            console.log(elements);
                             this.prepareNextStep(elements, Object.assign(Object.assign({}, fetchParams), { shouldRepost,
                                 submitAllData,
                                 preventSubmit }));
