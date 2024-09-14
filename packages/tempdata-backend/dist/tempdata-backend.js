@@ -23,17 +23,15 @@ class TempDataBackend {
     constructor(database, uri) {
         this.database = database;
         this.uri = uri;
-        this._response = null;
     }
     /**
      * Persists data to the server.
      *
-     * @param redirectURL - The URL to redirect to after the data is persisted.
-     * @param callback - The callback function to be called after the data is persisted.
+     * @param callbacks - The callback function to be called after the data is persisted.
      * @returns A promise that resolves when the data is persisted.
      */
-    persist(redirectURL_1) {
-        return __awaiter(this, arguments, void 0, function* (redirectURL, callback = (result) => { }) {
+    persist(callbacks) {
+        return __awaiter(this, void 0, void 0, function* () {
             const elements = yield this.database.read();
             const promises = [];
             if (elements instanceof Array && elements.length > 0) {
@@ -64,50 +62,29 @@ class TempDataBackend {
                     responseDataType: "json",
                     requestDataConvert: "form-data",
                 },
-                callbacks: {
-                    onSuccess: (response) => {
-                        this._response = response;
-                        callback(this._response);
-                        if (redirectURL) {
-                            return (window.location.href = redirectURL || "/");
-                        }
-                    },
-                }
+                callbacks: callbacks
             });
         });
     }
     /**
      * Saves form data to the server.
      *
-     * @param data - The data object containing the submiter, callback, redirectUrl, and loader properties.
-     * @param data.submiter - The submit button element.
-     * @param data.callback - The callback function to be called after the data is saved.
-     * @param data.redirectUrl - The URL to redirect to after the data is saved.
-     * @param data.loader - The loader HTML content to display while saving the data.
+     * @param submiter - The submit button element.
+     * @param callbacks - The callback functions to call before, after, on success or error during the fetch request.
+     * @param loader - The loader HTML content to display while saving the data.
      */
-    save(data) {
+    save(submiter, callbacks, loader) {
         var _a;
-        const form = (_a = data.submiter.closest("form")) !== null && _a !== void 0 ? _a : document.querySelector("form");
-        data.submiter.addEventListener("click", (e) => __awaiter(this, void 0, void 0, function* () {
+        const form = (_a = submiter.closest("form")) !== null && _a !== void 0 ? _a : document.querySelector("form");
+        submiter.addEventListener("click", (e) => __awaiter(this, void 0, void 0, function* () {
             e.preventDefault();
             const isEmpty = yield this.database.isItEmpty();
             if (true === isEmpty && !form.checkValidity()) {
                 return form.reportValidity();
             }
-            const innerSubmiter = this.escape(data.submiter.innerHTML);
-            if (data.loader) {
-                if (typeof data.loader === 'string') {
-                    data.submiter.innerHTML = data.loader;
-                }
-                else {
-                    data.loader();
-                }
-            }
+            const innerSubmiter = this.escape(submiter.innerHTML);
             if (true === isEmpty && form.checkValidity()) {
                 const formData = new FormData(form);
-                if (data.preFetchAction) {
-                    data.preFetchAction(formData);
-                }
                 new fetch_request_1.default({
                     uri: this.uri,
                     data: formData,
@@ -117,23 +94,29 @@ class TempDataBackend {
                         requestDataConvert: "form-data",
                     },
                     callbacks: {
-                        onSuccess(response) {
-                            data.submiter.innerHTML = innerSubmiter;
-                            if (data.callback)
-                                data.callback(response);
-                            if (data.redirectUrl) {
-                                return (window.location.href = data.redirectUrl);
+                        onPreFetch(data) {
+                            if (loader) {
+                                if (loader instanceof Function) {
+                                    loader();
+                                }
+                                else {
+                                    submiter.innerHTML = loader;
+                                }
                             }
+                            callbacks.onPreFetch(data);
+                        },
+                        onPostFetch: (response, status) => callbacks.onPostFetch(response, status),
+                        onError: (error, status) => callbacks.onError(error, status),
+                        onSuccess(response) {
+                            submiter.innerHTML = innerSubmiter;
+                            callbacks.onSuccess(response);
                         },
                     }
                 });
                 return;
             }
             form.setAttribute("novalidate", "");
-            yield this.persist(data.redirectUrl, (response) => {
-                data.submiter.innerHTML = innerSubmiter;
-                data.callback(response);
-            });
+            yield this.persist(callbacks);
         }));
     }
     /**
@@ -172,12 +155,6 @@ class TempDataBackend {
         const div = document.createElement("div");
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
-    }
-    /**
-     * Retourne la réponse du serveur.
-     */
-    get response() {
-        return this._response;
     }
 }
 exports.default = TempDataBackend;

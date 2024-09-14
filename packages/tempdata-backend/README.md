@@ -20,26 +20,44 @@ const backend = new TempDataBackend(database, "https://example.com/api/data");
 Once you have created an instance of the `TempDataBackend` class, you can use the `persist()` method to persist data to the server. The `persist()` method takes two optional parameters: a redirect URL and a callback function. The redirect URL is the URL that the user will be redirected to after the data is persisted. The callback function is called after the data is persisted.
 
 ```typescript
-backend.persist("/success", (response) => {
-  // Do something with the response
+backend.persist({
+  onPostFetch: (response: any, status:number) => {
+    // Do something
+  },
+  onPreFetch: (data: any) => {
+    // Do something
+  },
+  onSuccess: (response: any) => {
+    // Do something
+  },
+  onError: (error: Error, status: number) => {
+    // Do something
+  }
 });
 ```
 
 The `save()` method can be used to save form data to the server. The `save()` method takes an object as its only parameter. The object must contain the following properties:
 
 * `submiter`: The submit button element.
-* `callback`: The callback function to be called after the data is saved.
-* `redirectUrl` (optional): The URL to redirect to after the data is saved.
+* `callbacks`: an object containing the `onPreFetch`, `onPostFetch`, `onSuccess` and `onError` callbacks
 * `loader` (optional): The loader HTML content to display while saving the data.
 
 ```typescript
-backend.save({
-  submiter: document.querySelector("button[type=submit]"),
-  callback: (response) => {
-    // Do something with the response
+const submitter = document.querySelector("button[type=submit]");
+const loader = "<div>Loading...</div>";
+backend.save(submitter, loader {
+  onPostFetch: (response: any, status:number) => {
+    // Do something
   },
-  redirectUrl: "/success",
-  loader: "<div>Loading...</div>",
+  onPreFetch: (data: any) => {
+    // Do something
+  },
+  onSuccess: (response: any) => {
+    // Do something
+  },
+  onError: (error: Error, status: number) => {
+    // Do something
+  }
 });
 ```
 
