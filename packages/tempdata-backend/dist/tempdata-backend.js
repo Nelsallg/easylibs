@@ -39,7 +39,7 @@ class TempDataBackend {
                     ((currentIndex) => {
                         promises.push(new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                             try {
-                                const data = yield this.database.readOne(currentIndex, "record");
+                                const data = yield this.database.readOne(currentIndex, undefined, "record");
                                 if (data) {
                                     delete data["base64String"];
                                     delete data["mk"];
