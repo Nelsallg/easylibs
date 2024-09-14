@@ -126,10 +126,10 @@ If you do not specify the object store in the `add` method, `TempData` will cons
 ### simple reading
 
 ```javascript
-database.read("products").then((data)=>{
+database.read().then((data)=>{
     console.log(data) // retrieve all products
 })
-database.readOne(6,"customers").then((data)=>{
+database.readOne(6).then((data)=>{
     console.log(data)
 }) // retrieve customer to index 6
 ```
@@ -137,10 +137,10 @@ database.readOne(6,"customers").then((data)=>{
 ### reading by criteria
 
 ```javascript
-database.readBy({sex:"female",nationality:"Senegalese"},"customers").then((data)=>{
+database.readBy({sex:"female",nationality:"Senegalese"}).then((data)=>{
     console.log(data)
 })
-database.readOneBy({color:"undefined"},"products").then((data)=>{
+database.readOneBy({color:"undefined"}).then((data)=>{
     console.log(data)
 })
 ```
@@ -172,8 +172,8 @@ The `TempData` class provides the following methods:
 * `deleteOne(id,refactoringShortKeyString,callback)`: Deletes the object with the specified ID from the IDBObjectStore.
 * `deleteOS`: Delete the `ObjectStore`
 * `deleteAll()`: Removes every record stored in the database.
-* `_isItEmpty()`: Checks if databse is empty.
-* `_length()`: Retrieves the length of the object store.
-* `__isItExpired()`: Check expriation date of database
-* `_getObjectStore(access)`: Retrieves the IDBObjectStore with the specified access mode from the opened database.
+* `isItEmpty()`: Checks if databse is empty.
+* `length()`: Retrieves the length of the object store.
+* `isItExpired()`: Check expriation date of database
+* `getObjectStore(access)`: Retrieves the IDBObjectStore with the specified access mode from the opened database.
 * `refactorIndexes(refactoringShortKeyString)`: Refactors the indexes of the indexed data based on the provided string.

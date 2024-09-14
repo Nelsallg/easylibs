@@ -22,7 +22,7 @@ class TempData {
         this.osnames = osnames;
         this.version = version;
         this.current_osname = osnames;
-        this.openDB();
+        this.openDB(this.version);
     }
     /**
      * Adds a new element or elements to the IDBObjectStore with the provided object or array of objects.
@@ -43,7 +43,7 @@ class TempData {
                                     const elementId = target.result;
                                     let elementObject = item;
                                     elementObject["mk"] = elementId;
-                                    objectStore.put(elementObject);
+                                    objectStore.put(elementObject, elementId);
                                     resolve({ success: true, elementObject });
                                 }
                             });
@@ -315,7 +315,7 @@ class TempData {
     deleteDB() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.openDB();
+                yield this.openDB(this.version);
                 return new Promise((resolve, reject) => {
                     const request = indexedDB.deleteDatabase(this.dbname);
                     request.onsuccess = () => resolve(true);
@@ -332,9 +332,10 @@ class TempData {
      * Opens or creates a new IndexedDB database with the specified name and version.
      * @returns A promise that resolves to the opened or created IDBDatabase object.
      */
-    openDB() {
+    openDB(version) {
+        version = version ? version : this.version;
         return new Promise((resolve, reject) => {
-            const request = window.indexedDB.open(this.dbname, this.version);
+            const request = window.indexedDB.open(this.dbname, version);
             request.onerror = (event) => {
                 const { target } = event;
                 console.error("Failed to open database", target === null || target === void 0 ? void 0 : target.error);
@@ -460,7 +461,8 @@ class TempData {
      */
     getObjectStore(access, osname) {
         return __awaiter(this, void 0, void 0, function* () {
-            const db = yield this.openDB();
+            osname = osname ? osname : (typeof this.current_osname === "string" ? this.current_osname : "");
+            const db = yield this.openDB(this.version);
             const transaction = db.transaction([osname], access);
             return transaction.objectStore(osname);
         });
@@ -471,6 +473,7 @@ class TempData {
      */
     refactorIndexes(osname, refactoringShortKeyString) {
         return __awaiter(this, void 0, void 0, function* () {
+            osname = osname ? osname : (typeof this.current_osname === "string" ? this.current_osname : "");
             const objectData = yield this.read(osname);
             const isEmpty = yield this.isItEmpty();
             let updatedObjectArray = [];
@@ -490,6 +493,7 @@ class TempData {
      * @param object - The array of data to replace the indexed data with.
      */
     refactor(object, osname) {
+        osname = osname ? osname : (typeof this.current_osname === "string" ? this.current_osname : "");
         const openDBRequest = indexedDB.open(this.dbname, this.version);
         openDBRequest.onsuccess = (event) => {
             const target = event.target;
