@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const SUCCESS_HTTP_CODES = [200, 201, 202, 203, 204, 205, 206];
 /**
  * FetchRequest class designed to simplify the process of making HTTP requests within web applications.
  * It encapsulates functionality for sending requests and handling callbacks before and after the request.
@@ -93,7 +94,7 @@ class FetchRequest {
             return this.options.callbacks.onPostFetch ? this.options.callbacks.onPostFetch(response, status) : undefined;
         };
         this.onSuccess = async (status) => {
-            if (this.options.callbacks?.onSuccess && status === 200) {
+            if (this.options.callbacks?.onSuccess && SUCCESS_HTTP_CODES.includes(status)) {
                 this.options.callbacks.onSuccess(this.response);
             }
         };
@@ -127,7 +128,7 @@ class FetchRequest {
         if (options) {
             const responseDataType = options.responseDataType;
             if (responseDataType) {
-                if (!(this.status in EXCLUDE_STATUS))
+                if (!EXCLUDE_STATUS.includes(this.status))
                     try {
                         this.response = responseDataType === "text" ? await response.text() : await response.json();
                     }
@@ -141,7 +142,7 @@ class FetchRequest {
                     }
             }
         }
-        if (this.options.callbacks?.onError && !(this.status in EXCLUDE_STATUS) && !response.ok) {
+        if (this.options.callbacks?.onError && !EXCLUDE_STATUS.includes(this.status) && !response.ok) {
             this.options.callbacks.onError(new Error(typeof this.response === "string" ? this.response : (this.response.message ? this.response.message : "Fetch Request Error")), response.status);
         }
     }
