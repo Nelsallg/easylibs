@@ -45,12 +45,12 @@ export default class LazyProgressForm extends ProgressForm {
      */
     private prepareNextStep;
     /**
-     * Récupère les données du formulaire pour le fieldset donné.
-     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-     * @param {string} [i] - L'indice du fieldset (facultatif).
-     * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
-     * @returns {FormData} - Les données du formulaire sous forme de FormData.
-     */
+   * Retrieves the form data for the given fieldset.
+   * @param {HTMLFieldSetElement} template - The fieldset from which to extract the data.
+   * @param {string} [i] - The index of the fieldset (optional).
+   * @param {Record<string, any>} [extraData] - Additional data to add to the form (optional).
+   * @returns {FormData} - The form data as a FormData object.
+   */
     getFormData(template: HTMLFieldSetElement, i?: number, extraData?: Record<string, any>, form?: HTMLFormElement): FormData;
     /**
      * Insère le fieldset reçu dans le DOM et gère les événements.

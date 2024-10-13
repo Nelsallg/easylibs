@@ -115,7 +115,6 @@ class LazyProgressForm extends default_progress_form_1.default {
                         onPostFetch: (response, status) => {
                             this.handleSpinner(nextButton, spinner, "remove");
                             const elements = this.graftEvents(response, index);
-                            console.log(elements);
                             this.prepareNextStep(elements, Object.assign(Object.assign({}, fetchParams), { shouldRepost,
                                 submitAllData,
                                 preventSubmit }));
@@ -218,46 +217,52 @@ class LazyProgressForm extends default_progress_form_1.default {
         }
     }
     /**
-     * Récupère les données du formulaire pour le fieldset donné.
-     * @param {HTMLFieldSetElement} template - Le fieldset à partir duquel extraire les données.
-     * @param {string} [i] - L'indice du fieldset (facultatif).
-     * @param {Record<string, any>} [extraData] - Données supplémentaires à ajouter au formulaire (facultatif).
-     * @returns {FormData} - Les données du formulaire sous forme de FormData.
-     */
+   * Retrieves the form data for the given fieldset.
+   * @param {HTMLFieldSetElement} template - The fieldset from which to extract the data.
+   * @param {string} [i] - The index of the fieldset (optional).
+   * @param {Record<string, any>} [extraData] - Additional data to add to the form (optional).
+   * @returns {FormData} - The form data as a FormData object.
+   */
     getFormData(template, i, extraData, form) {
         let formData = form ? new FormData(form) : new FormData();
         let fields = template.querySelectorAll("input, select, textarea");
         if (!form) {
             let radioGroups = {};
+            let seenFields = {};
             fields.forEach((field) => {
+                if (!seenFields[field.name]) {
+                    seenFields[field.name] = new Set();
+                }
                 if (field.type === "radio") {
                     if (!radioGroups[field.name]) {
                         radioGroups[field.name] = false;
                     }
                     if (field.checked) {
-                        formData.set(field.name, field.value);
+                        formData.append(field.name, field.value);
                         radioGroups[field.name] = true;
                     }
                 }
                 else if (field.type === "checkbox" && field.checked) {
-                    formData.set(field.name, field.value);
+                    formData.append(field.name, field.value);
                 }
-                else if (field.type === "file" &&
-                    field.files &&
-                    field.files.length > 0) {
+                else if (field.type === "file" && field.files && field.files.length > 0) {
                     // Ajouter tous les fichiers sélectionnés au FormData
                     Array.from(field.files).forEach((file) => {
                         formData.append(field.name, file);
                     });
                 }
                 else if (field.type !== "checkbox" && field.type !== "file") {
-                    formData.set(field.name, field.value);
+                    // Vérifier si la valeur du champ est déjà dans le FormData
+                    if (!seenFields[field.name].has(field.value)) {
+                        formData.append(field.name, field.value);
+                        seenFields[field.name].add(field.value);
+                    }
                 }
             });
             // S'assurer que tous les groupes radio ont une valeur, même si aucun n'est sélectionné
             fields.forEach((field) => {
                 if (field.type === "radio" && !radioGroups[field.name]) {
-                    formData.set(field.name, "");
+                    formData.append(field.name, "");
                     radioGroups[field.name] = true;
                 }
             });
